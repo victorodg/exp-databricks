@@ -39,7 +39,32 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 |---|---|
 | `databricks.yml` | Definição do bundle (ambientes, catálogo e schema) |
 | `docs/inventario.md` | Fontes, saídas, dependências e regras fixas dos fluxos atuais |
-| `coleta/google_sheets/exportar_planilhas.gs` | Apps Script que exporta diariamente as 12 Google Sheets para .xlsx no Drive |
+| `coleta/fontes.toml` | Origem de cada arquivo enviado ao volume de entrada |
+| `coleta/enviar_arquivos.py` | Envia brutos do MKTZap, .xlsx do Drive e cópias das Google Sheets para o volume |
+| `coleta/google_sheets/exportar_planilhas.gs` | Apps Script que exporta diariamente as 12 Google Sheets para .xlsx em `G:\Meu Drive\dexp_google_sheets` |
+
+## Rotina diária
+
+1. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
+2. Enviar os arquivos para o Databricks, a partir da pasta `daily-experiencia`:
+
+```powershell
+.venv\Scripts\python.exe coleta\enviar_arquivos.py
+```
+
+O script só envia arquivos novos ou alterados (compara o SHA-256 com o último envio, guardado em `coleta\.estado\manifesto.json`) e nunca apaga nada. `--simular` mostra o que seria enviado sem enviar.
+
+## Volume de entrada
+
+`/Volumes/sandbox/sustentacao_bau_experiencias/dexp_landing`
+
+| Caminho | Conteúdo |
+|---|---|
+| `mktzap/<operação>/<AAAAMM>/bruto_<relatório>_<de>_a_<até>.csv` | Brutos do Selenium, um por execução (brasil, hispana, ncc) |
+| `drive/<fonte>/<AAAA-MM-DD>/<arquivo>.xlsx` | Uma pasta por versão nova de cada planilha do Drive, com a data da captura |
+| `google_sheets/<fonte>/<AAAA-MM-DD>/<fonte>.xlsx` | Idem, para as cópias das Google Sheets |
+
+A data das pastas é a da captura porque o Google Drive para desktop reescreve a data de alteração dos arquivos quando os baixa.
 
 ## Ambiente Databricks
 
@@ -48,9 +73,13 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 - O schema é compartilhado com outros projetos, inclusive tabelas de MKT e resenhas criadas por outra pessoa. Os objetos deste projeto usam o prefixo `dexp_` para não colidir.
 - SQL Warehouse: `sustentacao_bau_experiencias_sandbox_sql` (serverless, 2X-Small).
 
-## Primeiros passos
+## Preparar a máquina (uma vez)
 
 ```powershell
+winget install --id Git.Git -e --scope user --source winget
+winget install --id Databricks.DatabricksCLI -e --source winget
 databricks auth login --host https://dbc-02543f96-daa5.cloud.databricks.com --profile daily-exp
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 databricks bundle validate -t dev
 ```

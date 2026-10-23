@@ -10,8 +10,9 @@ __pycache__/
 *.env
 .databrickscfg
 
-# Estado local da CLI/Bundles do Databricks
+# Estado local da CLI/Bundles do Databricks e do envio de arquivos
 .databricks/
+.estado/
 
 # Dados: ficam no Drive/Databricks, não no Git
 data/

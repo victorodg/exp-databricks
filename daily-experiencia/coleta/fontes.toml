@@ -1,0 +1,54 @@
+# Fontes que o enviar_arquivos.py manda para o volume de entrada (dexp_landing).
+# Os IDs e as abas de cada planilha estão em docs/inventario.md.
+
+[destino]
+perfil = "daily-exp"
+volume = "/Volumes/sandbox/sustentacao_bau_experiencias/dexp_landing"
+
+[origens]
+mktzap = 'C:\Users\vyoitio\OneDrive - Sonda S.A\Documentos\logic\mktzap\downloads_brutos'
+drive = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados'
+# Pasta do Meu Drive onde o Apps Script (google_sheets/exportar_planilhas.gs) grava as cópias .xlsx
+google_sheets = 'G:\Meu Drive\dexp_google_sheets'
+
+# Brutos do Selenium: pasta da operação em downloads_brutos\<AAAAMM>\ -> nome no volume.
+# As três operações sobem, mesmo as que ainda não são processadas, para o histórico bruto ficar completo.
+[mktzap.operacoes]
+"27 - Brasil" = "brasil"
+"1531 - Hispana" = "hispana"
+"1990 - NCC" = "ncc"
+
+# Planilhas .xlsx do Drive compartilhado (caminho relativo a origens.drive).
+[drive]
+mkt_reativos = 'EXP BR\MKT\MKT_Reativos.xlsx'
+mkt_reativos_historico_ate_out25 = 'EXP BR\MKT\MKT Reativos - Historico ate Out25.xlsx'
+mkt_brasil_completo = 'EXP BR\MKT\MKT Brasil Completo.xlsx'
+tickets_brasil = 'EXP BR\MKT\Tickets Brasil.xlsx'
+servicenow_incidentes = 'EXP BR\Service Now\Servicenow - Incidentes Experiencia Brasil.xlsx'
+salesforce_cf = 'EXP BR\Salesforce\Salesforce CF.xlsx'
+salesforce_cf_criados = 'EXP BR\Salesforce\Salesforce CF Criados.xlsx'
+salesforce_cf_encerrados = 'EXP BR\Salesforce\Salesforce CF Encerrados.xlsx'
+salesforce_cf_encerrados_analistas = 'EXP BR\Salesforce\Salesforce CF Encerrados Analistas.xlsx'
+dynamics_criados_em = 'EXP BR\DYNAMICS\Report Diario\Criados em.xlsx'
+dynamics_termino_real = 'EXP BR\DYNAMICS\Report Diario\Termino Real.xlsx'
+app_natura = 'EXP BR\Resenhas\App Natura.xlsx'
+app_avon = 'EXP BR\Resenhas\App_Avon.xlsx'
+consultoria_natura = 'EXP BR\Resenhas\Consultoria Natura.xlsx'
+forca_de_vendas = 'EXP BR\Resenhas\Forca de Vendas.xlsx'
+
+# Cópias das Google Sheets: mesmos nomes usados em PLANILHAS no exportar_planilhas.gs.
+[google_sheets]
+arquivos = [
+    "base_expurgo_mkt",
+    "expurgo_dynamics",
+    "auxiliar_brasil",
+    "base_mkt",
+    "mapeamento_tribos",
+    "monitoracao_dynatrace",
+    "registros_ate_julho_dynatrace",
+    "appsheets_registros_experiencia_cb",
+    "registros_de_acionamentos",
+    "ticket_medio",
+    "healthcheck_2025",
+    "resenhas_appsheets",
+]

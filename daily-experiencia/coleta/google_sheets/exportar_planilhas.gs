@@ -4,7 +4,8 @@
  *
  * Instalação (uma vez), em https://script.google.com com a conta da Natura:
  *   1. Novo projeto -> cole este arquivo -> em Configurações do projeto, fuso horário "America/Sao_Paulo".
- *   2. Preencha PASTA_DESTINO_ID com o ID de uma pasta sua no Meu Drive (o trecho final da URL da pasta).
+ *   2. Crie a pasta "dexp_google_sheets" na raiz do Meu Drive (é onde o coleta/fontes.toml procura os arquivos)
+ *      e preencha PASTA_DESTINO_ID com o ID dela (o trecho final da URL da pasta).
  *   3. Execute exportarPlanilhas() uma vez e autorize o acesso pedido.
  *   4. Execute criarGatilhoDiario() para agendar a exportação todo dia.
  * Se alguma planilha falhar, a execução termina com erro e o Google envia um e-mail de aviso ao dono do script.
