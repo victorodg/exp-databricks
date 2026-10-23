@@ -72,6 +72,21 @@ def test_excel_detecta_cabecalho_e_ignora_aba_oculta(tmp_path):
     assert tabela.numeros_linha == [4, 6]
 
 
+def test_excel_com_erro_do_google_sheets(tmp_path):
+    arquivo = tmp_path / "planilha.xlsx"
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.append(["ID", "Valor"])
+    ws.append(["a1", 10])
+    celula = ws.cell(row=3, column=2, value="#ERROR!")
+    celula.data_type = "e"
+    ws.cell(row=3, column=1, value="a2")
+    wb.save(arquivo)
+
+    tabela = ler_excel(arquivo)
+    assert tabela.linhas == [["a1", "10"], ["a2", "#ERROR!"]]
+
+
 def test_excel_aba_inexistente(tmp_path):
     arquivo = tmp_path / "planilha.xlsx"
     openpyxl.Workbook().save(arquivo)

@@ -14,7 +14,7 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install python-calamine==0.9.0 --quiet
+# MAGIC %pip install python-calamine==0.9.0 openpyxl==3.1.5 --quiet
 
 # COMMAND ----------
 

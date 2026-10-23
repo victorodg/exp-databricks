@@ -11,7 +11,8 @@ import unicodedata
 from dataclasses import dataclass, field
 from datetime import date, datetime, time, timedelta
 
-from python_calamine import CalamineWorkbook, SheetVisibleEnum
+import openpyxl
+from python_calamine import CalamineError, CalamineWorkbook, SheetVisibleEnum
 
 LINHAS_PROCURA_CABECALHO = 20
 # A linha de cabeçalho é a primeira com pelo menos esta fração das células preenchidas da linha mais cheia
@@ -95,7 +96,14 @@ def ler_excel(caminho, aba=None, linha_cabecalho=None):
             aba = visiveis[0]
         elif aba not in wb.sheet_names:
             raise ValueError(f"{caminho}: aba {aba!r} não existe (abas: {wb.sheet_names})")
-        brutas = wb.get_sheet_by_name(aba).to_python(skip_empty_area=False)
+        try:
+            brutas = wb.get_sheet_by_name(aba).to_python(skip_empty_area=False)
+        except CalamineError:
+            brutas = None
+    if brutas is None:
+        # O calamine (rápido) recusa erros fora do padrão do Excel, como o #ERROR! do Google Sheets;
+        # o openpyxl lê a célula como o texto do erro.
+        brutas = _linhas_openpyxl(caminho, aba)
 
     linhas = [[valor_texto(v) for v in linha] for linha in brutas]
     numeros = list(range(1, len(linhas) + 1))
@@ -103,6 +111,14 @@ def ler_excel(caminho, aba=None, linha_cabecalho=None):
     if indice is None:
         return TabelaTexto([])
     return _montar(linhas, numeros, indice)
+
+
+def _linhas_openpyxl(caminho, aba):
+    wb = openpyxl.load_workbook(caminho, read_only=True, data_only=True)
+    try:
+        return [list(linha) for linha in wb[aba].iter_rows(values_only=True)]
+    finally:
+        wb.close()
 
 
 def _decodificar(conteudo):

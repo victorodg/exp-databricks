@@ -4,13 +4,12 @@
  *
  * Instalação (uma vez), em https://script.google.com com a conta da Natura:
  *   1. Novo projeto -> cole este arquivo -> em Configurações do projeto, fuso horário "America/Sao_Paulo".
- *   2. Crie a pasta "dexp_google_sheets" na raiz do Meu Drive (é onde o coleta/fontes.toml procura os arquivos)
- *      e preencha PASTA_DESTINO_ID com o ID dela (o trecho final da URL da pasta).
- *   3. Execute exportarPlanilhas() uma vez e autorize o acesso pedido.
- *   4. Execute criarGatilhoDiario() para agendar a exportação todo dia.
+ *   2. Execute exportarPlanilhas() uma vez e autorize o acesso pedido. A pasta PASTA_DESTINO é criada na raiz
+ *      do Meu Drive se ainda não existir (é onde o coleta/fontes.toml procura os arquivos).
+ *   3. Execute criarGatilhoDiario() para agendar a exportação todo dia.
  * Se alguma planilha falhar, a execução termina com erro e o Google envia um e-mail de aviso ao dono do script.
  */
-const PASTA_DESTINO_ID = 'COLE_AQUI_O_ID_DA_PASTA';
+const PASTA_DESTINO = 'dexp_google_sheets';
 // Horário do gatilho diário. O Google roda gatilhos de horário com até ~15 min de folga em torno do minuto pedido.
 const HORA_EXECUCAO = 9;
 const MINUTO_EXECUCAO = 10;
@@ -32,7 +31,7 @@ const PLANILHAS = {
 };
 
 function exportarPlanilhas() {
-  const pasta = DriveApp.getFolderById(PASTA_DESTINO_ID);
+  const pasta = pastaDestino();
   const token = ScriptApp.getOAuthToken();
   const falhas = [];
 
@@ -55,6 +54,12 @@ function exportarPlanilhas() {
   if (falhas.length) {
     throw new Error(`Falhas na exportação:\n${falhas.join('\n')}`);
   }
+}
+
+function pastaDestino() {
+  const raiz = DriveApp.getRootFolder();
+  const existentes = raiz.getFoldersByName(PASTA_DESTINO);
+  return existentes.hasNext() ? existentes.next() : raiz.createFolder(PASTA_DESTINO);
 }
 
 // Troca a versão do dia anterior pela nova; a anterior vai para a lixeira (recuperável por 30 dias).
