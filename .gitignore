@@ -1,0 +1,33 @@
+# Ambientes e caches Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Segredos e credenciais: nunca versionar
+.env
+*.env
+.databrickscfg
+
+# Estado local da CLI/Bundles do Databricks
+.databricks/
+
+# Dados: ficam no Drive/Databricks, não no Git
+data/
+downloads_brutos/
+temp/
+tmp/
+*.xlsx
+*.xls
+*.csv
+*.hyper
+
+# Perfis do Chrome usados pelo Selenium
+chrome_profile*/
+
+# Editor / SO
+.vscode/*
+!.vscode/settings.json
+Thumbs.db
+desktop.ini

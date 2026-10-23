@@ -1,0 +1,21 @@
+# Bundle do projeto Daily Experiência BR (MKT + Dynamics e Resenhas).
+# Jobs, pipelines e notebooks são declarados em resources/ e publicados com:
+#   databricks bundle deploy -t dev
+bundle:
+  name: daily-experiencia
+
+variables:
+  catalog:
+    description: Catálogo do Unity Catalog onde fica o projeto
+    default: sandbox
+  schema:
+    description: Schema que guarda o volume de entrada e as tabelas do projeto
+    default: sustentacao_bau_experiencias
+
+targets:
+  # Ambiente de desenvolvimento/paralelo: roda ao lado do fluxo Tableau Prep atual, sem tocá-lo.
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-02543f96-daa5.cloud.databricks.com
