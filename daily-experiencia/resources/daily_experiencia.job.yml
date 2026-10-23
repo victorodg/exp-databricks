@@ -1,0 +1,16 @@
+resources:
+  jobs:
+    dexp_daily_experiencia:
+      name: dexp_daily_experiencia
+      description: Daily Experiência BR (MKT + Dynamics e Resenhas). Lê o volume dexp_landing e gera as camadas bronze, silver e gold.
+      max_concurrent_runs: 1
+      queue:
+        enabled: true
+      tasks:
+        - task_key: bronze
+          existing_cluster_id: ${var.cluster_id}
+          notebook_task:
+            notebook_path: ../src/bronze/carregar_bronze.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}

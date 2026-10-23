@@ -4,6 +4,15 @@
 bundle:
   name: daily-experiencia
 
+include:
+  - resources/*.yml
+
+# Só o que roda no Databricks vai para o workspace; coleta/ e tests/ rodam na máquina local.
+sync:
+  exclude:
+    - coleta/**
+    - tests/**
+
 variables:
   catalog:
     description: Catálogo do Unity Catalog onde fica o projeto
@@ -11,6 +20,11 @@ variables:
   schema:
     description: Schema que guarda o volume de entrada e as tabelas do projeto
     default: sustentacao_bau_experiencias
+  cluster_id:
+    # O usuário não tem permissão para jobs serverless; os jobs rodam no cluster all-purpose do time.
+    description: Cluster em que os jobs rodam
+    lookup:
+      cluster: sustentacao_bau_experiencias_sandbox_python
 
 targets:
   # Ambiente de desenvolvimento/paralelo: roda ao lado do fluxo Tableau Prep atual, sem tocá-lo.
