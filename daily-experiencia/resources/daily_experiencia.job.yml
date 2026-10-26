@@ -14,3 +14,22 @@ resources:
             base_parameters:
               catalog: ${var.catalog}
               schema: ${var.schema}
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          existing_cluster_id: ${var.cluster_id}
+          notebook_task:
+            notebook_path: ../src/silver/carregar_silver.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+        # Vem antes da gold do MKT: a saída dexp_gold_dynamics_nivel é entrada do fluxo MKT.
+        - task_key: gold_dynamics_e_resenhas
+          depends_on:
+            - task_key: silver
+          existing_cluster_id: ${var.cluster_id}
+          notebook_task:
+            notebook_path: ../src/gold/dynamics_e_resenhas.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
