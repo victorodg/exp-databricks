@@ -36,3 +36,6 @@ desktop.ini
 # Extracts do Tableau baixados para validação (dados reais)
 *.tdsx
 validacao/
+
+# Log gerado pela API do Hyper ao ler extracts
+hyperd*.log
