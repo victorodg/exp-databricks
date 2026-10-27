@@ -529,9 +529,9 @@ sem_resposta = (F.when(baixa, dentro_ou_fora(dias_desde_avaliacao > tolerancia_b
 usuario_replicou = (F.when(baixa, dentro_ou_fora(dias_desde_atualizacao > 1))
                      .when(alta, dentro_ou_fora(dias_desde_atualizacao > 5))
                      .otherwise("Dentro do SLA"))
-# No Tableau, data + número soma DIAS: o "+ 86399" da fórmula original soma 86.399 dias (e não segundos),
-# então esta comparação nunca dá "Fora do SLA". Mantido igual para os números baterem com o extract atual.
-limite_resposta_baixa = tb.somar_dias(F.date_trunc("day", tb.somar_dias(avaliacao, tolerancia_baixa)), 86399)
+# Prazo até 23:59:59 do dia limite. A fórmula do Prep usa "+ 86399", e no Tableau data + número soma DIAS
+# (86.399 dias), então lá esse ramo nunca dá "Fora do SLA". Corrigido para segundos, a pedido (27/10/2026).
+limite_resposta_baixa = (F.date_trunc("day", tb.somar_dias(avaliacao, tolerancia_baixa)).cast("long") + 86399).cast("timestamp")
 ultima_foi_exp = (F.when(baixa, dentro_ou_fora(resposta_exp > limite_resposta_baixa))
                    .when(alta, dentro_ou_fora(F.to_date(resposta_exp) > F.date_add(F.to_date(avaliacao), 5)))
                    .otherwise("Dentro do SLA"))
