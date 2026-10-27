@@ -20,7 +20,7 @@ coluna a coluna) e `ferramentas/consultar_extract.py` (mesma consulta nos dois l
 - **Tipo Protocolo (165 tarefas):** Salesforce, tipo "Atendimento Franquias", visão "Criado em", set–out/2026. O extract
   traz "Protocolos CB"; a fórmula do `.tfl` local dá "Franquias" (e é o que o próprio extract traz na visão "Encerrado em").
   A fórmula é idêntica nas etapas [63] e [72] do arquivo local, então o fluxo publicado no Tableau Cloud deve ser
-  outra versão. Mantida a regra do arquivo local até confirmar.
+  outra versão. **Decisão (27/10/2026): o correto é "Franquias"**, como na gold; a produção está errada nessas linhas.
 - **Grafias que só mudam maiúsculas** ("Pós-compra" × "Pós-Compra"): o extract do Tableau guarda uma grafia só para
   textos iguais sem diferenciar maiúsculas. Vai acontecer igual quando o Tableau ler do Databricks.
 - **Textos livres** (descrições, comentários, anotações): pequenas diferenças na contagem de distintos e no mínimo/máximo,
