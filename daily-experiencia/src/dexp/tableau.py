@@ -111,9 +111,10 @@ def fazer_data_hora(dia, h, m=0, s=0) -> Column:
 
 
 def somar_dias(c, dias) -> Column:
-    """DATEADD('day', dias, c) mantendo o horário (dias pode ser coluna)."""
+    """DATEADD('day', dias, c) mantendo o horário (dias pode ser coluna). A conta é em 64 bits: com inteiro de
+    32 bits, somas grandes como os 86.399 dias da fórmula de Resenhas Brasil estouram e viram datas no passado."""
     dias = dias if isinstance(dias, Column) else F.lit(dias)
-    return (c.cast("long") + dias * SEGUNDOS_DIA).cast("timestamp")
+    return (c.cast("long") + dias.cast("long") * SEGUNDOS_DIA).cast("timestamp")
 
 
 def diff_dias(inicio, fim) -> Column:

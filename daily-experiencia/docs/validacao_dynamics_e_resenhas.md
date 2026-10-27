@@ -1,0 +1,40 @@
+# Validação – Dynamics e Resenhas
+
+Comparação das 6 tabelas gold com os extracts publicados no Tableau Cloud (atualizados em 27/10/2026 às 09:15 de
+Brasília), usando as planilhas capturadas no mesmo dia. Ferramentas: `ferramentas/comparar_extract.py` (perfil
+coluna a coluna) e `ferramentas/consultar_extract.py` (mesma consulta nos dois lados).
+
+## Resultado
+
+| Gold | Extract | Linhas (extract = gold) | Campos calculados |
+|---|---|---|---|
+| `dexp_gold_dynamics_tarefas` | Dynamics - Termino Real | 131.309 | iguais, exceto Tipo Protocolo em 165 linhas (abaixo) |
+| `dexp_gold_dynamics_nivel` | Dynamics Nivel | 55.060 | iguais |
+| `dexp_gold_dynamics_rechamada` | Dynamics - Base para Rechamada | 16.431 | iguais |
+| `dexp_gold_servicenow_chamados` | EXPBR - Chamados Servicenow | 31.044 | iguais |
+| `dexp_gold_resenhas_appsheets` | Resenhas EXP BR AppSheets | 9.229 | iguais |
+| `dexp_gold_resenhas_brasil` | Resenhas Brasil | 569.995 | iguais |
+
+## Diferenças que sobraram
+
+- **Tipo Protocolo (165 tarefas):** Salesforce, tipo "Atendimento Franquias", visão "Criado em", set–out/2026. O extract
+  traz "Protocolos CB"; a fórmula do `.tfl` local dá "Franquias" (e é o que o próprio extract traz na visão "Encerrado em").
+  A fórmula é idêntica nas etapas [63] e [72] do arquivo local, então o fluxo publicado no Tableau Cloud deve ser
+  outra versão. Mantida a regra do arquivo local até confirmar.
+- **Grafias que só mudam maiúsculas** ("Pós-compra" × "Pós-Compra"): o extract do Tableau guarda uma grafia só para
+  textos iguais sem diferenciar maiúsculas. Vai acontecer igual quando o Tableau ler do Databricks.
+- **Textos livres** (descrições, comentários, anotações): pequenas diferenças na contagem de distintos e no mínimo/máximo,
+  por causa da ordenação da collation do Tableau. Não afetam nenhuma métrica.
+- **Colunas sem cabeçalho** (F7, F31 a F34 do ServiceNow): não foram levadas para a gold.
+
+## Comportamentos do Prep reproduzidos
+
+- Texto comparado sem diferenciar maiúsculas (collation LPT_RBR_S2), e espaços do fim dos textos removidos na leitura.
+- Filtros de data "a partir de" / "até" / "intervalo" com os limites exatos gravados no fluxo.
+- `data + número` soma **dias**: o "+ 86399" do Status SLA de Resenhas Brasil soma 86.399 dias, então o ramo
+  "última interação do EXP, 1 a 3 estrelas" sempre dá "Dentro do SLA" (39.851 avaliações hoje).
+- Rechamada: no join [84] o sufixo "-1" vai para o lado da própria ocorrência, e a flag testa essa coluna. Por isso
+  toda ocorrência com código e tribo sai como "Rechamada" (12.391 de 16.431). As rechamadas de fato, que casam com o
+  mês anterior, são as linhas com `id_rechamada` preenchido (107 hoje).
+
+Os dois últimos itens parecem erros do fluxo original e foram mantidos para os números baterem; corrigir é decisão do negócio.

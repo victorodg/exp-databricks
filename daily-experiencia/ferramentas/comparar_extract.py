@@ -52,7 +52,7 @@ APELIDOS = {
     "grupo_de_atribuicao_no_service_now": "grupo_de_atribuicao_tribos",
     "nomenclatura_para_criar_aba_no_service_now": "nomenclatura_aba",
     "nomenclatura_para_criar_aba_no_service_now_1": "nomenclatura_aba_2",
-    "perc_de_tempo_de_neg_decorrido": "perc_tempo_de_negocio_decorrido",
+    "de_tempo_de_neg_decorrido": "perc_tempo_de_negocio_decorrido",
     "anotacoes_de_resolucao": "anotacoes_de_resolucao",
     "ultima_reabertura_em": "ultima_reabertura_em",
     "id_rechamada_1": "id_rechamada_1",
@@ -95,15 +95,20 @@ def texto(v):
         f = float(s)
         return str(int(f)) if f.is_integer() else f"{f:.6f}".rstrip("0")
     except ValueError:
-        return s[:19] if len(s) >= 19 and s[4] == "-" and s[10] in " T" else s
+        return s[:19] if len(s) >= 19 and s[4] == "-" and s[10] in " Tt" else s
 
 
-def perfil_sql(colunas, tabela, citar):
+def perfil_sql(colunas, tabela, citar, textos=()):
+    """No extract, textos são comparados sem diferenciar maiúsculas (collation do Tableau); na gold, usa lower()."""
+    hyper = citar is citar_hyper
     partes = ["count(*)"]
     for c in colunas:
         q = citar(c)
-        partes += [f"count({q})", f"count(DISTINCT {q})", f"min(CAST({q} AS {'TEXT' if citar is citar_hyper else 'STRING'}))",
-                   f"max(CAST({q} AS {'TEXT' if citar is citar_hyper else 'STRING'}))"]
+        if c in textos and not hyper:
+            v = f"lower({q})"
+        else:
+            v = f"CAST({q} AS {'TEXT' if hyper else 'STRING'})"
+        partes += [f"count({q})", f"count(DISTINCT {v})", f"min({v})", f"max({v})"]
     return f"SELECT {', '.join(partes)} FROM {tabela}"
 
 
@@ -136,8 +141,10 @@ def main():
             so_extract = [o for o, n in zip(colunas_ext, normalizadas) if APELIDOS.get(n, n) not in colunas_gold]
             so_gold = [g for g in colunas_gold if g not in {a for _, a in pares}]
 
+            definicao = {str(c.name.unescaped): str(c.type).lower() for c in con.catalog.get_table_definition(tabela_ext).columns}
+            textos_gold = {a for o, a in pares if definicao[o] == "text"}
             ext = con.execute_list_query(perfil_sql([o for o, _ in pares], tabela_ext, citar_hyper))[0]
-            gold = sql_databricks(w, perfil_sql([a for _, a in pares], f"{ESQUEMA}.{tabela_gold}", citar_spark))[0]
+            gold = sql_databricks(w, perfil_sql([a for _, a in pares], f"{ESQUEMA}.{tabela_gold}", citar_spark, textos_gold))[0]
 
             print(f"# {origem.name}  x  {tabela_gold}\n")
             print(f"Linhas: extract {int(ext[0]):,} | gold {int(gold[0]):,} | diferença {int(gold[0]) - int(ext[0]):+,}\n")
@@ -147,10 +154,14 @@ def main():
             for i, (original, alvo) in enumerate(pares):
                 e = ext[1 + 4 * i: 5 + 4 * i]
                 g = gold[1 + 4 * i: 5 + 4 * i]
-                iguais = [str(int(e[0])) == str(g[0]), str(int(e[1])) == str(g[1]), texto(e[2]) == texto(g[2]), texto(e[3]) == texto(g[3])]
+                eh_texto = alvo in textos_gold
+                comparar = (lambda v: (texto(v) or "").lower()) if eh_texto else texto
+                iguais = [str(int(e[0])) == str(g[0]), str(int(e[1])) == str(g[1]),
+                          comparar(e[2]) == comparar(g[2]), comparar(e[3]) == comparar(g[3])]
                 marca = "" if all(iguais) else " ⚠️"
+                curto = lambda v: (texto(v) or "")[:60].replace("\n", " ").replace("|", "/")
                 print(f"| {original}{marca} | {int(e[0]):,} / {int(g[0]):,} | {int(e[1]):,} / {int(g[1]):,} | "
-                      f"{texto(e[2])} / {texto(g[2])} | {texto(e[3])} / {texto(g[3])} |")
+                      f"{curto(e[2])} / {curto(g[2])} | {curto(e[3])} / {curto(g[3])} |")
                 if 0 < int(e[1]) <= MAX_CATEGORIAS:
                     categorias.append((original, alvo))
             print(f"\nSó no extract: {so_extract}\nSó na gold: {so_gold}\n")

@@ -392,15 +392,22 @@ por_ocorrencia = (
     .withColumn("id_rechamada", F.concat("codigo_natura", F.lit("-"), "experience_tribos"))
     .withColumn("mes_seguinte", F.add_months("mes_ano", 1).cast("timestamp"))
 )
+# No join [84] o Prep põe o sufixo "-1" nas colunas do lado DIREITO (todas as ocorrências), não no do mês anterior:
+# "ID Rechamada" é o do mês anterior (só preenchido quando casa) e "ID Rechamada-1" é o da própria ocorrência.
+# Como a flag testa "ID Rechamada-1", hoje toda ocorrência com código e tribo vira "Rechamada" (12 mil de 16 mil).
+# Mantido igual à produção; a rechamada de fato (casou com o mês anterior) é id_rechamada não nulo.
 mes_anterior = (
     por_ocorrencia.groupBy("id_rechamada", "mes_ano").agg(F.max("mes_seguinte").alias("mes_seguinte"))
-    .select(F.col("id_rechamada").alias("id_rechamada_1"), F.col("mes_ano").alias("mes_ano_a"),
-            F.col("mes_seguinte").alias("mes_seguinte_1"))
+    .withColumnRenamed("mes_ano", "mes_ano_a")
 )
+atual = por_ocorrencia.select(
+    "numero_da_ocorrencia_limpo", "experience_tribos", "codigo_natura", "fase", "solucao", "tipo_protocolo",
+    "termino_real", "mes_ano", "mes", F.col("id_rechamada").alias("id_rechamada_1"),
+    F.col("mes_seguinte").alias("mes_seguinte_1"))
 rechamada = (
-    por_ocorrencia
-    .join(mes_anterior, (tb.chave_join(por_ocorrencia["id_rechamada"]) == tb.chave_join(mes_anterior["id_rechamada_1"]))
-          & (por_ocorrencia["mes_ano"] == mes_anterior["mes_seguinte_1"]), "left")
+    atual
+    .join(mes_anterior, (tb.chave_join(mes_anterior["id_rechamada"]) == tb.chave_join(atual["id_rechamada_1"]))
+          & (mes_anterior["mes_seguinte"] == atual["mes_ano"]), "left")
     .withColumn("flag_de_rechamada", F.when(F.col("id_rechamada_1").isNotNull(), 1).otherwise(0))
     .withColumn("tarefa_status", F.when(F.col("id_rechamada_1").isNotNull(), "Rechamada").otherwise("Comum"))
     .drop("mes_seguinte_1", "mes_ano_a")

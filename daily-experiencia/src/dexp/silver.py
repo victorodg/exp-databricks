@@ -8,7 +8,8 @@ from pyspark.sql import functions as F
 from dexp import tableau as tb
 
 CONVERSORES = {
-    "texto": lambda nome: F.col(f"`{nome}`"),
+    # O Prep tira os espaços do fim dos textos ao ler as planilhas ('Pay ' vira 'Pay'); os do começo ficam.
+    "texto": lambda nome: F.rtrim(F.col(f"`{nome}`")),
     "data_hora": lambda nome: tb.data_hora(F.col(f"`{nome}`")),
     "data": lambda nome: tb.data(F.col(f"`{nome}`")),
     "inteiro": tb.inteiro,
