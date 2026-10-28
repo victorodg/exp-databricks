@@ -31,16 +31,15 @@ coluna a coluna) e `ferramentas/consultar_extract.py` (mesma consulta nos dois l
 
 - Texto comparado sem diferenciar maiúsculas (collation LPT_RBR_S2), e espaços do fim dos textos removidos na leitura.
 - Filtros de data "a partir de" / "até" / "intervalo" com os limites exatos gravados no fluxo.
-- Rechamada: no join [84] o sufixo "-1" vai para o lado da própria ocorrência, e a flag testa essa coluna. Por isso
-  toda ocorrência com código e tribo sai como "Rechamada" (12.391 de 16.431). Mantido igual à produção.
-  O painel "% Rechamada 6 meses" **não** é afetado: o numerador do workbook é
-  `{ FIXED [Mes/Ano] : COUNTD(IF [Flag de Rechamada] = 1 THEN [ID Rechamada] END) }`, e `[ID Rechamada]` só é
-  preenchido quando a ocorrência casa com o mês anterior. A gold reproduz o painel (mai–out/2026: 1,44%, 0,85%,
-  0,42%, 0,83%, 0,90%, 0,26%). Só a planilha "Tabela de Tarefas Rechamada", que mostra a coluna Flag, exibe 1 em
-  quase todas as tarefas. Em validação com a equipe.
-
 ## Correções em relação à produção
 
+- **Flag de Rechamada e Tarefa Status (28/10/2026):** no join [84] do Prep o sufixo "-1" vai para o lado da própria
+  ocorrência, e a flag testava essa coluna: toda ocorrência com código e tribo saía como "Rechamada" (12.391 de 16.431).
+  Agora a flag testa `id_rechamada`, que só é preenchido quando a ocorrência casa com o mês anterior (107).
+  O painel "% Rechamada 6 meses" não muda: o numerador do workbook já é
+  `{ FIXED [Mes/Ano] : COUNTD(IF [Flag de Rechamada] = 1 THEN [ID Rechamada] END) }` (mai–out/2026: 1,44%, 0,85%,
+  0,42%, 0,83%, 0,90%, 0,26%). Muda só a coluna Flag da planilha "Tabela de Tarefas Rechamada", que passa a mostrar 1
+  apenas nas rechamadas de fato.
 - **Status SLA de Resenhas Brasil (27/10/2026):** o "+ 86399" da fórmula soma 86.399 dias no Tableau, e o ramo
   "última interação do EXP, 1 a 3 estrelas" sempre dava "Dentro do SLA". Corrigido para 86.399 segundos (prazo até
   23:59:59 do dia limite). Efeito com os dados de 27/10: 17.775 das 39.851 avaliações desse ramo passam a "Fora do SLA";

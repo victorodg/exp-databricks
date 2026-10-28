@@ -394,8 +394,8 @@ por_ocorrencia = (
 )
 # No join [84] o Prep põe o sufixo "-1" nas colunas do lado DIREITO (todas as ocorrências), não no do mês anterior:
 # "ID Rechamada" é o do mês anterior (só preenchido quando casa) e "ID Rechamada-1" é o da própria ocorrência.
-# Como a flag testa "ID Rechamada-1", hoje toda ocorrência com código e tribo vira "Rechamada" (12 mil de 16 mil).
-# Mantido igual à produção; a rechamada de fato (casou com o mês anterior) é id_rechamada não nulo.
+# No Prep a flag testa "ID Rechamada-1" e marca quase toda ocorrência; aqui ela testa "ID Rechamada" (casou com o
+# mês anterior), corrigido a pedido em 28/10/2026. O % Rechamada do painel não muda: ele já conta "ID Rechamada".
 mes_anterior = (
     por_ocorrencia.groupBy("id_rechamada", "mes_ano").agg(F.max("mes_seguinte").alias("mes_seguinte"))
     .withColumnRenamed("mes_ano", "mes_ano_a")
@@ -408,8 +408,8 @@ rechamada = (
     atual
     .join(mes_anterior, (tb.chave_join(mes_anterior["id_rechamada"]) == tb.chave_join(atual["id_rechamada_1"]))
           & (mes_anterior["mes_seguinte"] == atual["mes_ano"]), "left")
-    .withColumn("flag_de_rechamada", F.when(F.col("id_rechamada_1").isNotNull(), 1).otherwise(0))
-    .withColumn("tarefa_status", F.when(F.col("id_rechamada_1").isNotNull(), "Rechamada").otherwise("Comum"))
+    .withColumn("flag_de_rechamada", F.when(F.col("id_rechamada").isNotNull(), 1).otherwise(0))
+    .withColumn("tarefa_status", F.when(F.col("id_rechamada").isNotNull(), "Rechamada").otherwise("Comum"))
     .drop("mes_seguinte_1", "mes_ano_a")
     .withColumnRenamed("numero_da_ocorrencia_limpo", "numero_da_ocorrencia")
 )
