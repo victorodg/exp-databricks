@@ -294,6 +294,8 @@ gravar(email_cb.withColumn("nivel_considerar", F.when(igual("nivel", "NEUTRO"), 
        "email_experiencia_cb", "Gold Daily Experiência BR: e-mail Experiência CB (extract MKT Email Experiencia CB)")
 
 # [107] [117] [127]
+# O Prep cria "Setor" (calculado) ao lado do "SETOR" do MKT_Reativos; são colunas diferentes nas saídas, então o
+# original fica como setor_reativos.
 setor_fim = F.col("setor_fim")
 data_ajustada = F.col("data_contato_ajustada")
 prazo_aberto = (F.when(tb.dia_semana(data_ajustada) == 6, tb.somar_dias(data_ajustada, 3))
@@ -303,6 +305,7 @@ emails_lojas = (
     email.where(manter("setor_fim", "APP AVON CF", "APP NATURA", "NATURA EXPCB", "NATURA EXPCN"))
     .withColumn("sla_tempo_medio_operacional", F.when(tempo_operacao.isNull(), "Sem informação")
                                                 .when(tempo_operacao <= 86400, DENTRO).otherwise(FORA))
+    .withColumnRenamed("setor", "setor_reativos")
     .withColumn("setor", F.when(igual(setor_fim, "APP AVON CF"), "APP AVON CF").when(igual(setor_fim, "APP NATURA"), "APP NATURA")
                           .when(igual(setor_fim, "NATURA EXPCN", "NATURA EXPCB"), "NATURA EXPCB"))
     .where(excluir("status_de_finalizacao", "Card Em Branco"))
@@ -320,6 +323,7 @@ COLUNAS_ATENDIMENTO = ["responsavel", "tempo_ate_ser_atendido", "tempo_do_atendi
 email_cb_reduzido = (
     remover(email_cb, "tempo_medio_segundos", "tempo_operacao_em_segundos", *COLUNAS_PESSOAIS, "testelis",
             "ciclo_health_check", "recebidos_health_check", "e_mail", *COLUNAS_ATENDIMENTO)
+    .withColumnRenamed("setor", "setor_reativos")
     .withColumn("setor", F.when(F.col("protocolo").isNull(), NULO_TEXTO).otherwise("Experiência CB"))
     .drop("chamado", "fornecedor")
 )
@@ -345,7 +349,8 @@ REMOVER_WHATSAPP = ["tempo_medio_segundos", "primeiro_tempo_de_espera_segundos",
 
 
 def reduzido(df, setor):
-    return remover(df, *REMOVER_WHATSAPP).withColumn("setor", F.when(F.col("protocolo").isNull(), NULO_TEXTO).otherwise(setor))
+    return (remover(df, *REMOVER_WHATSAPP).withColumnRenamed("setor", "setor_reativos")
+            .withColumn("setor", F.when(F.col("protocolo").isNull(), NULO_TEXTO).otherwise(setor)))
 
 
 whats_gv_reduzido = reduzido(whats_gv, "WHATS GV")

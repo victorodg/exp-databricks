@@ -64,10 +64,21 @@ APELIDOS = {
 # snake_case; estas têm nome próprio na gold.
 NOMES_EM_COLISAO = {
     "Mercado": "mercado_re",
+    "SETOR": "setor_reativos",
     "PEDIDO FINALIZADO": "pedido_finalizado_ticket",
     "Hora Fim do Atendimento": "hora_fim_do_atendimento_ate_julho",
     "Erro Perceptível ao Usuário?": "erro_perceptivel_ao_usuario_ate_julho",
 }
+
+
+def casar_colunas(colunas_ext, colunas_gold):
+    """Para cada coluna do extract, a coluna da gold correspondente (ou None se não houver)."""
+    # nome normalizado sem o sufixo de desempate (_2) que normalizar_colunas põe nas repetidas
+    normalizadas = [normalizar_colunas([c])[0] for c in colunas_ext]
+    repetidas = {n for n in normalizadas if normalizadas.count(n) > 1}
+    alvos = [NOMES_EM_COLISAO.get(o, APELIDOS.get(n, n)) if n in repetidas else APELIDOS.get(n, n)
+             for o, n in zip(colunas_ext, normalizadas)]
+    return [a if a in colunas_gold else None for a in alvos]
 
 
 def cliente():
@@ -142,13 +153,9 @@ def main():
             tabela_ext = max(tabelas, key=lambda t: con.execute_scalar_query(f"SELECT count(*) FROM {t}"))
             colunas_ext = [str(c.name.unescaped) for c in con.catalog.get_table_definition(tabela_ext).columns]
 
-            # nome normalizado sem o sufixo de desempate (_2) que normalizar_colunas põe nas repetidas
-            normalizadas = [normalizar_colunas([c])[0] for c in colunas_ext]
-            repetidas = {n for n in normalizadas if normalizadas.count(n) > 1}
-            alvos = [NOMES_EM_COLISAO.get(o, APELIDOS.get(n, n)) if n in repetidas else APELIDOS.get(n, n)
-                     for o, n in zip(colunas_ext, normalizadas)]
-            pares = [(o, a) for o, a in zip(colunas_ext, alvos) if a in colunas_gold]
-            so_extract = [o for o, a in zip(colunas_ext, alvos) if a not in colunas_gold]
+            alvos = casar_colunas(colunas_ext, colunas_gold)
+            pares = [(o, a) for o, a in zip(colunas_ext, alvos) if a]
+            so_extract = [o for o, a in zip(colunas_ext, alvos) if not a]
             so_gold = [g for g in colunas_gold if g not in {a for _, a in pares}]
 
             definicao = {str(c.name.unescaped): str(c.type).lower() for c in con.catalog.get_table_definition(tabela_ext).columns}

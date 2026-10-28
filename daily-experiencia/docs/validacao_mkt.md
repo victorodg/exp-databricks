@@ -43,6 +43,9 @@ SLA do primeiro contato, tempos, função do sistema, tribo, expurgo, responsáv
 - **Grafias que só mudam maiúsculas** ("SIM"/"Sim", "ARAUCÁRIA"/"Araucária"): o extract guarda uma grafia só para textos
   iguais sem diferenciar maiúsculas. Vai acontecer igual quando o Tableau ler do Databricks.
 - **"Table Names"**, **F31 a F34** (ServiceNow): colunas técnicas do Prep e colunas sem cabeçalho, não levadas para a gold.
+- **`SETOR` e `Setor`** (MKT BRASIL - Email, MKT BRASIL - WhatsApp, MKT Emails de Lojas): no Prep são colunas
+  diferentes, o setor que vem do MKT_Reativos e o setor calculado. A primeira versão da gold guardava só o calculado; desde
+  28/10/2026 o original fica em `setor_reativos`.
 
 ## Comportamentos do Prep reproduzidos
 

@@ -49,7 +49,8 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 | `src/dexp/leitura.py` | Leitura dos CSV do MKTZap e dos .xlsx como texto |
 | `src/dexp/tableau.py`, `src/dexp/prep.py`, `src/dexp/nomes.py` | Equivalentes das funções do Tableau e das operações do Prep (join com os mesmos sufixos -1/-2) |
 | `src/dexp/regras_mkt.py` | Listas grandes do fluxo MKT, extraídas do `.tfl` por `ferramentas/extrair_regras_mkt.py` |
-| `ferramentas/` | Gerador de especificação, comparação com extracts, carga do histórico do Backlog |
+| `src/views/views_tableau.sql` | Views `dexp_vw_*` com os nomes de campo do Tableau (geradas por `ferramentas/gerar_views_tableau.py`) |
+| `ferramentas/` | Gerador de especificação, comparação com extracts, geração das views, carga do histórico do Backlog |
 | `tests/` | Testes locais (ver abaixo) |
 | `coleta/fontes.toml` | Origem de cada arquivo enviado ao volume de entrada |
 | `coleta/enviar_arquivos.py` | Envia brutos do MKTZap, .xlsx do Drive e cópias das Google Sheets para o volume |
@@ -138,6 +139,20 @@ databricks bundle validate -t dev
 .venv\Scripts\uv.exe python install 3.12
 & "$env:APPDATA\uv\python\cpython-3.12.16-windows-x86_64-none\python.exe" -m venv .venv-spark
 .venv-spark\Scripts\python.exe -m pip install -r requirements.txt "pyspark==3.5.*"
+```
+
+## Views para o Tableau
+
+Para cada tabela gold há uma view `dexp_vw_<saída>` com exatamente os nomes, a ordem e os tipos de campo do extract que
+ela substitui. Assim o workbook troca a fonte publicada pelo Databricks sem quebrar os campos calculados. Colunas técnicas
+do Prep que a gold não tem ("Table Names", F31 a F34) entram como NULL. O Databricks não aceita dois nomes que só
+diferem em maiúsculas ("SETOR" e "Setor"), então o segundo ganha " (2)" e o workbook mapeia o campo de volta.
+
+As views leem a gold na hora, sem cópia de dados nem passo no job. Se a gold ganhar ou mudar colunas, gere de novo
+(precisa dos extracts em `validacao\extracts\`):
+
+```powershell
+.venv\Scripts\python.exe ferramentas\gerar_views_tableau.py --aplicar
 ```
 
 ## Validação contra o Tableau
