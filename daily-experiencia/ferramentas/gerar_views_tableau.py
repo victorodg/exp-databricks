@@ -72,8 +72,42 @@ def colunas_extract(hyper, caminho, pasta):
         return [(str(c.name.unescaped), tipo_databricks(c.type)) for c in con.catalog.get_table_definition(tabela).columns]
 
 
+# views que juntam várias saídas com os campos de um mesmo extract, para um painel único com parâmetro.
+# view -> (extract cujos campos a view usa, {valor da coluna Painel: tabela gold})
+UNIOES = {
+    "dexp_vw_mkt_whats_detalhes": ("MKT Whats GN", {
+        "GN": "dexp_gold_mkt_whats_gn",
+        "GV": "dexp_gold_mkt_whats_gv",
+        "GV Antecipada": "dexp_gold_mkt_whats_gv_antecipada",
+        "Franquia": "dexp_gold_mkt_whats_franquia",
+        "CBCOM": "dexp_gold_mkt_cbcom",
+    }),
+}
+
+
+def definicao_uniao(view, extract, partes, colunas, tipos_por_gold):
+    blocos, avisos = [], []
+    for painel, gold in partes.items():
+        _, linhas, av = selecao(colunas, tipos_por_gold[gold])
+        avisos += [f"{painel}: {a}" for a in av if "não existe" in a]
+        blocos.append("SELECT\n" + ",\n".join(linhas) + f",\n  '{painel}' AS `Painel`\nFROM {ESQUEMA}.{gold}")
+    sql = (f"-- {', '.join(partes)} com os campos do extract \"{extract}\"\nCREATE OR REPLACE VIEW {ESQUEMA}.{view}\n"
+           f"COMMENT 'Daily Experiência BR: WhatsApp {', '.join(partes)} juntos, para o painel único (coluna Painel)'\nAS\n"
+           + "\nUNION ALL\n".join(blocos))
+    return sql, avisos
+
+
 def definicao_view(extract, gold, colunas, tipos_gold):
     view = "dexp_vw_" + gold.removeprefix("dexp_gold_")
+    _, linhas, avisos = selecao(colunas, tipos_gold)
+    sql = (f"-- {extract}\nCREATE OR REPLACE VIEW {ESQUEMA}.{view}\n"
+           f"COMMENT 'Daily Experiência BR: {gold} com os nomes de campo do extract \"{extract}\" (para o Tableau)'\nAS SELECT\n"
+           + ",\n".join(linhas) + f"\nFROM {ESQUEMA}.{gold}")
+    return view, sql, avisos
+
+
+def selecao(colunas, tipos_gold):
+    """Colunas do extract lidas da gold: (nomes na view, expressões do SELECT, avisos)."""
     alvos = casar_colunas([n for n, _ in colunas], list(tipos_gold))
     usados, linhas, avisos = set(), [], []
     for (nome, tipo), alvo in zip(colunas, alvos):
@@ -90,10 +124,7 @@ def definicao_view(extract, gold, colunas, tipos_gold):
         else:
             expressao = f"`{alvo}`"
         linhas.append(f"  {expressao} AS `{apelido.replace('`', '``')}`")
-    sql = (f"-- {extract}\nCREATE OR REPLACE VIEW {ESQUEMA}.{view}\n"
-           f"COMMENT 'Daily Experiência BR: {gold} com os nomes de campo do extract \"{extract}\" (para o Tableau)'\nAS SELECT\n"
-           + ",\n".join(linhas) + f"\nFROM {ESQUEMA}.{gold}")
-    return view, sql, avisos
+    return usados, linhas, avisos
 
 
 def main():
@@ -101,14 +132,26 @@ def main():
     aplicar = "--aplicar" in sys.argv
     w = cliente()
     blocos = []
+    tipos = {}
+
+    def tipos_gold(gold):
+        if gold not in tipos:
+            tipos[gold] = {r[0]: r[1].lower() for r in sql_databricks(w, f"DESCRIBE TABLE {ESQUEMA}.{gold}")
+                           if r[0] and not r[0].startswith("#")}
+        return tipos[gold]
+
     with tempfile.TemporaryDirectory() as pasta, HyperProcess(Telemetry.DO_NOT_SEND_USAGE_DATA_TO_TABLEAU) as hyper:
+        definicoes = []
         for extract, gold in SAIDAS.items():
             colunas = colunas_extract(hyper, EXTRACTS / f"{extract}.tdsx", pasta)
-            tipos_gold = {r[0]: r[1].lower() for r in sql_databricks(w, f"DESCRIBE TABLE {ESQUEMA}.{gold}")
-                          if r[0] and not r[0].startswith("#")}
-            view, sql, avisos = definicao_view(extract, gold, colunas, tipos_gold)
+            definicoes.append(definicao_view(extract, gold, colunas, tipos_gold(gold)))
+        for view, (extract, partes) in UNIOES.items():
+            colunas = colunas_extract(hyper, EXTRACTS / f"{extract}.tdsx", pasta)
+            definicoes.append((view, *definicao_uniao(view, extract, partes, colunas,
+                                                      {g: tipos_gold(g) for g in partes.values()})))
+        for view, sql, avisos in definicoes:
             blocos.append(sql)
-            print(f"{view}: {len(colunas)} colunas")
+            print(f"{view}: {sql.count(' AS `')} colunas")
             for a in avisos:
                 print(f"  - {a}")
             if aplicar:
