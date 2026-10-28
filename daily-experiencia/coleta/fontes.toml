@@ -13,8 +13,8 @@ warehouse = "dcb43c45e3a55fe4"
 [origens]
 mktzap = 'C:\Users\vyoitio\OneDrive - Sonda S.A\Documentos\logic\mktzap\downloads_brutos'
 drive = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados'
-# Pasta do Meu Drive onde o Apps Script (google_sheets/exportar_planilhas.gs) grava as cópias .xlsx
-google_sheets = 'G:\Meu Drive\dexp_google_sheets'
+# Pasta onde o Apps Script (google_sheets/exportar_planilhas.gs) grava as cópias .xlsx
+google_sheets = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados\auto\google_sheets'
 
 # Brutos do Selenium: pasta da operação em downloads_brutos\<AAAAMM>\ -> nome no volume.
 # As três operações sobem, mesmo as que ainda não são processadas, para o histórico bruto ficar completo.

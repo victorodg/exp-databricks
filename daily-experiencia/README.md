@@ -53,13 +53,13 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 | `tests/` | Testes locais (ver abaixo) |
 | `coleta/fontes.toml` | Origem de cada arquivo enviado ao volume de entrada |
 | `coleta/enviar_arquivos.py` | Envia brutos do MKTZap, .xlsx do Drive e cópias das Google Sheets para o volume |
-| `coleta/google_sheets/exportar_planilhas.gs` | Apps Script que exporta diariamente as 12 Google Sheets para .xlsx em `G:\Meu Drive\dexp_google_sheets` |
+| `coleta/google_sheets/exportar_planilhas.gs` | Apps Script que exporta diariamente as 12 Google Sheets para .xlsx em `Fontes de Dados\auto\google_sheets` (Drive compartilhado). Fica vinculado à planilha `exportar_planilhas`, na mesma pasta |
 
 ## Rotina diária
 
 O pipeline não depende de nada do Tableau Prep: lê só os arquivos do volume e as próprias tabelas gold.
 
-1. 9h (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `G:\Meu Drive\dexp_google_sheets`
+1. 9h (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `Fontes de Dados\auto\google_sheets`
    e grava `_ultima_exportacao.json` com o horário e o resultado.
 2. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
 3. Abrir `coleta\rotina_manual.ipynb` no VS Code (abrindo a pasta `logic-local`, o Python do `.venv` já vem escolhido)

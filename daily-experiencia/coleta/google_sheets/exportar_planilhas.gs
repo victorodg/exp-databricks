@@ -1,18 +1,21 @@
 /**
- * Exporta as Google Sheets usadas pelo Daily Experiência BR como .xlsx numa pasta do "Meu Drive".
- * O Google Drive para desktop sincroniza essa pasta no G:\ e o script local envia os arquivos ao Databricks.
+ * Exporta as Google Sheets usadas pelo Daily Experiência BR como .xlsx na pasta "Fontes de Dados\auto\google_sheets"
+ * do Drive compartilhado. O Google Drive para desktop sincroniza essa pasta no G:\ e a rotina local envia os
+ * arquivos ao Databricks.
  *
- * Instalação (uma vez), em https://script.google.com com a conta da Natura:
- *   1. Novo projeto -> cole este arquivo -> em Configurações do projeto, fuso horário "America/Sao_Paulo".
- *   2. Execute exportarPlanilhas() uma vez e autorize o acesso pedido. A pasta PASTA_DESTINO é criada na raiz
- *      do Meu Drive se ainda não existir (é onde o coleta/fontes.toml procura os arquivos).
+ * Instalação (uma vez), com a conta da Natura, no editor do Apps Script (na planilha: Extensões > Apps Script):
+ *   1. Cole este arquivo, salve e, em Configurações do projeto, use o fuso horário "America/Sao_Paulo".
+ *   2. Execute exportarPlanilhas() uma vez e autorize o acesso pedido. A pasta é criada se ainda não existir.
  *   3. Execute criarGatilhoDiario() para agendar a exportação todo dia.
  * Se alguma planilha falhar, a execução termina com erro e o Google envia um e-mail de aviso ao dono do script.
  * Ao final de cada execução grava _ultima_exportacao.json na mesma pasta (horário e o que deu certo ou errado);
  * é esse arquivo que a rotina local consulta para saber se a exportação do dia já terminou.
  * Ao mudar o horário abaixo, execute criarGatilhoDiario() de novo para recriar o gatilho.
  */
-const PASTA_DESTINO = 'dexp_google_sheets';
+// A pasta "Fontes de Dados" é encontrada a partir do MKT_Reativos.xlsx oficial (Fontes de Dados\EXP BR\MKT),
+// e dentro dela o caminho abaixo; assim não é preciso copiar o ID de nenhuma pasta.
+const ARQUIVO_REFERENCIA = '1n3X3Njk37qoH0Mprf8SH2fr2AVIBVJYE';
+const CAMINHO_DESTINO = ['auto', 'google_sheets'];
 const ARQUIVO_STATUS = '_ultima_exportacao.json';
 // Horário do gatilho diário. O Google roda gatilhos de horário com até ~15 min de folga em torno do minuto pedido.
 const HORA_EXECUCAO = 9;
@@ -70,9 +73,14 @@ function exportarPlanilhas() {
 }
 
 function pastaDestino() {
-  const raiz = DriveApp.getRootFolder();
-  const existentes = raiz.getFoldersByName(PASTA_DESTINO);
-  return existentes.hasNext() ? existentes.next() : raiz.createFolder(PASTA_DESTINO);
+  // MKT_Reativos.xlsx -> MKT -> EXP BR -> Fontes de Dados
+  let pasta = DriveApp.getFileById(ARQUIVO_REFERENCIA).getParents().next();
+  pasta = pasta.getParents().next().getParents().next();
+  for (const nome of CAMINHO_DESTINO) {
+    const existentes = pasta.getFoldersByName(nome);
+    pasta = existentes.hasNext() ? existentes.next() : pasta.createFolder(nome);
+  }
+  return pasta;
 }
 
 // Troca a versão do dia anterior pela nova; a anterior vai para a lixeira (recuperável por 30 dias).
