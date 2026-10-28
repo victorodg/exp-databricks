@@ -155,6 +155,15 @@ As views leem a gold na hora, sem cópia de dados nem passo no job. Se a gold ga
 .venv\Scripts\python.exe ferramentas\gerar_views_tableau.py --aplicar
 ```
 
+Para ligar um workbook às views, `ferramentas/trocar_fontes_tableau.py` troca cada fonte publicada que tem view pela
+conexão do Databricks, mantendo cálculos, apelidos, formatos e cores, e tira o vínculo com o workbook publicado (para a
+cópia não sobrescrever o de produção). Precisa de um workbook modelo em que uma fonte já foi ligada ao Databricks pelo
+Tableau Desktop:
+
+```powershell
+.venv\Scripts\python.exe ferramentas	rocar_fontes_tableau.py <original.twbx> <modelo.twbx> <saída.twbx>
+```
+
 ## Validação contra o Tableau
 
 Baixe os extracts (.tdsx) do Tableau Cloud para `validacao\extracts\` (fora do Git) e rode, no Git Bash:
