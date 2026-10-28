@@ -37,7 +37,8 @@ SLA do primeiro contato, tempos, função do sistema, tribo, expurgo, responsáv
 - **Durações de 24 horas ou mais** (ex.: "Tempo de Operação" 44:44:06): o Prep converte a célula do Excel em texto pelo
   formato de exibição e interpreta "[h]:mm:ss" errado — perde a hora e põe o mês no lugar dos minutos (44:44:06 vira
   ":12:06"). Com isso o Prep dá "Sem informação" no SLA Tempo Médio Operacional, e a gold, que lê o valor certo, dá
-  "Fora do SLA" (10 linhas no MKT BRASIL - Email, 8 no Email Experiencia CB, 2 nos Emails de Lojas). **Decisão pendente.**
+  "Fora do SLA" (10 linhas no MKT BRASIL - Email, 8 no Email Experiencia CB, 2 nos Emails de Lojas).
+  **Decisão (28/10/2026): manter o valor correto na gold**, diferente do Prep.
 - **CPF/CNPJ**: num registro o Prep arredondou o número (10424500000); a gold tem o valor certo (10424494817).
 - **Grafias que só mudam maiúsculas** ("SIM"/"Sim", "ARAUCÁRIA"/"Araucária"): o extract guarda uma grafia só para textos
   iguais sem diferenciar maiúsculas. Vai acontecer igual quando o Tableau ler do Databricks.
