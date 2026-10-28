@@ -13,10 +13,13 @@ A data é a da captura, e não a de alteração do arquivo, porque o Google Driv
 reescreve a data de alteração toda vez que baixa o arquivo para leitura.
 
 Arquivos iguais aos do último envio são pulados (comparação por SHA-256, guardada em .estado/manifesto.json).
-Nada é apagado, nem no volume nem na origem.
+Nada é apagado, nem no volume nem na origem. No fim, se nenhum envio deu erro, dispara o job do Databricks
+(destino.job em fontes.toml), que processa o volume da bronze até a gold.
 
 Uso (a partir da pasta daily-experiencia):
-  .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py                       # envia tudo
+  .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py                       # envia tudo e dispara o job
+  .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py --aguardar            # idem, esperando o job terminar
+  .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py --sem-job             # só envia
   .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py --simular             # só mostra o que seria enviado
   .venv\\Scripts\\python.exe coleta\\enviar_arquivos.py --somente mktzap drive
 """
@@ -29,7 +32,7 @@ import shutil
 import sys
 import tomllib
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from databricks.sdk import WorkspaceClient
@@ -114,6 +117,8 @@ def main():
     parser.add_argument("--simular", action="store_true", help="não envia nada; só lista o que seria enviado")
     parser.add_argument("--forcar", action="store_true", help="reenvia mesmo os arquivos sem mudança")
     parser.add_argument("--somente", nargs="+", choices=GRUPOS, default=list(GRUPOS), help="grupos de fontes a enviar")
+    parser.add_argument("--sem-job", action="store_true", help="só envia os arquivos, sem disparar o job do Databricks")
+    parser.add_argument("--aguardar", action="store_true", help="espera o job terminar e mostra o resultado")
     parser.add_argument("--config", default=PASTA / "fontes.toml", type=Path)
     args = parser.parse_args()
 
@@ -163,7 +168,29 @@ def main():
     print("\nResumo: " + " | ".join(f"{s}: {n}" for s, n in contagem.items() if n))
     if contagem["ausente"]:
         print("⚠️ Arquivos ausentes não foram enviados: confira o caminho em fontes.toml ou se a exportação rodou.")
-    sys.exit(1 if contagem["erro"] else 0)
+    if contagem["erro"]:
+        print("❌ Houve erro no envio: o job do Databricks não foi disparado.")
+        sys.exit(1)
+    if not args.simular and not args.sem_job:
+        sys.exit(disparar_job(w, cfg["destino"]["job"], args.aguardar))
+
+
+def disparar_job(w, nome_job, aguardar):
+    """Dispara o job que processa o volume (bronze -> silver -> gold). Devolve o código de saída do script."""
+    jobs = list(w.jobs.list(name=nome_job))
+    if len(jobs) != 1:
+        print(f"❌ Esperava 1 job chamado {nome_job!r} e achei {len(jobs)}: confira destino.job em fontes.toml.")
+        return 1
+    execucao = w.jobs.run_now(jobs[0].job_id)
+    detalhe = w.jobs.get_run(execucao.run_id)
+    print(f"\n🚀 Job disparado: {detalhe.run_page_url}")
+    if not aguardar:
+        return 0
+    print("   Aguardando o fim (uns 15 a 20 minutos)...")
+    final = execucao.result(timeout=timedelta(hours=2))
+    estado = final.state.result_state.value if final.state and final.state.result_state else "?"
+    print(f"{'✅' if estado == 'SUCCESS' else '❌'} Job terminou: {estado}")
+    return 0 if estado == "SUCCESS" else 1
 
 
 if __name__ == "__main__":

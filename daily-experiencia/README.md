@@ -57,14 +57,24 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 
 ## Rotina diária
 
-1. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
-2. Enviar os arquivos para o Databricks, a partir da pasta `daily-experiencia`:
+1. 9h10 (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `G:\Meu Drive\dexp_google_sheets`.
+2. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
+3. A tarefa agendada **"Daily Experiencia BR - envio Databricks"** roda `coleta\rotina_diaria.ps1`: envia os arquivos
+   novos ou alterados ao volume e dispara o job `dexp_daily_experiencia` (bronze → silver → gold, uns 15 minutos).
+   O log de cada execução fica em `coleta\.estado\logs\`.
+
+Para rodar à mão, a partir da pasta `daily-experiencia`:
 
 ```powershell
-.venv\Scripts\python.exe coleta\enviar_arquivos.py
+powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1            # envia e dispara o job
+powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1 --aguardar # idem, esperando o job terminar
 ```
 
-O script só envia arquivos novos ou alterados (compara o SHA-256 com o último envio, guardado em `coleta\.estado\manifesto.json`) e nunca apaga nada. `--simular` mostra o que seria enviado sem enviar.
+O envio só manda arquivos novos ou alterados (compara o SHA-256 com o último envio, guardado em
+`coleta\.estado\manifesto.json`) e nunca apaga nada. Com erro em algum envio, o job não é disparado.
+Outras opções de `coleta\enviar_arquivos.py`: `--sem-job`, `--simular`, `--somente mktzap drive google_sheets`.
+
+Agendar (ou mudar o horário): `powershell -ExecutionPolicy Bypass -File coleta\agendar_rotina.ps1 -Horario 09:40`.
 
 ## Volume de entrada
 
