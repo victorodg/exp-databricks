@@ -1,8 +1,11 @@
 """Definição das tabelas silver: cada uma é uma tabela bronze com colunas renomeadas e tipadas.
 
-Cada coluna é (nome na silver, nome na bronze, tipo). Tipos: texto, data_hora, data, inteiro.
+Cada coluna é (nome na silver, nome na bronze, tipo). Tipos: texto, data_hora, data, inteiro, decimal.
 Colunas da bronze que não estão na lista (ex.: coluna_<n> sem cabeçalho) não passam para a silver.
+Para as fontes do MKT a lista é montada a partir da própria bronze (MesmasColunas): os nomes ficam os mesmos e
+só os tipos mudam, porque as fórmulas do Prep usam os nomes originais dessas planilhas.
 """
+from dataclasses import dataclass, field
 from pyspark.sql import functions as F
 
 from dexp import tableau as tb
@@ -13,7 +16,19 @@ CONVERSORES = {
     "data_hora": lambda nome: tb.data_hora(F.col(f"`{nome}`")),
     "data": lambda nome: tb.data(F.col(f"`{nome}`")),
     "inteiro": tb.inteiro,
+    "decimal": lambda nome: F.expr(f"try_cast(`{nome}` AS DOUBLE)"),
 }
+
+
+@dataclass(frozen=True)
+class MesmasColunas:
+    """Todas as colunas da bronze com o mesmo nome; tipos diferentes de texto em `tipos`."""
+    tipos: dict = field(default_factory=dict)
+    excluir: tuple = ()
+
+    def colunas(self, colunas_bronze):
+        return [(c, c, self.tipos.get(c, "texto")) for c in colunas_bronze
+                if not c.startswith("_") and c not in self.excluir]
 
 
 def tipar(df, colunas):
@@ -94,7 +109,10 @@ _REVIEWS_GOOGLE_PLAY = [
     ("review_link", "review_link", "texto"),
 ]
 
-# tabela silver -> (tabelas bronze unidas, colunas)
+_TIPOS_ANALITICO = {"data_contato": "data_hora", "encerrado_em": "data_hora", "qtd_atendimentos": "inteiro",
+                    "qtde_mensagens": "inteiro", "quantidade_de_tickets": "inteiro"}
+
+# tabela silver -> (tabelas bronze unidas, colunas ou MesmasColunas)
 TABELAS = {
     "salesforce_cf_legado": (["salesforce_cf"], _SALESFORCE_COMUM),
     "salesforce_cf_criados": (["salesforce_cf_criados"], _SALESFORCE_HISTORICO),
@@ -178,4 +196,33 @@ TABELAS = {
         ("observacao", "observacao", "texto"),
     ]),
     "resenhas_google_play": (["app_natura", "app_avon", "consultoria_natura", "forca_de_vendas"], _REVIEWS_GOOGLE_PLAY),
+    # --- fontes do fluxo MKT ---
+    "mkt_reativos": (["mkt_reativos"], MesmasColunas(_TIPOS_ANALITICO)),
+    "mkt_reativos_historico_ate_out25": (["mkt_reativos_historico_ate_out25"], MesmasColunas(_TIPOS_ANALITICO)),
+    "mkt_base_mkt": (["base_mkt"], MesmasColunas({
+        "data_contato": "data_hora", "tempo_do_atendimento": "data_hora", "encerrado_em": "data_hora",
+        "qtd_atendimentos": "inteiro", "ciclo_vigente": "inteiro"})),
+    "mkt_brasil_completo": (["mkt_brasil_completo"], MesmasColunas({
+        "atendimentos_first_message_at": "data_hora", "data_criacao": "data_hora", "inicio_atendimento": "data_hora",
+        "atendido": "data_hora", "data_conclusao": "data_hora", "ultima_mensagem": "data_hora",
+        "qtde_mensagens": "inteiro"})),
+    "mkt_tickets_brasil": (["tickets_brasil"], MesmasColunas({
+        "data_de_criacao_do_atendimento": "data_hora", "data_de_finalizacao": "data_hora",
+        "data_de_criacao_do_ticket": "data_hora", "data_de_conversao_do_atendimento": "data_hora",
+        "qtd_atendimentos": "inteiro", "ciclo_vigente": "inteiro"})),
+    "mkt_auxiliar_brasil": (["auxiliar_brasil"], MesmasColunas(excluir=("coluna_1",))),
+    "mkt_tribos": (["tribos_base_mkt"], MesmasColunas(excluir=("coluna_1",))),
+    "mkt_expurgo": (["base_expurgo_mkt"], MesmasColunas({"data": "data_hora"})),
+    "mkt_dynatrace": (["monitoracao_dynatrace"], MesmasColunas({
+        "data": "data_hora", "hora_do_erro": "data_hora", "hora_inicio_do_atendimento": "data_hora",
+        "hora_fim_do_atendimento": "data_hora", "codigo_cb": "inteiro"})),
+    "mkt_dynatrace_ate_julho": (["registros_ate_julho_dynatrace"], MesmasColunas({"data": "data", "codigo_cb": "inteiro"})),
+    "mkt_appsheets_registros": (["appsheets_registros_experiencia_cb"], MesmasColunas({
+        "data": "data_hora", "data_do_retorno": "data", "data_do_pedido": "data_hora", "data_1_follow": "data"})),
+    "mkt_registros_de_acionamentos": (["registros_de_acionamentos"], MesmasColunas({
+        "data_do_contato": "data", "qtde_de_atendimentos": "inteiro"})),
+    "mkt_ticket_medio": (["ticket_medio"], MesmasColunas({"mes": "data", "ticket_medio": "decimal"})),
+    "mkt_healthcheck": (["healthcheck_2025"], MesmasColunas({
+        "data": "data", "qtde_agendamento": "inteiro", "qtde_recebidos": "inteiro", "qtde_protocolos": "inteiro"})),
+    "mkt_salesforce_analistas": (["salesforce_cf_encerrados_analistas"], MesmasColunas()),
 }

@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 from pathlib import Path
 
 import openpyxl
@@ -25,6 +25,7 @@ def test_normalizar_colunas():
     (True, "true"),
     (datetime(2026, 10, 1, 8, 46, 59, 999_800), "2026-10-01 08:47:00"),
     (timedelta(hours=26, minutes=3, seconds=4), "26:03:04"),
+    (time(0, 35, 30), "0:35:30"),
 ])
 def test_valor_texto(valor, esperado):
     assert valor_texto(valor) == esperado

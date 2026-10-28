@@ -56,7 +56,10 @@ def valor_texto(valor):
     if isinstance(valor, datetime):
         # o Excel guarda datas como frações de dia; arredonda o resíduo de ponto flutuante para o segundo
         return (valor + timedelta(microseconds=500_000)).replace(microsecond=0).isoformat(sep=" ")
-    if isinstance(valor, (date, time)):
+    if isinstance(valor, time):
+        # como o Tableau Prep escreve hora/duração sem zero à esquerda na hora: 0:35:30
+        return f"{valor.hour}:{valor.minute:02d}:{valor.second:02d}"
+    if isinstance(valor, date):
         return valor.isoformat()
     if isinstance(valor, timedelta):
         segundos = round(valor.total_seconds())

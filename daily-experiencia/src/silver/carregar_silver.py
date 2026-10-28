@@ -15,7 +15,7 @@ from pyspark.sql import functions as F
 
 sys.path.append(os.path.abspath(".."))
 from dexp import tableau as tb
-from dexp.silver import TABELAS, tipar
+from dexp.silver import TABELAS, MesmasColunas, tipar
 
 dbutils.widgets.text("catalog", "sandbox")
 dbutils.widgets.text("schema", "sustentacao_bau_experiencias")
@@ -26,10 +26,11 @@ tb.preparar_sessao(spark)
 # COMMAND ----------
 
 resumo = []
-for tabela, (bronzes, colunas) in TABELAS.items():
+for tabela, (bronzes, definicao) in TABELAS.items():
     partes = []
     for bronze in bronzes:
         df = spark.table(f"{CATALOGO}.{SCHEMA}.dexp_bronze_{bronze}")
+        colunas = definicao.colunas(df.columns) if isinstance(definicao, MesmasColunas) else definicao
         faltando = [b for _, b, _ in colunas if b not in df.columns]
         if faltando:
             raise ValueError(f"dexp_bronze_{bronze}: colunas esperadas não encontradas: {faltando}")

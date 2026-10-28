@@ -39,11 +39,18 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 |---|---|
 | `databricks.yml` | Definição do bundle (ambientes, catálogo e schema) |
 | `docs/inventario.md` | Fontes, saídas, dependências e regras fixas dos fluxos atuais |
-| `resources/daily_experiencia.job.yml` | Job `dexp_daily_experiencia` (serverless): bronze → silver → gold |
+| `docs/fluxos/` | Especificação de cada fluxo do Prep (etapas em ordem, fórmulas completas), gerada do `.tfl` |
+| `docs/validacao_*.md` | Resultado da comparação com os extracts do Tableau e decisões tomadas |
+| `resources/daily_experiencia.job.yml` | Job `dexp_daily_experiencia`: bronze → silver → gold Dynamics e Resenhas → gold MKT |
 | `src/bronze/carregar_bronze.py` | Notebook da camada bronze |
+| `src/silver/carregar_silver.py` | Notebook da camada silver (definições em `src/dexp/silver.py`) |
+| `src/gold/dynamics_e_resenhas.py`, `src/gold/mkt.py` | Notebooks da gold, um por fluxo do Prep; cada bloco cita a etapa da especificação |
 | `src/dexp/fontes.py` | De onde vem cada tabela bronze (pasta no volume e aba) |
 | `src/dexp/leitura.py` | Leitura dos CSV do MKTZap e dos .xlsx como texto |
-| `tests/` | Testes locais da leitura (`.venv\Scripts\python.exe -m pytest`) |
+| `src/dexp/tableau.py`, `src/dexp/prep.py`, `src/dexp/nomes.py` | Equivalentes das funções do Tableau e das operações do Prep (join com os mesmos sufixos -1/-2) |
+| `src/dexp/regras_mkt.py` | Listas grandes do fluxo MKT, extraídas do `.tfl` por `ferramentas/extrair_regras_mkt.py` |
+| `ferramentas/` | Gerador de especificação, comparação com extracts, carga do histórico do Backlog |
+| `tests/` | Testes locais (ver abaixo) |
 | `coleta/fontes.toml` | Origem de cada arquivo enviado ao volume de entrada |
 | `coleta/enviar_arquivos.py` | Envia brutos do MKTZap, .xlsx do Drive e cópias das Google Sheets para o volume |
 | `coleta/google_sheets/exportar_planilhas.gs` | Apps Script que exporta diariamente as 12 Google Sheets para .xlsx em `G:\Meu Drive\dexp_google_sheets` |
@@ -104,3 +111,27 @@ python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 databricks bundle validate -t dev
 ```
+
+## Testes locais
+
+- `.venv\Scripts\python.exe -m pytest`: leitura dos arquivos e regra de nomes do Prep (sem Spark).
+- `.venv-spark\Scripts\python.exe -m pytest`: tudo, inclusive as funções que emulam o Tableau, com Spark local.
+  O `.venv-spark` usa Python 3.12 e PySpark 3.5 (a versão do DBR 16.4), porque o PySpark 3.5 não roda no Python 3.14,
+  e precisa de Java (o Java 8 já instalado serve). Para recriar:
+
+```powershell
+.venv\Scripts\python.exe -m pip install uv
+.venv\Scripts\uv.exe python install 3.12
+& "$env:APPDATA\uv\python\cpython-3.12.16-windows-x86_64-none\python.exe" -m venv .venv-spark
+.venv-spark\Scripts\python.exe -m pip install -r requirements.txt "pyspark==3.5.*"
+```
+
+## Validação contra o Tableau
+
+Baixe os extracts (.tdsx) do Tableau Cloud para `validacao\extracts\` (fora do Git) e rode, no Git Bash:
+
+```bash
+sh ferramentas/comparar_mkt.sh
+```
+
+Para as saídas do Dynamics, `ferramentas/comparar_extract.py <extract> <tabela gold>`. Os resultados ficam em `validacao\relatorios\`.

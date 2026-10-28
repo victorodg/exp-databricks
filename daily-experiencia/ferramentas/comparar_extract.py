@@ -60,6 +60,16 @@ APELIDOS = {
 }
 
 
+# Quando duas colunas do extract só diferem em maiúsculas ("MERCADO" e "Mercado"), elas viram o mesmo nome em
+# snake_case; estas têm nome próprio na gold.
+NOMES_EM_COLISAO = {
+    "Mercado": "mercado_re",
+    "PEDIDO FINALIZADO": "pedido_finalizado_ticket",
+    "Hora Fim do Atendimento": "hora_fim_do_atendimento_ate_julho",
+    "Erro Perceptível ao Usuário?": "erro_perceptivel_ao_usuario_ate_julho",
+}
+
+
 def cliente():
     cli = glob.glob(os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\WinGet\Packages\Databricks.DatabricksCLI_*\databricks.exe"))
     return WorkspaceClient(config=Config(profile=PERFIL, databricks_cli_path=cli[0] if cli else None))
@@ -132,13 +142,13 @@ def main():
             tabela_ext = max(tabelas, key=lambda t: con.execute_scalar_query(f"SELECT count(*) FROM {t}"))
             colunas_ext = [str(c.name.unescaped) for c in con.catalog.get_table_definition(tabela_ext).columns]
 
-            normalizadas = normalizar_colunas(colunas_ext)
-            pares = []
-            for original, norm in zip(colunas_ext, normalizadas):
-                alvo = APELIDOS.get(norm, norm)
-                if alvo in colunas_gold:
-                    pares.append((original, alvo))
-            so_extract = [o for o, n in zip(colunas_ext, normalizadas) if APELIDOS.get(n, n) not in colunas_gold]
+            # nome normalizado sem o sufixo de desempate (_2) que normalizar_colunas põe nas repetidas
+            normalizadas = [normalizar_colunas([c])[0] for c in colunas_ext]
+            repetidas = {n for n in normalizadas if normalizadas.count(n) > 1}
+            alvos = [NOMES_EM_COLISAO.get(o, APELIDOS.get(n, n)) if n in repetidas else APELIDOS.get(n, n)
+                     for o, n in zip(colunas_ext, normalizadas)]
+            pares = [(o, a) for o, a in zip(colunas_ext, alvos) if a in colunas_gold]
+            so_extract = [o for o, a in zip(colunas_ext, alvos) if a not in colunas_gold]
             so_gold = [g for g in colunas_gold if g not in {a for _, a in pares}]
 
             definicao = {str(c.name.unescaped): str(c.type).lower() for c in con.catalog.get_table_definition(tabela_ext).columns}
@@ -167,11 +177,14 @@ def main():
             print(f"\nSó no extract: {so_extract}\nSó na gold: {so_gold}\n")
 
             for original, alvo in categorias:
+                # o extract guarda uma grafia só para textos iguais sem diferenciar maiúsculas; compara em minúsculas
                 q = citar_hyper(original)
-                cont_ext = {texto(v): int(n) for v, n in con.execute_list_query(
-                    f"SELECT CAST({q} AS TEXT), count(*) FROM {tabela_ext} GROUP BY 1")}
-                cont_gold = {texto(v): int(n) for v, n in sql_databricks(
-                    w, f"SELECT CAST(`{alvo}` AS STRING), count(*) FROM {ESQUEMA}.{tabela_gold} GROUP BY 1")}
+                chave = (lambda v: None if v is None else texto(v).lower()) if alvo in textos_gold else texto
+                cont_ext, cont_gold = {}, {}
+                for v, n in con.execute_list_query(f"SELECT CAST({q} AS TEXT), count(*) FROM {tabela_ext} GROUP BY 1"):
+                    cont_ext[chave(v)] = cont_ext.get(chave(v), 0) + int(n)
+                for v, n in sql_databricks(w, f"SELECT CAST(`{alvo}` AS STRING), count(*) FROM {ESQUEMA}.{tabela_gold} GROUP BY 1"):
+                    cont_gold[chave(v)] = cont_gold.get(chave(v), 0) + int(n)
                 difs = {k: (cont_ext.get(k, 0), cont_gold.get(k, 0)) for k in set(cont_ext) | set(cont_gold)
                         if cont_ext.get(k, 0) != cont_gold.get(k, 0)}
                 if difs:
