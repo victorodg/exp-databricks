@@ -1,0 +1,5 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/daily-experiencia/.venv/Scripts/python.exe",
+    "jupyter.notebookFileRoot": "${fileDirname}",
+    "files.encoding": "utf8"
+}

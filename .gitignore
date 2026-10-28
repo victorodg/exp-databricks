@@ -40,3 +40,7 @@ validacao/
 
 # Log gerado pela API do Hyper ao ler extracts
 hyperd*.log
+
+# Vídeos e gravações (não versionar)
+*.mp4
+*.mov

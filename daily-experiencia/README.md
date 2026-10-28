@@ -57,13 +57,17 @@ Orquestração: um Job do Databricks em que o ramo **Dynamics** roda antes do **
 
 ## Rotina diária
 
-1. 9h10 (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `G:\Meu Drive\dexp_google_sheets`.
-2. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
-3. A tarefa agendada **"Daily Experiencia BR - envio Databricks"** roda `coleta\rotina_diaria.ps1`: envia os arquivos
-   novos ou alterados ao volume e dispara o job `dexp_daily_experiencia` (bronze → silver → gold, uns 15 minutos).
-   O log de cada execução fica em `coleta\.estado\logs\`.
+O pipeline não depende de nada do Tableau Prep: lê só os arquivos do volume e as próprias tabelas gold.
 
-Para rodar à mão, a partir da pasta `daily-experiencia`:
+1. 9h (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `G:\Meu Drive\dexp_google_sheets`
+   e grava `_ultima_exportacao.json` com o horário e o resultado.
+2. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
+3. Abrir `coleta\rotina_manual.ipynb` no VS Code (abrindo a pasta `logic-local`, o Python do `.venv` já vem escolhido)
+   e rodar as células em ordem: confere a exportação das Google Sheets, envia os arquivos, dispara o job
+   `dexp_daily_experiencia` (bronze → silver → gold, uns 15 minutos), acompanha e mostra as tabelas atualizadas.
+
+Quando a rotina for ficar automática, a tarefa agendada roda `coleta\rotina_diaria.ps1` (mesmo envio + job, com log
+em `coleta\.estado\logs\`). Pela linha de comando, a partir da pasta `daily-experiencia`:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1            # envia e dispara o job

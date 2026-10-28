@@ -6,6 +6,9 @@ perfil = "daily-exp"
 volume = "/Volumes/sandbox/sustentacao_bau_experiencias/dexp_landing"
 # Job disparado depois do envio (nome que o bundle dá no ambiente dev)
 job = "[dev victorodaguiri_sonda] dexp_daily_experiencia"
+# Onde ficam as tabelas e o SQL Warehouse usado para conferi-las (sustentacao_bau_experiencias_sandbox_sql)
+schema = "sandbox.sustentacao_bau_experiencias"
+warehouse = "dcb43c45e3a55fe4"
 
 [origens]
 mktzap = 'C:\Users\vyoitio\OneDrive - Sonda S.A\Documentos\logic\mktzap\downloads_brutos'

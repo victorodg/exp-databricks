@@ -8,11 +8,15 @@
  *      do Meu Drive se ainda não existir (é onde o coleta/fontes.toml procura os arquivos).
  *   3. Execute criarGatilhoDiario() para agendar a exportação todo dia.
  * Se alguma planilha falhar, a execução termina com erro e o Google envia um e-mail de aviso ao dono do script.
+ * Ao final de cada execução grava _ultima_exportacao.json na mesma pasta (horário e o que deu certo ou errado);
+ * é esse arquivo que a rotina local consulta para saber se a exportação do dia já terminou.
+ * Ao mudar o horário abaixo, execute criarGatilhoDiario() de novo para recriar o gatilho.
  */
 const PASTA_DESTINO = 'dexp_google_sheets';
+const ARQUIVO_STATUS = '_ultima_exportacao.json';
 // Horário do gatilho diário. O Google roda gatilhos de horário com até ~15 min de folga em torno do minuto pedido.
 const HORA_EXECUCAO = 9;
-const MINUTO_EXECUCAO = 10;
+const MINUTO_EXECUCAO = 0;
 
 // nome do arquivo exportado -> ID da Google Sheet (ver docs/inventario.md)
 const PLANILHAS = {
@@ -33,6 +37,7 @@ const PLANILHAS = {
 function exportarPlanilhas() {
   const pasta = pastaDestino();
   const token = ScriptApp.getOAuthToken();
+  const exportadas = [];
   const falhas = [];
 
   for (const [nome, id] of Object.entries(PLANILHAS)) {
@@ -45,11 +50,19 @@ function exportarPlanilhas() {
         throw new Error(`HTTP ${resposta.getResponseCode()}`);
       }
       substituirArquivo(pasta, resposta.getBlob().setName(`${nome}.xlsx`));
+      exportadas.push(nome);
       console.log(`ok: ${nome}`);
     } catch (e) {
       falhas.push(`${nome}: ${e.message}`);
     }
   }
+
+  const status = {
+    exportado_em: Utilities.formatDate(new Date(), 'America/Sao_Paulo', "yyyy-MM-dd'T'HH:mm:ss"),
+    exportadas: exportadas,
+    falhas: falhas,
+  };
+  substituirArquivo(pasta, Utilities.newBlob(JSON.stringify(status, null, 2), 'application/json', ARQUIVO_STATUS));
 
   if (falhas.length) {
     throw new Error(`Falhas na exportação:\n${falhas.join('\n')}`);
