@@ -75,7 +75,7 @@ def acoes_container(no):
     """Etapa de limpeza antiga (Container): as ações são nós encadeados dentro do loomContainer."""
     interno = no["loomContainer"]
     nos = interno["nodes"]
-    atual = interno.get("initialNodes", [None])[0]
+    atual = (interno.get("initialNodes") or [None])[0]
     ordem = []
     while atual and atual in nos:
         ordem.append(nos[atual])
