@@ -89,6 +89,11 @@ def _montar(linhas, numeros, indice_cabecalho):
     return tabela
 
 
+def tem_aba(caminho, aba):
+    with CalamineWorkbook.from_path(caminho) as wb:
+        return aba in wb.sheet_names
+
+
 def ler_excel(caminho, aba=None, linha_cabecalho=None):
     """Lê uma aba do .xlsx. aba=None usa a primeira aba visível; linha_cabecalho (1 = primeira) ou detecção."""
     with CalamineWorkbook.from_path(caminho) as wb:

@@ -27,6 +27,7 @@ Dynamics e Resenhas ──(Dynamics Nivel)──► MKT
 | Forca de Vendas | xlsx | | `EXP BR\Resenhas` | `1bMwOdxhHoizvbQ036QPso3Va-amt_ZVj` |
 | Mapeamento: Assunto / Função do sistema x Jornada (Tribo) | gsheet | Base Dynamics_1309, Base_GruposServiceNow_2209 | `EXP BR\Auxiliar` | `1y4uGJ1ik89sDJ4qYKJgtgduGfHbn6jnbvukCzGYNjWE` |
 | Expurgo | gsheet | Página1 | `EXP BR\DYNAMICS\Expurgo` | `15TkEO9bS5D6W1_DYJ2VeoDiYVVUQN729P6H5YgdlzJo` |
+| Expurgo (SLA por tarefa) | gsheet | Expurgo SLA | `EXP BR\DYNAMICS\Expurgo` | `15TkEO9bS5D6W1_DYJ2VeoDiYVVUQN729P6H5YgdlzJo` |
 | Resenhas | gsheet | | não localizado em Fontes de Dados | `1RAFYqizyyX6H7FCzWZdog2vTS3Hbh3TOfkwt2pdHTUA` |
 
 ## Fontes – fluxo MKT

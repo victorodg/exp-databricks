@@ -45,3 +45,19 @@ coluna a coluna) e `ferramentas/consultar_extract.py` (mesma consulta nos dois l
   23:59:59 do dia limite). Efeito com os dados de 27/10: 17.775 das 39.851 avaliações desse ramo passam a "Fora do SLA";
   no Status SLA 2 (só avaliações com texto), "Dentro do SLA" cai de 83,6% para 68,8% em 2026 e de 91,0% para 79,9% em 2025.
 - **Tipo Protocolo das Franquias:** ver acima; a gold traz "Franquias", que é o correto.
+
+## Expurgo de SLA por tarefa (29/10/2026)
+
+Antes só existia o expurgo de nível (aba "Página1" da planilha Expurgo: o nível da ocorrência passa a ser o da planilha).
+Para tirar tarefas do indicador de SLA 24h foi criada a aba **"Expurgo SLA"** na mesma planilha, uma linha por tarefa:
+Número da Ocorrência, Tarefa (o "(Não Modificar) Tarefa" do relatório do Dynamics), Etapa, Término Real, Indicador
+("SLA Experiência"), Data Expurgo, Mês de Expurgo, Incidente, Motivo e Aprovado por. A chave é a tarefa e não a
+ocorrência, porque uma ocorrência tem tarefas de Fase 1 e de Fase 2 e só algumas são expurgadas.
+
+O SLA Experiência dessas tarefas passa a ser **"EXPURGADO"**; como o % SLA EXP do workbook é dentro ÷ (dentro + fora),
+elas saem da conta sem mudar o Tableau. A regra está na gold (`src/gold/dynamics_e_resenhas.py`) e nas etapas
+"Expurgo SLA" do fluxo no Prep (acrescentadas por `ferramentas/adicionar_expurgo_sla_prep.py`).
+
+Primeiro caso: 94 tarefas do SEV 1 [INC1203571] Captação de Pedidos, aprovadas pela Valéria. Com o cálculo do painel
+(horas úteis), 76 delas estavam fora do prazo e 18 dentro; a lista aprovada foi aplicada inteira.
+

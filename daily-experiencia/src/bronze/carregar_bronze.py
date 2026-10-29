@@ -29,7 +29,7 @@ from pyspark.sql.types import LongType, StringType, StructField, StructType
 
 sys.path.append(os.path.abspath(".."))  # pasta src/ do bundle
 from dexp.fontes import FONTES_EXCEL, FONTES_MKTZAP
-from dexp.leitura import ler_csv_mktzap, ler_excel, normalizar_colunas
+from dexp.leitura import ler_csv_mktzap, ler_excel, normalizar_colunas, tem_aba
 
 dbutils.widgets.text("catalog", "sandbox")
 dbutils.widgets.text("schema", "sustentacao_bau_experiencias")
@@ -143,6 +143,10 @@ for f in FONTES_EXCEL:
             registrar(f.tabela, "ausente", f"nada em {f.grupo}/{f.fonte}")
             continue
         arquivo, versao = achado
+        if f.opcional and not tem_aba(arquivo, f.aba):
+            spark.sql(f"DROP TABLE IF EXISTS {nome_tabela(f.tabela)}")
+            registrar(f.tabela, "ausente", f"aba {f.aba!r} não existe em {versao} (opcional)")
+            continue
         if not FORCAR and arquivos_carregados(f.tabela) == {arquivo}:
             registrar(f.tabela, "sem mudança", versao)
             continue

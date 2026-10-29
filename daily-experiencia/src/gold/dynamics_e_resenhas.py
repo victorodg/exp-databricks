@@ -335,6 +335,20 @@ visao_encerrado = (
     .drop("nivel_expurgo")
 )
 
+# Expurgo de SLA (aba "Expurgo SLA", por tarefa): a tarefa sai do SLA Experiência, que fica "EXPURGADO" e não conta
+# nem como dentro nem como fora do prazo. Mesma regra das etapas "Expurgo SLA" do fluxo no Prep.
+if spark.catalog.tableExists(f"{CATALOGO}.{SCHEMA}.dexp_silver_expurgo_dynamics_sla"):
+    expurgo_sla = (silver("expurgo_dynamics_sla").where(igual("indicador", "SLA Experiência"))
+                   .select(F.col("tarefa_id").alias("tarefa_expurgo_sla")).distinct())
+    visao_encerrado = (
+        visao_encerrado
+        .join(expurgo_sla, tb.chave_join(visao_encerrado["tarefa_id"]) == tb.chave_join(expurgo_sla["tarefa_expurgo_sla"]),
+              "left")
+        .withColumn("sla_experiencia", F.when(F.col("tarefa_expurgo_sla").isNull(), F.col("sla_experiencia"))
+                                        .otherwise(F.lit("EXPURGADO")))
+        .drop("tarefa_expurgo_sla")
+    )
+
 # [72]
 visao_encerrado = (
     visao_encerrado

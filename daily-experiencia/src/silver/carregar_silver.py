@@ -15,7 +15,7 @@ from pyspark.sql import functions as F
 
 sys.path.append(os.path.abspath(".."))
 from dexp import tableau as tb
-from dexp.silver import TABELAS, MesmasColunas, tipar
+from dexp.silver import OPCIONAIS, TABELAS, MesmasColunas, tipar
 
 dbutils.widgets.text("catalog", "sandbox")
 dbutils.widgets.text("schema", "sustentacao_bau_experiencias")
@@ -27,6 +27,11 @@ tb.preparar_sessao(spark)
 
 resumo = []
 for tabela, (bronzes, definicao) in TABELAS.items():
+    destino = f"{CATALOGO}.{SCHEMA}.dexp_silver_{tabela}"
+    if tabela in OPCIONAIS and not all(spark.catalog.tableExists(f"{CATALOGO}.{SCHEMA}.dexp_bronze_{b}") for b in bronzes):
+        spark.sql(f"DROP TABLE IF EXISTS {destino}")
+        print(f"dexp_silver_{tabela:32}  ausente (bronze opcional não existe)")
+        continue
     partes = []
     for bronze in bronzes:
         df = spark.table(f"{CATALOGO}.{SCHEMA}.dexp_bronze_{bronze}")
@@ -38,7 +43,6 @@ for tabela, (bronzes, definicao) in TABELAS.items():
     df = partes[0]
     for p in partes[1:]:
         df = df.unionByName(p)
-    destino = f"{CATALOGO}.{SCHEMA}.dexp_silver_{tabela}"
     df.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(destino)
     resumo.append((f"dexp_silver_{tabela}", spark.table(destino).count()))
     print(f"dexp_silver_{tabela:32} {resumo[-1][1]:>9,} linhas")

@@ -112,6 +112,9 @@ _REVIEWS_GOOGLE_PLAY = [
 _TIPOS_ANALITICO = {"data_contato": "data_hora", "encerrado_em": "data_hora", "qtd_atendimentos": "inteiro",
                     "qtde_mensagens": "inteiro", "quantidade_de_tickets": "inteiro"}
 
+# tabelas que só existem quando a aba de origem existe (FonteExcel opcional)
+OPCIONAIS = {"expurgo_dynamics_sla"}
+
 # tabela silver -> (tabelas bronze unidas, colunas ou MesmasColunas)
 TABELAS = {
     "salesforce_cf_legado": (["salesforce_cf"], _SALESFORCE_COMUM),
@@ -176,6 +179,19 @@ TABELAS = {
         ("data_expurgo", "data_expurgo", "data"),
         ("mes_de_expurgo", "mes_de_expurgo", "texto"),
         ("motivo", "motivo", "texto"),
+    ]),
+    # aba "Expurgo SLA" da planilha de expurgo: tarefas que saem do indicador de SLA (uma linha por tarefa e indicador)
+    "expurgo_dynamics_sla": (["expurgo_dynamics_sla"], [
+        ("numero_da_ocorrencia", "numero_da_ocorrencia_referente_ocorrencia", "texto"),
+        ("tarefa_id", "tarefa", "texto"),
+        ("etapa", "etapa", "texto"),
+        ("termino_real", "termino_real", "texto"),
+        ("indicador", "indicador", "texto"),
+        ("data_expurgo", "data_expurgo", "data"),
+        ("mes_de_expurgo", "mes_de_expurgo", "texto"),
+        ("incidente", "incidente", "texto"),
+        ("motivo", "motivo", "texto"),
+        ("aprovado_por", "aprovado_por", "texto"),
     ]),
     "resenhas_appsheets": (["resenhas_appsheets"], [
         ("id", "coluna_1", "texto"),

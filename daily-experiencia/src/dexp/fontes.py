@@ -12,6 +12,7 @@ class FonteExcel:
     fonte: str                          # pasta no volume: <grupo>/<fonte>/<AAAA-MM-DD>/<arquivo>
     aba: str | None = None              # None = primeira aba visível
     linha_cabecalho: int | None = None  # None = detectar
+    opcional: bool = False              # aba que pode ainda não existir: sem ela, a tabela não é criada
 
 
 @dataclass(frozen=True)
@@ -41,6 +42,8 @@ FONTES_EXCEL = [
     # Google Sheets exportadas pelo Apps Script
     FonteExcel("base_expurgo_mkt", "google_sheets", "base_expurgo_mkt", "MKT"),
     FonteExcel("expurgo_dynamics", "google_sheets", "expurgo_dynamics", "Página1"),
+    # Expurgo de SLA por tarefa (aba criada em 29/10/2026, primeiro caso: INC1203571)
+    FonteExcel("expurgo_dynamics_sla", "google_sheets", "expurgo_dynamics", "Expurgo SLA", opcional=True),
     FonteExcel("auxiliar_brasil", "google_sheets", "auxiliar_brasil", "Página1"),
     FonteExcel("base_mkt", "google_sheets", "base_mkt", "MKT Brasil"),
     FonteExcel("tribos_base_mkt", "google_sheets", "mapeamento_tribos", "Base_MKT_1309"),
