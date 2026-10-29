@@ -56,6 +56,9 @@ KPIS = {
                                           meta=0.95, unidade="protocolos", **SLA_TEXTO),
     "WhatsApp Consolidado SLA Prim. Cont.": dict(campo="SLA do Primeiro Contato", legenda="SLA Primeiro Contato",
                                                  meta=0.95, unidade="protocolos", **SLA_TEXTO),
+    "Retencao Email AppNatura": dict(campo="Nivel", legenda="Retenção N1 (resolvidos)", positivos=["N1"],
+                                     negativos=["N2"], peso="Qtd Atendimentos", meta=0.70, texto="em N1",
+                                     unidade="atendimentos"),
     "WhatsApp Consolidado Nivel 2": dict(campo="Nível", legenda="Retenção N1 (atendimentos)", positivos=["N1"],
                                          negativos=["N2"], peso="Qtd Atendimentos", meta=0.70,
                                          texto="em N1", unidade="atendimentos"),
@@ -393,11 +396,16 @@ def main():
         raiz = etree.fromstring(z.read(twb), etree.XMLParser(huge_tree=True))
         outros = [(i, z.read(i.filename)) for i in z.infolist() if i.filename != twb]
 
-    print(f"5. intervalos de datas sem fim fixo: {soltar_fim_dos_intervalos(raiz)} filtros")
+    # --somente "planilha;planilha": converte só esses indicadores, num workbook que já passou pelo redesenho
+    somente = sys.argv[sys.argv.index("--somente") + 1].split(";") if "--somente" in sys.argv else None
+    if somente is None:
+        print(f"5. intervalos de datas sem fim fixo: {soltar_fim_dos_intervalos(raiz)} filtros")
     fontes = {d.get("name"): d for d in raiz.find("datasources")}
     por_nome = {w.get("name"): w for w in raiz.find("worksheets")}
     ja_criados, status_criados = {}, []
     for nome, cfg in KPIS.items():
+        if somente is not None and nome not in somente:
+            continue
         ws = por_nome.get(nome)
         if ws is None:
             print(f"1. {nome}: não existe")
@@ -408,6 +416,10 @@ def main():
         col_status = calculos_do_indicador(ds, cfg, ja_criados)["status"]
         status_criados.append(col_status.get("name").strip("[]"))
         legendas_do_indicador(raiz, ws, ds.get("name"), status_criados[-1])
+    if somente is not None:
+        print(f"filtros do próprio cartão retirados: {retirar_filtros_do_cartao(raiz, somente)}")
+        gravar(raiz, outros, saida)
+        return
     for nome in VOLUMES:
         print(f"2. {nome}: {volume_em_meses(por_nome[nome]) if nome in por_nome else 'não existe'}")
     cores(raiz)
@@ -415,7 +427,24 @@ def main():
     print("3. laranjas trocados fora dos indicadores com meta")
     tirar_ponto_solto(raiz)
     print("4. ponto solto do SLA Cliente retirado do Protocolos Recebidos")
+    gravar(raiz, outros, saida)
 
+
+def retirar_filtros_do_cartao(raiz, planilhas):
+    """Filtro rápido preso a uma planilha convertida e que ela não tem mais (ex.: Mês/Ano dentro do cartão) sai do painel."""
+    por_nome = {w.get("name"): w for w in raiz.find("worksheets")}
+    retirados = []
+    for painel in raiz.find("dashboards"):
+        for zona in list(painel.iter("zone")):
+            nome = zona.get("name")
+            if zona.get("type-v2") == "filter" and nome in planilhas and zona.getparent() is not None:
+                if not any(f.get("column") == zona.get("param") for f in filtros(por_nome[nome])):
+                    zona.getparent().remove(zona)
+                    retirados.append(f"{painel.get('name')}: {re.sub(r'^.*\]\.', '', zona.get('param'))}")
+    return retirados
+
+
+def gravar(raiz, outros, saida):
     texto = etree.tostring(raiz, encoding="utf-8", xml_declaration=True)
     etree.fromstring(texto, etree.XMLParser(huge_tree=True))
     with zipfile.ZipFile(saida, "w", zipfile.ZIP_DEFLATED) as z:
