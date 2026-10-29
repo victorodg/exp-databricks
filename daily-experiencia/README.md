@@ -172,6 +172,8 @@ Melhorias de visualização ficam em versões novas do workbook, geradas a parti
   CF (já filtra o Tipo Protocolo); os três "Email ... - Detalhes" viram "Email Lojas - Detalhes", com o parâmetro
   "Setor do e-mail"; os cinco "Whats ... - Detalhes" viram "Whats - Detalhes", lendo a view
   `dexp_vw_mkt_whats_detalhes` com o parâmetro "Painel do WhatsApp".
+- `ferramentas/rosquinhas_para_barras_tableau.py`: as rosquinhas de SLA (Whats e os quatro apps de Resenhas) viram a
+  barra 100% horizontal do SLA Experiência do Dynamics.
 
 ## Validação contra o Tableau
 
