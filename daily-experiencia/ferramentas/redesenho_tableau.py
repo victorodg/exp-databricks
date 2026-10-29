@@ -1,8 +1,9 @@
 """Redesenho visual do workbook Daily Experiência BR (gera uma nova versão; a de entrada não muda).
 
-1. Indicadores com meta: as barras 100% de um mês só viram uma faixa com os últimos 6 meses, um bloco por mês com o %
-   do indicador, pintado pela distância da meta: verde-água dentro da meta, laranja até 10 pontos abaixo, vermelho
-   mais abaixo (as cores do "SLA ... por Fase" do Dynamics Consolidado).
+1. Indicadores com meta: as barras 100% de um mês só passam a ter o desenho do "SLA Cliente por Fase" do Dynamics
+   Consolidado: uma barra horizontal por mês (o anterior e o atual) com o % do indicador num eixo fixo de 0 a 100%,
+   linhas pontilhadas na meta e 10 pontos abaixo dela, rótulo "x% no prazo · a de b" e cor pela distância da meta:
+   verde-água dentro da meta, laranja até 10 pontos abaixo, vermelho mais abaixo.
 2. Volumes que mostravam um mês só passam a mostrar os últimos 6 meses.
 3. Laranja deixa de ser cor de série: nas visões que não são indicador com meta, os laranjas viram tons de
    azul-acinzentado (nas Resenhas, roxo e lilás, para os apps continuarem com cores diferentes).
@@ -26,32 +27,38 @@ from lxml import etree
 DENTRO, ABAIXO, MUITO_ABAIXO = "Dentro da meta", "Abaixo da meta", "Muito abaixo da meta"
 CORES_META = {DENTRO: "#76b7b2", ABAIXO: "#f28e2b", MUITO_ABAIXO: "#e15759"}
 FAIXA_ABAIXO = 0.10  # até 10 pontos abaixo da meta = laranja
-MESES = 6
+MESES = 6       # volumes
+MESES_KPI = 2   # indicadores com meta: mês anterior e atual
+MODELO_KPI = "Dynamics CB+CF - SLA Cliente por Fase"
 
 # planilha -> indicador: campo de status, valores que contam como positivos e negativos, peso e meta.
 # Metas que não estão no título das planilhas (e-mail, atendidos até 1 hora, Resenhas) ficaram em 85%.
-SLA_DYNAMICS = dict(positivos=["DENTRO DO PRAZO"], negativos=["FORA DO PRAZO"], meta=0.85)
-SLA_TEXTO = dict(positivos=["Dentro do SLA"], negativos=["Fora do SLA"])
+SLA_DYNAMICS = dict(positivos=["DENTRO DO PRAZO"], negativos=["FORA DO PRAZO"], meta=0.85, texto="no prazo",
+                    unidade="protocolos")
+SLA_TEXTO = dict(positivos=["Dentro do SLA"], negativos=["Fora do SLA"], texto="no prazo")
 KPIS = {
     "Dynamics CB+CF SLA EXP": dict(campo="SLA Experiência", legenda="SLA Experiência", **SLA_DYNAMICS),
     "Dynamics CB+CF SLA Cliente": dict(campo="SLA Cliente", legenda="SLA Cliente", **SLA_DYNAMICS),
     "Dynamics CB+CF SLA 5h": dict(campo="SLA 5 Horas", legenda="SLA 5 Horas", **SLA_DYNAMICS),
     "Dynamics CB+CF % N1 Encerrados": dict(campo="Nivel de Atendimento", legenda="Retenção N1 (encerrados)",
-                                           positivos=["N1"], negativos=["N2"], meta=0.70),
-    "Email APP NATURA": dict(campo="Status SLA Email", legenda="SLA E-mail", meta=0.85, **SLA_TEXTO),
+                                           positivos=["N1"], negativos=["N2"], meta=0.70, texto="em N1",
+                                           unidade="protocolos"),
+    "Email APP NATURA": dict(campo="Status SLA Email", legenda="SLA E-mail", meta=0.85, unidade="e-mails", **SLA_TEXTO),
     "Email EXPCB 1 Hora (2)": dict(campo="Calculation_0013859898982401", legenda="Atendidos até 1 hora",
                                    positivos=["Dentro de 1 Hora"], negativos=["Acima de 1 Hora"],
-                                   peso="Qtd Atendimentos", meta=0.85),
-    "SLA App AVON": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, **SLA_TEXTO),
-    "SLA App Consultoria": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, **SLA_TEXTO),
-    "SLA App FV": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, **SLA_TEXTO),
-    "SLA App Sempre Presente": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, **SLA_TEXTO),
+                                   peso="Qtd Atendimentos", meta=0.85, texto="em até 1 hora",
+                                   unidade="atendimentos"),
+    "SLA App AVON": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, unidade="resenhas", **SLA_TEXTO),
+    "SLA App Consultoria": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, unidade="resenhas", **SLA_TEXTO),
+    "SLA App FV": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, unidade="resenhas", **SLA_TEXTO),
+    "SLA App Sempre Presente": dict(campo="Status SLA", legenda="SLA Resenhas", meta=0.85, unidade="resenhas", **SLA_TEXTO),
     "Whats GN SLA Primeiro Contato": dict(campo="SLA do Primeiro Contato", legenda="SLA Primeiro Contato",
-                                          meta=0.95, **SLA_TEXTO),
+                                          meta=0.95, unidade="protocolos", **SLA_TEXTO),
     "WhatsApp Consolidado SLA Prim. Cont.": dict(campo="SLA do Primeiro Contato", legenda="SLA Primeiro Contato",
-                                                 meta=0.95, **SLA_TEXTO),
+                                                 meta=0.95, unidade="protocolos", **SLA_TEXTO),
     "WhatsApp Consolidado Nivel 2": dict(campo="Nível", legenda="Retenção N1 (atendimentos)", positivos=["N1"],
-                                         negativos=["N2"], peso="Qtd Atendimentos", meta=0.70),
+                                         negativos=["N2"], peso="Qtd Atendimentos", meta=0.70,
+                                         texto="em N1", unidade="atendimentos"),
 }
 
 VOLUMES = ["Dynamics CB+CF N2", "Resenhas App Avon Contagem", "Resenhas App CN Contagem", "Resenhas App FV Contagem",
@@ -118,7 +125,7 @@ def campo_de_data(ws, ds_nome):
     return max(set(achados), key=achados.count) if achados else None
 
 
-def filtro_ultimos_meses(ws, ds_nome, data):
+def filtro_ultimos_meses(ws, ds_nome, data, meses=MESES):
     """Tira os filtros de dia/mês/ano/intervalo e as seleções salvas de ações sobre a data; filtra os últimos meses."""
     view = ws.find("table/view")
     padrao = re.compile(r"\[(?:%s):%s:(?:ok|qk)\]" % ("|".join(DERIVACOES_DE_DATA + ("none",)), re.escape(data)))
@@ -132,7 +139,7 @@ def filtro_ultimos_meses(ws, ds_nome, data):
     garantir_coluna(dep, f'<column-instance column="[{data}]" derivation="MY" name="[my:{data}:ok]" pivot="key" '
                          f'type="ordinal"/>')
     novo = etree.Element("filter", {"class": "relative-date", "column": f"[{ds_nome}].[none:{data}:qk]",
-                                    "first-period": str(1 - MESES), "include-future": "true",
+                                    "first-period": str(1 - meses), "include-future": "true",
                                     "include-null": "false", "last-period": "0", "period-type-v2": "month"})
     lista = filtros(ws)
     (lista[-1] if lista else view.findall("datasource-dependencies")[-1]).addnext(novo)
@@ -162,6 +169,7 @@ def estilo_da_fonte(ds):
 
 
 def calculos_do_indicador(ds, cfg, ja_criados):
+    """Cria na fonte (uma vez por indicador) os cálculos de positivos, total, % e status da meta, e as cores do status."""
     chave = (ds.get("name"), cfg["campo"], tuple(cfg["positivos"]), tuple(cfg["negativos"]), cfg.get("peso"),
              cfg["meta"])
     if chave in ja_criados:
@@ -169,76 +177,91 @@ def calculos_do_indicador(ds, cfg, ja_criados):
     campo = f"[{cfg['campo']}]"
     peso = f"[{cfg['peso']}]" if cfg.get("peso") else "1"
     cond = lambda valores: " OR ".join(f'{campo} = "{v}"' for v in valores)
-    pct, status = novo_calculo(), novo_calculo()
-    formula_pct = (f"SUM(IF {cond(cfg['positivos'])} THEN {peso} ELSE 0 END) / "
-                   f"SUM(IF {cond(cfg['positivos'] + cfg['negativos'])} THEN {peso} ELSE 0 END)")
+    num, den, pct, status = novo_calculo(), novo_calculo(), novo_calculo(), novo_calculo()
     meta, piso = cfg["meta"], round(cfg["meta"] - FAIXA_ABAIXO, 4)
-    formula_status = (f'IF [{pct}] >= {meta} THEN "{DENTRO}" ELSEIF [{pct}] >= {piso} THEN "{ABAIXO}" '
-                      f'ELSE "{MUITO_ABAIXO}" END')
-    col_pct = etree.fromstring(f'<column caption="% {cfg["legenda"]} (meta {round(meta * 100)}%)" datatype="real" '
-                               f'default-format="p0.0%" name="[{pct}]" role="measure" type="quantitative"/>')
-    etree.SubElement(col_pct, "calculation", {"class": "tableau", "formula": formula_pct})
-    col_status = etree.fromstring(f'<column caption="Status Meta {cfg["legenda"]} ({round(meta * 100)}%)" '
-                                  f'datatype="string" name="[{status}]" role="measure" type="nominal"/>')
-    etree.SubElement(col_status, "calculation", {"class": "tableau", "formula": formula_status})
-    ds.findall("column")[-1].addnext(col_pct)
-    col_pct.addnext(col_status)
-    cor = etree.SubElement(estilo_da_fonte(ds), "encoding", attr="color", field=f"[{ds.get('name')}].[usr:{status}:nk]",
-                           type="palette")
+    rotulo = f"{cfg['legenda']} (meta {round(meta * 100)}%)"
+    definicoes = [
+        (num, f"Qtd {cfg['texto']} - {rotulo}", "integer", "quantitative",
+         f"SUM(IF {cond(cfg['positivos'])} THEN {peso} ELSE 0 END)"),
+        (den, f"Qtd total - {rotulo}", "integer", "quantitative",
+         f"SUM(IF {cond(cfg['positivos'] + cfg['negativos'])} THEN {peso} ELSE 0 END)"),
+        (pct, f"% {rotulo}", "real", "quantitative", f"[{num}] / [{den}]"),
+        (status, f"Status Meta {rotulo}", "string", "nominal",
+         f'IF [{pct}] >= {meta} THEN "{DENTRO}" ELSEIF [{pct}] >= {piso} THEN "{ABAIXO}" ELSE "{MUITO_ABAIXO}" END'),
+    ]
+    colunas = []
+    ancora = ds.findall("column")[-1]
+    for nome, legenda, tipo, natureza, formula in definicoes:
+        col = etree.Element("column", caption=legenda, datatype=tipo, name=f"[{nome}]", role="measure", type=natureza)
+        if nome == pct:
+            col.set("default-format", "p0.0%")
+        etree.SubElement(col, "calculation", {"class": "tableau", "formula": formula})
+        ancora.addnext(col)
+        ancora = col
+        colunas.append(col)
+    # o Tableau guarda a cor de um campo na fonte sem o nome da fonte na frente
+    cor = etree.SubElement(estilo_da_fonte(ds), "encoding", attr="color", field=f"[usr:{status}:nk]", type="palette")
     for valor, hexa in CORES_META.items():
         etree.SubElement(etree.SubElement(cor, "map", to=hexa), "bucket").text = f'"{valor}"'
-    ja_criados[chave] = (col_pct, col_status)
+    ja_criados[chave] = dict(zip(("num", "den", "pct", "status"), colunas))
     return ja_criados[chave]
 
 
-def kpi_em_faixa(ws, ds, cfg, ja_criados):
+def kpi_em_barras(ws, ds, cfg, ja_criados, modelo):
+    """O desenho do "SLA Cliente por Fase" (barra por linha, meta pontilhada, cor pela meta), com uma linha por mês."""
     ds_nome = ds.get("name")
     data = campo_de_data(ws, ds_nome)
     if data is None:
-        return f"sem campo de data, ficou como estava"
-    col_pct, col_status = calculos_do_indicador(ds, cfg, ja_criados)
-    pct, status = col_pct.get("name").strip("[]"), col_status.get("name").strip("[]")
+        return "sem campo de data, ficou como estava"
+    calc = calculos_do_indicador(ds, cfg, ja_criados)
+    nome = {k: c.get("name").strip("[]") for k, c in calc.items()}
     dep = dependencia(ws, ds_nome)
     for base, tipo, papel in [(cfg["campo"], "string", "dimension"), (cfg.get("peso"), "real", "measure"),
                               (data, "datetime", "dimension")]:
         if base and not base.startswith("Calculation_"):
             garantir_coluna(dep, f'<column datatype="{tipo}" name="[{base}]" role="{papel}" '
                                  f'type="{"quantitative" if tipo == "real" else "nominal"}"/>')
-    for col in (col_status, col_pct):
-        garantir_coluna(dep, etree.tostring(col).decode("utf-8"))
-    garantir_coluna(dep, f'<column-instance column="[{pct}]" derivation="User" name="[usr:{pct}:qk]" pivot="key" '
-                         f'type="quantitative"/>')
-    garantir_coluna(dep, f'<column-instance column="[{status}]" derivation="User" name="[usr:{status}:nk]" '
-                         f'pivot="key" type="nominal"/>')
-    filtro_ultimos_meses(ws, ds_nome, data)
+    for k in ("status", "pct", "den", "num"):
+        garantir_coluna(dep, etree.tostring(calc[k]).decode("utf-8"))
+    for k, sufixo in (("num", "qk"), ("den", "qk"), ("pct", "qk"), ("status", "nk")):
+        garantir_coluna(dep, f'<column-instance column="[{nome[k]}]" derivation="User" name="[usr:{nome[k]}:{sufixo}]" '
+                             f'pivot="key" type="{"nominal" if sufixo == "nk" else "quantitative"}"/>')
+    filtro_ultimos_meses(ws, ds_nome, data, MESES_KPI)
 
+    # a tabela do modelo, com os campos deste indicador
+    m_ds = modelo.find("table/view/datasources/datasource").get("name")
+    m_pct, m_num, m_status = "Calculation_897060763491704838", "Calculation_897060763489107968", "Calculation_0892037347688448"
+    texto = etree.tostring(modelo.find("table"), encoding="unicode")
+    meta, piso = cfg["meta"], round(cfg["meta"] - FAIXA_ABAIXO, 4)
+    trocas = [
+        (f"[{m_ds}].[usr:{m_pct}:qk]", f"[{ds_nome}].[usr:{nome['pct']}:qk]"),
+        (f"[{m_ds}].[usr:{m_num}:qk]", f"[{ds_nome}].[usr:{nome['num']}:qk]"),
+        (f"[{m_ds}].[cnt:Número da Ocorrência (Referente) (Ocorrência):qk]", f"[{ds_nome}].[usr:{nome['den']}:qk]"),
+        (f"[{m_ds}].[usr:{m_status}:nk]", f"[{ds_nome}].[usr:{nome['status']}:nk]"),
+        (f"[{m_ds}].[none:Fase:nk]", f"[{ds_nome}].[my:{data}:ok]"),
+        ('major-spacing="0.84999999999999998"', f'major-spacing="{meta}"'),
+        ('value="0.84999999999999998"', f'value="{meta}"'),
+        ('value="0.75"', f'value="{piso}"'),
+        ("&gt; no prazo  ·  &lt;", f"&gt; {cfg['texto']}  ·  &lt;"),
+        ("&gt; protocolos", f"&gt; {cfg.get('unidade', 'protocolos')}"),
+    ]
+    for de, para in trocas:
+        assert de in texto, de
+        texto = texto.replace(de, para)
+    nova = etree.fromstring(texto.encode("utf-8"))
+    for f in list(nova.iter("format")):
+        if f"[{m_ds}]." in (f.get("field") or ""):  # largura da coluna de mês do modelo
+            f.getparent().remove(f)
     tabela = ws.find("table")
-    ref = lambda n: f"[{ds_nome}].[{n}]"
-    estilo = etree.fromstring(f"""<style>
-      <style-rule element="cell"><format attr="text-format" field="{ref(f'usr:{pct}:qk')}" value="p0.0%"/>
-        <format attr="text-align" value="center"/><format attr="vertical-align" value="center"/></style-rule>
-      <style-rule element="header"><format attr="font-size" value="8"/></style-rule>
-      <style-rule element="datalabel"><format attr="color-mode" value="auto"/><format attr="font-weight" value="bold"/>
-        <format attr="font-size" value="11"/></style-rule>
-      <style-rule element="table"><format attr="background-color" value="#00000000"/></style-rule>
-      <style-rule element="worksheet"><format attr="display-field-labels" scope="cols" value="false"/></style-rule>
-    </style>""")
-    panes = etree.fromstring(f"""<panes><pane selection-relaxation-option="selection-relaxation-allow">
-      <view><breakdown value="auto"/></view><mark class="Square"/>
-      <encodings><color column="{ref(f'usr:{status}:nk')}"/><text column="{ref(f'usr:{pct}:qk')}"/></encodings>
-      <style><style-rule element="mark"><format attr="mark-labels-show" value="true"/>
-        <format attr="mark-labels-cull" value="false"/></style-rule></style>
-    </pane></panes>""")
-    for antigo, novo in [(tabela.find("style"), estilo), (tabela.find("panes"), panes)]:
+    for tag in ("style", "panes", "rows", "cols"):
+        antigo, novo = tabela.find(tag), nova.find(tag)
         if antigo is None:
-            tabela.find("view").addnext(novo)
+            tabela.append(novo)
         else:
             novo.tail = antigo.tail
             tabela.replace(antigo, novo)
-    tabela.find("rows").text = None
-    tabela.find("cols").text = ref(f"my:{data}:ok")
-    acrescentar_ao_titulo(ws, f"últimos {MESES} meses · cor pela meta")
-    return f"faixa de {MESES} meses de {cfg['campo']} por {data}, meta {round(cfg['meta'] * 100)}%"
+    acrescentar_ao_titulo(ws, "mês anterior e atual · cor pela meta")
+    return f"barras do mês anterior e atual de {cfg['campo']} por {data}, meta {round(meta * 100)}%"
 
 
 def legendas_do_indicador(raiz, ws, ds_nome, status):
@@ -381,8 +404,8 @@ def main():
             continue
         cor = next(e.get("column") for e in ws.iter("color") if e.get("column"))
         ds = fontes[re.match(r"\[([^\]]+)\]", cor).group(1)]
-        print(f"1. {nome}: {kpi_em_faixa(ws, ds, cfg, ja_criados)}")
-        _, col_status = calculos_do_indicador(ds, cfg, ja_criados)
+        print(f"1. {nome}: {kpi_em_barras(ws, ds, cfg, ja_criados, por_nome[MODELO_KPI])}")
+        col_status = calculos_do_indicador(ds, cfg, ja_criados)["status"]
         status_criados.append(col_status.get("name").strip("[]"))
         legendas_do_indicador(raiz, ws, ds.get("name"), status_criados[-1])
     for nome in VOLUMES:

@@ -174,9 +174,10 @@ Melhorias de visualização ficam em versões novas do workbook, geradas a parti
   `dexp_vw_mkt_whats_detalhes` com o parâmetro "Painel do WhatsApp".
 - `ferramentas/rosquinhas_para_barras_tableau.py`: as rosquinhas de SLA (Whats e os quatro apps de Resenhas) viram a
   barra 100% horizontal do SLA Experiência do Dynamics.
-- `ferramentas/redesenho_tableau.py`: indicadores com meta viram uma faixa com os últimos 6 meses pintada pela
-  distância da meta (verde-água dentro, laranja até 10 pontos abaixo, vermelho mais abaixo); volumes de um mês
-  passam a mostrar 6 meses; o laranja sai das visões que não são indicador; filtros de data sem fim fixo.
+- `ferramentas/redesenho_tableau.py`: indicadores com meta ganham o desenho do "SLA Cliente por Fase" (barra do mês
+  anterior e do atual, meta pontilhada, cor pela meta: verde-água dentro, laranja até 10 pontos abaixo, vermelho
+  mais abaixo); volumes de um mês passam a mostrar 6 meses; o laranja sai das visões que não são indicador; filtros
+  de data sem fim fixo.
 
 ## Validação contra o Tableau
 
