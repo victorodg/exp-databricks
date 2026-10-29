@@ -164,6 +164,15 @@ Tableau Desktop:
 .venv\Scripts\python.exe ferramentas	rocar_fontes_tableau.py <original.twbx> <modelo.twbx> <saída.twbx>
 ```
 
+Melhorias de visualização ficam em versões novas do workbook, geradas a partir da anterior (a de entrada não muda):
+
+- `ferramentas/melhorias_tableau.py`: SLA por fase no Dynamics CB e CF; filtro DENTRO/FORA DO PRAZO nas planilhas de
+  SLA que mostram a fatia de cada valor (para o EXPURGADO não aparecer).
+- `ferramentas/unificar_paineis_tableau.py`: junta os painéis repetidos. O Dynamics Consolidado substitui o CB e o
+  CF (já filtra o Tipo Protocolo); os três "Email ... - Detalhes" viram "Email Lojas - Detalhes", com o parâmetro
+  "Setor do e-mail"; os cinco "Whats ... - Detalhes" viram "Whats - Detalhes", lendo a view
+  `dexp_vw_mkt_whats_detalhes` com o parâmetro "Painel do WhatsApp".
+
 ## Validação contra o Tableau
 
 Baixe os extracts (.tdsx) do Tableau Cloud para `validacao\extracts\` (fora do Git) e rode, no Git Bash:
