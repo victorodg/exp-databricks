@@ -49,15 +49,20 @@ coluna a coluna) e `ferramentas/consultar_extract.py` (mesma consulta nos dois l
 ## Expurgo de SLA por tarefa (29/10/2026)
 
 Antes só existia o expurgo de nível (aba "Página1" da planilha Expurgo: o nível da ocorrência passa a ser o da planilha).
-Para tirar tarefas do indicador de SLA 24h foi criada a aba **"Expurgo SLA"** na mesma planilha, uma linha por tarefa:
+Para tirar tarefas dos indicadores de SLA foi criada a aba **"Expurgo SLA"** na mesma planilha, uma linha por tarefa:
 Número da Ocorrência, Tarefa (o "(Não Modificar) Tarefa" do relatório do Dynamics), Etapa, Término Real, Indicador
-("SLA Experiência"), Data Expurgo, Mês de Expurgo, Incidente, Motivo e Aprovado por. A chave é a tarefa e não a
+("Todos os SLAs"), Data Expurgo, Mês de Expurgo, Incidente, Motivo e Aprovado por. A chave é a tarefa e não a
 ocorrência, porque uma ocorrência tem tarefas de Fase 1 e de Fase 2 e só algumas são expurgadas.
 
-O SLA Experiência dessas tarefas passa a ser **"EXPURGADO"**; como o % SLA EXP do workbook é dentro ÷ (dentro + fora),
-elas saem da conta sem mudar o Tableau. A regra está na gold (`src/gold/dynamics_e_resenhas.py`) e nas etapas
-"Expurgo SLA" do fluxo no Prep (acrescentadas por `ferramentas/adicionar_expurgo_sla_prep.py`).
+As tarefas da aba saem de **todos os SLAs**: SLA Experiência, SLA Cliente e SLA 5 Horas passam a ser **"EXPURGADO"**.
+Continuam contando nos volumes (encerrados, tops), mas não como dentro nem como fora do prazo. A regra está na gold
+(`src/gold/dynamics_e_resenhas.py`) e nas etapas "Expurgo SLA" do fluxo no Prep (`ferramentas/adicionar_expurgo_sla_prep.py`).
 
-Primeiro caso: 94 tarefas do SEV 1 [INC1203571] Captação de Pedidos, aprovadas pela Valéria. Com o cálculo do painel
-(horas úteis), 76 delas estavam fora do prazo e 18 dentro; a lista aprovada foi aplicada inteira.
+No workbook, os percentuais dentro ÷ (dentro + fora) já ignoram o EXPURGADO, e as planilhas de SLA Cliente já filtravam
+só DENTRO DO PRAZO / FORA DO PRAZO. As planilhas que mostram a fatia de cada valor sobre o total de registros (SLA EXP do
+CB, do CF e do Consolidado, e SLA 5h do Consolidado) ganharam esse mesmo filtro; sem ele o EXPURGADO aparece como uma
+fatia e reduz o percentual dentro do prazo (`ferramentas/melhorias_tableau.py`, filtro_sla_expurgado).
 
+Primeiro caso: 94 tarefas do SEV 1 [INC1203571] Captação de Pedidos, pedido da Suelen com aprovação da Valéria em
+27/10/2026. Com o cálculo do painel (horas úteis), 76 delas estavam fora do prazo de 24h e 18 dentro; a lista aprovada
+foi aplicada inteira.

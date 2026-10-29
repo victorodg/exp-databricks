@@ -5,6 +5,9 @@ Melhorias implementadas:
     (uma barra por mês com o % em cima, que vira um quadrado quando o filtro deixa só um mês) pelas 3 planilhas
     "SLA ... por Fase" já usadas no Dynamics Consolidado, uma barra horizontal por fase. As planilhas novas são cópias
     das do Consolidado, ligadas aos filtros e ações do painel de destino e filtradas pelo tipo de protocolo.
+  filtro_sla_expurgado: as planilhas que mostram a fatia de cada valor de SLA Experiência / SLA 5 Horas sobre o total
+    de registros passam a considerar só "DENTRO DO PRAZO" e "FORA DO PRAZO", como as de SLA Cliente já faziam. Assim as
+    tarefas expurgadas (SLA = "EXPURGADO", aba "Expurgo SLA") não aparecem nem entram no percentual.
 
 Uso (a partir da pasta daily-experiencia):
   .venv\\Scripts\\python.exe ferramentas\\melhorias_tableau.py <entrada.twbx> <saída.twbx>
@@ -153,6 +156,37 @@ def dynamics_por_fase(raiz):
     return removidas
 
 
+# planilha -> campo de SLA que ela mostra como fatias do total
+PLANILHAS_SLA = {
+    "Dynamics CB SLA EXP": "SLA Experiência", "Dynamics CF SLA EXP": "SLA Experiência",
+    "Dynamics CB+CF SLA EXP": "SLA Experiência", "Dynamics CB+CF SLA 5h": "SLA 5 Horas",
+}
+MODELO_FILTRO_SLA = "Dynamics CB+CF SLA Cliente"  # já filtra SLA Cliente em DENTRO DO PRAZO / FORA DO PRAZO
+
+
+def filtro_sla_expurgado(raiz):
+    por_nome = {w.get("name"): w for w in raiz.find("worksheets")}
+    modelo = next(f for f in filtros(por_nome[MODELO_FILTRO_SLA])
+                  if coluna_do_filtro(f) == "[none:SLA Cliente:nk]")
+    for nome, campo in PLANILHAS_SLA.items():
+        ws = por_nome.get(nome)
+        if ws is None:
+            continue
+        instancia = f"[none:{campo}:nk]"
+        if any(coluna_do_filtro(f) == instancia for f in filtros(ws)):
+            continue
+        novo = etree.fromstring(etree.tostring(modelo).replace(b"[none:SLA Cliente:nk]", instancia.encode("utf-8")))
+        ultimo = filtros(ws)[-1]
+        fonte = ultimo.get("column").split("].[")[0] + "]"
+        novo.set("column", f"{fonte}.{instancia}")
+        novo.tail = ultimo.tail
+        ultimo.addnext(novo)
+        slices = ws.find("table/view/slices")
+        if slices is not None:
+            etree.SubElement(slices, "column").text = novo.get("column")
+        print(f"+ {nome}: só DENTRO DO PRAZO e FORA DO PRAZO em {campo}")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     entrada, saida = Path(sys.argv[1]), Path(sys.argv[2])
@@ -161,6 +195,7 @@ def main():
         raiz = etree.fromstring(z.read(twb), etree.XMLParser(huge_tree=True))
 
         removidas = dynamics_por_fase(raiz)
+        filtro_sla_expurgado(raiz)
 
         texto = etree.tostring(raiz, encoding="utf-8", xml_declaration=True)
         # nenhuma referência às planilhas removidas pode sobrar
