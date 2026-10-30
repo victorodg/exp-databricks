@@ -1,0 +1,130 @@
+FLUXOGRAMA - AUTOMAÇÃO MKTZAP
+
++--------------------------------------------+
+| INÍCIO                                     |
+| Período: dia 1º do mês atual até hoje      |
++--------------------------------------------+
+                     |
+                     v
+          +-----------------------+
+          | O mês anterior já     |
+          | foi fechado?          |
+          | (Golds do mês inteiro |
+          | gerados após o último |
+          | dia, nas 8 bases)     |
+          +-----------------------+
+            |                   |
+           SIM                 NÃO (e hoje é
+            |                   |   até o dia 10)
+            |                   v
+            |      +-----------------------------+
+            |      | Inclui também o mês         |
+            |      | anterior INTEIRO            |
+            |      | (2 períodos nesta execução) |
+            |      +-----------------------------+
+            |                   |
+            +--------+----------+
+                     |
+                     v
++--------------------------------------------+
+| Abre o Chrome e entra no MKTZap            |
+| (natura.mktzap.com.br) com login salvo     |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| Para cada operação:                        |
+| 27 - Brasil > 1531 - Hispana > 1990 - NCC  |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| Troca para a empresa da operação           |
++--------------------------------------------+
+                     |
+                     v
+            +-------------------+
+            | Conseguiu trocar? |
+            +-------------------+
+              |               |
+             SIM             NÃO
+              |               |
+              |               v
+              |      +-----------------------+
+              |      | Registra o erro e     |
+              |      | pula a operação       |
+              |      +-----------------------+
+              v
++--------------------------------------------+
+| BAIXA OS 3 RELATÓRIOS DE CADA PERÍODO      |
+|                                            |
+| 1. Analítico (CSV, via fila de background; |
+|    atalho "Este mês" ou "Mês passado")     |
+| 2. Enquetes C-SAT (via fila de background) |
+| 3. Tickets (download direto)               |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| Salva os arquivos BRUTOS na máquina local  |
+| downloads_brutos\AAAAMM\operação\          |
++--------------------------------------------+
+                     |
+                     v
+            +--------------------+
+            | Falta alguma       |-- SIM --> volta e processa a
+            | operação?          |           próxima operação
+            +--------------------+
+                     |
+                    NÃO
+                     v
++--------------------------------------------+
+| Fecha o Chrome e confere os 9 arquivos     |
+| por período (3 relatórios x 3 operações)   |
+| Lista o que falhou e apaga os temporários  |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| TRATAMENTO (por relatório/operação/período)|
+|                                            |
+| 1. Limpa os textos (acentos, quebras de    |
+|    linha, espaços)                         |
+| 2. Ajusta as colunas para ficarem iguais   |
+|    às da planilha consolidada              |
+| 3. Aplica as regras específicas:           |
+|    - Brasil: regra da Qtd Atendimentos     |
+|    - Hispana: renomeia colunas             |
+|    - NCC: descarta a coluna "telefone"     |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| Gera o arquivo GOLD (CSV tratado)          |
+| Drive: pre-processing\AAAAMM\operação\     |
+| (um Gold por período, no mês dele)         |
+| (se já existir, guarda a versão anterior)  |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| ATUALIZA A PLANILHA CONSOLIDADA (Excel)    |
+|                                            |
+| 1. Abre a planilha histórica               |
+| 2. Remove as linhas do(s) mês(es) baixados |
+| 3. Cola as linhas dos arquivos Gold        |
+| 4. Salva por cima (os demais meses         |
+|    não são alterados)                      |
++--------------------------------------------+
+                     |
+                     v
++--------------------------------------------+
+| FIM                                        |
+| Planilhas atualizadas no Drive, prontas    |
+| para alimentar os dashboards do Tableau    |
++--------------------------------------------+
+
+
+OBSERVAÇÃO
+O relatório de Tickets do NCC é baixado, mas não passa pelas etapas de
+tratamento e atualização da planilha (fica só como arquivo bruto).

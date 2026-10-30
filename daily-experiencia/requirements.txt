@@ -2,5 +2,10 @@ databricks-sdk==0.156.0
 python-calamine==0.9.0
 openpyxl==3.1.5
 lxml==6.1.3
+# publicação das fontes no Tableau Cloud
+pyarrow==26.0.0
+keyring==25.7.0
+tableauserverclient==0.42
+tableauhyperapi==0.0.26963
 # testes locais
 pytest==9.1.1

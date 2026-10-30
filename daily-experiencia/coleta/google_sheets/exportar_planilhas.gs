@@ -35,6 +35,13 @@ const PLANILHAS = {
   ticket_medio: '1A_VHAujNp0oYAnAnNA_xuWBjT6GsWKJ-jhIC6d4a06s',
   healthcheck_2025: '1j_CTBASV-2p_WWwZTnMY_MlizYPanlu4mMBm20zhD7g',
   resenhas_appsheets: '1RAFYqizyyX6H7FCzWZdog2vTS3Hbh3TOfkwt2pdHTUA',
+  // Daily Hispana
+  auxiliar_hispana: '1zjTNpqmyoAWu-WLqV2nLzYNJp0Las6u_mMQf3zgLf3c',
+  registro_de_grupos_hispana: '1LVISJ8GsoVgBizLomMHWkKmFIur8MfFmoFZFuY3YX7U',
+  resenhas_ois: '1FEqQXMCU10tqtJyAd5gULEQD24ZZV1BKOwZyJID7SAE',
+  ticket_medio_hispana: '1l9B0QkiZiOXAn545u1Js3gligsA8iOW2HbfSwUpwZZE',
+  ticket_medio_por_pais: '1CGjLnV4zgf3toikmBZwt6iXxND9HzQUVy6PxJpHJpAU',
+  base_exento: '1XjUlJog7movWv6pm3YKhkkI_zcqVeY8bTex9xbFCwpA',
 };
 
 function exportarPlanilhas() {

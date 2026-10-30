@@ -53,6 +53,20 @@ SAIDAS = {
     "HC Exp Brasil": "dexp_gold_mkt_hc_exp_brasil",
 }
 
+# Daily Hispana: extracts em validacao/extracts_hispana
+EXTRACTS_HISPANA = RAIZ / "validacao" / "extracts_hispana"
+SAIDAS_HISPANA = {
+    "Base MKT OIS": "dexp_gold_hispana_base_mkt",
+    "Base MKT HC OIS": "dexp_gold_hispana_base_mkt_hc",
+    "Base MKT Lojas OIS": "dexp_gold_hispana_base_mkt_lojas",
+    "MKT Hispana Completo": "dexp_gold_hispana_completo",
+    "Experiencia Hispana Produtividade": "dexp_gold_hispana_produtividade",
+    "Resenhas OIS": "dexp_gold_hispana_resenhas",
+    "AppSheets Resenhas OIs": "dexp_gold_hispana_appsheets_resenhas",
+    "Experiencia Hispana - Chamados Servicenow": "dexp_gold_hispana_chamados_servicenow",
+    "Ticket Medio Hispana": "dexp_gold_hispana_ticket_medio",
+}
+
 # tipo do Hyper -> tipo do Databricks
 TIPOS = {"TEXT": "STRING", "BIG_INT": "BIGINT", "INT": "INT", "SMALL_INT": "INT", "DOUBLE": "DOUBLE",
          "DATE": "DATE", "TIMESTAMP": "TIMESTAMP", "BOOL": "BOOLEAN"}
@@ -144,6 +158,9 @@ def main():
         definicoes = []
         for extract, gold in SAIDAS.items():
             colunas = colunas_extract(hyper, EXTRACTS / f"{extract}.tdsx", pasta)
+            definicoes.append(definicao_view(extract, gold, colunas, tipos_gold(gold)))
+        for extract, gold in SAIDAS_HISPANA.items():
+            colunas = colunas_extract(hyper, EXTRACTS_HISPANA / f"{extract}.tdsx", pasta)
             definicoes.append(definicao_view(extract, gold, colunas, tipos_gold(gold)))
         for view, (extract, partes) in UNIOES.items():
             colunas = colunas_extract(hyper, EXTRACTS / f"{extract}.tdsx", pasta)

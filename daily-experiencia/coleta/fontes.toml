@@ -11,7 +11,7 @@ schema = "sandbox.sustentacao_bau_experiencias"
 warehouse = "dcb43c45e3a55fe4"
 
 [origens]
-mktzap = 'C:\Users\vyoitio\OneDrive - Sonda S.A\Documentos\logic\mktzap\downloads_brutos'
+mktzap = 'C:\Users\vyoitio\Documents\logic-local\mktzap\downloads_brutos'
 drive = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados'
 # Pasta onde o Apps Script (google_sheets/exportar_planilhas.gs) grava as cópias .xlsx
 google_sheets = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados\auto\google_sheets'
@@ -40,6 +40,15 @@ app_natura = 'EXP BR\Resenhas\App Natura.xlsx'
 app_avon = 'EXP BR\Resenhas\App_Avon.xlsx'
 consultoria_natura = 'EXP BR\Resenhas\Consultoria Natura.xlsx'
 forca_de_vendas = 'EXP BR\Resenhas\Forca de Vendas.xlsx'
+# Daily Hispana
+mkt_analitico_hispana = 'EXP OIS\MKT\MKT Analitico Hispana.xlsx'
+mkt_hispana_completo = 'EXP OIS\MKT\MKT Hispana Completo.xlsx'
+tickets_hispana = 'EXP OIS\MKT\Tickets Hispana.xlsx'
+base_mtk = 'EXP OIS\MKT\BASE MTK.xlsx'
+base_mtk_historico = 'EXP OIS\MKT\BASE MTK Historico.xlsx'
+base_sn_ois = 'EXP OIS\SERVICE NOW\BASE SN OIS.xlsx'
+resenhas_latam = 'EXP OIS\Resenhas\Resenhas Latam.xlsx'
+mi_negocio = 'EXP OIS\Resenhas\Mi Negocio.xlsx'
 
 # Cópias das Google Sheets: mesmos nomes usados em PLANILHAS no exportar_planilhas.gs.
 [google_sheets]
@@ -56,4 +65,57 @@ arquivos = [
     "ticket_medio",
     "healthcheck_2025",
     "resenhas_appsheets",
+    # Daily Hispana
+    "auxiliar_hispana",
+    "registro_de_grupos_hispana",
+    "resenhas_ois",
+    "ticket_medio_hispana",
+    "ticket_medio_por_pais",
+    "base_exento",
 ]
+
+# Fontes no Tableau Cloud (publicar_tableau.py): extrações que se atualizam sozinhas a partir das views.
+# A fonte de referência identifica o projeto, porque há vários projetos com o mesmo nome em pastas diferentes.
+# O prefixo evita substituir qualquer fonte que já exista no projeto.
+[tableau]
+servidor = "https://prod-useast-a.online.tableau.com"
+site = "onlinenaturaco"
+token_nome = "dexp-publicacao"
+projeto = "3. SANDBOX"
+fonte_referencia = "test-hc_exp_brasil"
+prefixo = "dexp - "
+horario_atualizacao = "09:30"
+
+[tableau.databricks]
+servidor = "dbc-02543f96-daa5.cloud.databricks.com"
+caminho_http = "/sql/1.0/warehouses/dcb43c45e3a55fe4"
+
+# nome da fonte -> view
+[tableau.fontes]
+"HC Exp Brasil" = "dexp_vw_mkt_hc_exp_brasil"
+"Histórico Backlog Diário" = "dexp_vw_mkt_historico_backlog_diario"
+"MKT Brasil Backlog" = "dexp_vw_mkt_brasil_backlog"
+"Requisição Eventual EXP BR" = "dexp_vw_mkt_requisicao_eventual"
+"Ticket Medio Exp Br" = "dexp_vw_mkt_ticket_medio"
+"Exp Brasil Dynatrace" = "dexp_vw_mkt_exp_brasil_dynatrace"
+"MKT Brasil Completo" = "dexp_vw_mkt_brasil_completo"
+"MKT Brasil Completo Nivel" = "dexp_vw_mkt_brasil_completo_nivel"
+"MKT Email Experiencia CB" = "dexp_vw_mkt_email_experiencia_cb"
+"MKT Emails de Lojas" = "dexp_vw_mkt_emails_de_lojas"
+"MKT BRASIL - WhatsApp" = "dexp_vw_mkt_brasil_whatsapp"
+"MKT Whats Detalhes" = "dexp_vw_mkt_whats_detalhes"
+"Experiencia Brasil Nivel" = "dexp_vw_mkt_experiencia_brasil_nivel"
+"Dynamics - Base para Rechamada" = "dexp_vw_dynamics_rechamada"
+"Dynamics - Termino Real" = "dexp_vw_dynamics_tarefas"
+"EXPBR - Chamados Servicenow" = "dexp_vw_servicenow_chamados"
+"Resenhas EXP BR AppSheets" = "dexp_vw_resenhas_appsheets"
+"Resenhas Brasil" = "dexp_vw_resenhas_brasil"
+# Daily Hispana (Experiencia Hispana Produtividade tem view, mas o painel não a usa)
+"Base MKT OIS" = "dexp_vw_hispana_base_mkt"
+"Base MKT HC OIS" = "dexp_vw_hispana_base_mkt_hc"
+"Base MKT Lojas OIS" = "dexp_vw_hispana_base_mkt_lojas"
+"MKT Hispana Completo" = "dexp_vw_hispana_completo"
+"Resenhas OIS" = "dexp_vw_hispana_resenhas"
+"AppSheets Resenhas OIs" = "dexp_vw_hispana_appsheets_resenhas"
+"Experiencia Hispana - Chamados Servicenow" = "dexp_vw_hispana_chamados_servicenow"
+"Ticket Medio Hispana" = "dexp_vw_hispana_ticket_medio"

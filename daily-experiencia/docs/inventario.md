@@ -34,7 +34,7 @@ Dynamics e Resenhas ──(Dynamics Nivel)──► MKT
 
 | Fonte | Tipo | Aba | Local | ID |
 |---|---|---|---|---|
-| MKT_Reativos (Analítico MKTZap Brasil) | xlsx | Sheet1 | `EXP BR\MKT` (oficial; `auto\mktzap\27 - Brasil` é o destino da automação) | `1n3X3Njk37qoH0Mprf8SH2fr2AVIBVJYE` |
+| MKT_Reativos (Analítico MKTZap Brasil) | xlsx | Sheet1 | `EXP BR\MKT` (oficial; desde 30/10/2026 é também o destino da automação, antes `auto\mktzap\27 - Brasil`) | `1n3X3Njk37qoH0Mprf8SH2fr2AVIBVJYE` |
 | MKT Reativos - Historico ate Out25 | xlsx | Sheet1 | `EXP BR\MKT` | `1owprt-DlQNngTKerXeXwWLv0p2A6lKmI` |
 | Tickets Brasil (MKTZap) | xlsx | Planilha1 | `EXP BR\MKT` | `13VyrKDCu1POwQFYwZJe9WnAYLejUYX15` |
 | MKT Brasil Completo | xlsx | Sheet1 | `EXP BR\MKT` (cópia também em `auto\mktzap\27 - Brasil`) | `1Wb3UV8OKS983YvrTAIknEdTqzyTjDtQC` |
@@ -71,6 +71,55 @@ Dynamics e Resenhas ──(Dynamics Nivel)──► MKT
 | MKT | Histórico < 202610 · A partir de 202610 |
 | Dynamics | Data Corte (Nov a Dez/2025) · Até 2025 · Dados a partir de 2026 |
 | Dynamics | Ajuste dos dias 24, 25 e 31 (feriados de dez/2025 no cálculo de horas úteis) |
+
+## Daily Hispana (levantado em 30/10/2026, migração em andamento)
+
+Fluxo `logic\tableau\Daily Experiencia OIS.tfl`, especificação em `docs/fluxos/hispana.md`. Painel `logic\tableau\Experiência Hispana - Daily.twbx` (98 planilhas, 14 painéis). Na produção, os extracts foram atualizados por volta das 9h20 em 30/10.
+
+### Fontes
+
+Caminhos relativos a `Fontes de Dados`.
+
+| Fonte | Tipo | Aba | Local | ID | Etapas |
+|---|---|---|---|---|---|
+| MKT Analitico Hispana | xlsx | Planilha1 | `EXP OIS\MKT` | `19hVZLPMuvfwfJzI9SMpGvy5gvGpyoOml` | [3] [11] |
+| MKT Hispana Completo | xlsx | Sheet1 | `EXP OIS\MKT` | `1uc2dNuJTPvBkeOcJkqFw0C6UNylwiAzJ` | [1] |
+| Tickets Hispana | xlsx | Planilha1 | `EXP OIS\MKT` | `1o54zZFpWqP1jVsn0EjvXv7bMZ9W64T6j` | [9] |
+| BASE MTK | xlsx | Base | `EXP OIS\MKT` | `1oH0JZAsPaIxeWTD3IQPZcZ9btOMGJ2SY` | [8] [14] |
+| BASE MTK Historico | xlsx (108 MB) | Base | `EXP OIS\MKT` | `1PYQSCpV-9LWXj8ceYRcorWFZvF9AwhG6` | [7] [12] |
+| BASE SN OIS | xlsx | Page 1 | `EXP OIS\SERVICE NOW` | `1Iuo1gldMiYWMunv8-MwZ3lEyoM3rYuJU` | [19] |
+| Resenhas Latam | xlsx | in | `EXP OIS\Resenhas` | `1cgHX2ukjgLEJu69i1jNPEhk-qI20j52Q` | [17] |
+| Mi Negocio | xlsx | reviews_reviews_net.natura.mine | `EXP OIS\Resenhas` | `1SxY9VozokY6gDbHNmF8V4mZDDukjrpWF` | [18] |
+| App Natura | xlsx | reviews_reviews_net.natura.semp | `EXP BR\Resenhas` (já no pipeline) | `17fNDVkXVlhggmZybz8diaiklXKpjU4i1` | [6] |
+| App_Avon | xlsx | reviews_reviews_com.naturaeco.a | `EXP BR\Resenhas` (já no pipeline) | `1PXHgELzJ5yqNgcgHLNW9TeKEAnaAv2Ve` | [13] |
+| Auxiliar Hispana | gsheet | Funcao do Sistema | | `1zjTNpqmyoAWu-WLqV2nLzYNJp0Las6u_mMQf3zgLf3c` | [2] |
+| Consolidado - Registro de Grupos | gsheet | Página1 | `EXP OIS\MKT` | `1LVISJ8GsoVgBizLomMHWkKmFIur8MfFmoFZFuY3YX7U` | [4] |
+| Resenhas OIs | gsheet | BaseDados | | `1FEqQXMCU10tqtJyAd5gULEQD24ZZV1BKOwZyJID7SAE` | [5] |
+| Ticket Medio Hispana | gsheet | Ticket Medio | `EXP OIS\Ticket Medio` | `1l9B0QkiZiOXAn545u1Js3gligsA8iOW2HbfSwUpwZZE` | [10] |
+| Ticket Medio por Pais | gsheet | Ticket Medio | `EXP OIS\Ticket Medio` | `1CGjLnV4zgf3toikmBZwt6iXxND9HzQUVy6PxJpHJpAU` | [15] |
+| Base Exento | gsheet | Página1 | `EXP OIS\MKT` | `1XjUlJog7movWv6pm3YKhkkI_zcqVeY8bTex9xbFCwpA` | [16] |
+
+App Natura e App_Avon são os mesmos arquivos do fluxo Brasil, mas nas etapas [6] e [13] há filtro de idioma (`[Reviewer Language]="es"` em [6]).
+
+### Saídas (extracts em `4. DATASOURCES`, linhas em 30/10/2026)
+
+| Saída | Etapa | Linhas | Colunas | Planilhas do painel |
+|---|---|---|---|---|
+| Base MKT OIS | [106] | 254.072 | 67 | 43 |
+| Resenhas OIS | [54] | 443.362 | 25 | 11 |
+| Experiencia Hispana Produtividade | [114] | 245.702 | 15 | Não usada |
+| MKT Hispana Completo | [82] | 42.441 | 31 | 2 |
+| Experiencia Hispana - Chamados Servicenow | [60] | 31.222 | 37 | 18 |
+| Base MKT HC OIS | [105] | 5.513 | 67 | 4 |
+| AppSheets Resenhas OIs | [43] | 2.611 | 20 | 8 |
+| Base MKT Lojas OIS | [103] | 935 | 67 | 15 |
+| Ticket Medio Hispana | [38] | 147 | 3 | 1 |
+
+O painel também lê direto a Google Sheet `Healthcheck Paises Consolidado` (`EXP OIS\Healthcheck`), que fica como está. Os extracts usados como gabarito estão em `validacao\extracts_hispana\`.
+
+### Tamanho
+
+114 etapas: 19 entradas, 68 limpezas, 13 uniões, 5 joins, 9 saídas.
 
 ## Tamanho dos fluxos
 

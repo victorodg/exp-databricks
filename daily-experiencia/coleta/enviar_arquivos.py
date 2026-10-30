@@ -1,7 +1,7 @@
 """Envia os arquivos de entrada do Daily Experiência BR para o volume dexp_landing no Databricks.
 
 Fontes (configuradas em fontes.toml):
-  - mktzap:        brutos baixados pelo Selenium (logic\\mktzap\\downloads_brutos\\<AAAAMM>\\<operação>\\)
+  - mktzap:        brutos baixados pelo Selenium (logic-local\\mktzap\\downloads_brutos\\<AAAAMM>\\<operação>\\)
   - drive:         planilhas .xlsx do Drive compartilhado
   - google_sheets: cópias .xlsx das Google Sheets geradas pelo Apps Script (google_sheets/exportar_planilhas.gs)
 

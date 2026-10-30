@@ -6,7 +6,7 @@ import pytest
 
 from dexp.leitura import ler_csv_mktzap, ler_excel, normalizar_colunas, valor_texto
 
-BRUTOS_LOCAIS = Path(r"C:\Users\vyoitio\OneDrive - Sonda S.A\Documentos\logic\mktzap\downloads_brutos")
+BRUTOS_LOCAIS = Path(r"C:\Users\vyoitio\Documents\logic-local\mktzap\downloads_brutos")
 
 
 def test_normalizar_colunas():

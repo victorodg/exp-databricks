@@ -14,6 +14,10 @@ CONVERSORES = {
     # O Prep tira os espaços do fim dos textos ao ler as planilhas ('Pay ' vira 'Pay'); os do começo ficam.
     "texto": lambda nome: F.rtrim(F.col(f"`{nome}`")),
     "data_hora": lambda nome: tb.data_hora(F.col(f"`{nome}`")),
+    # Coluna com células de data sem formato: o Excel guarda o número de série (45980.93) e o Prep lê como data.
+    "data_hora_ou_serial": lambda nome: F.coalesce(
+        tb.data_hora(F.col(f"`{nome}`")),
+        F.expr(f"cast(round((try_cast(`{nome}` AS DOUBLE) - 25569) * 86400) AS TIMESTAMP)")),
     "data": lambda nome: tb.data(F.col(f"`{nome}`")),
     "inteiro": tb.inteiro,
     "decimal": lambda nome: F.expr(f"try_cast(`{nome}` AS DOUBLE)"),
@@ -111,6 +115,9 @@ _REVIEWS_GOOGLE_PLAY = [
 
 _TIPOS_ANALITICO = {"data_contato": "data_hora", "encerrado_em": "data_hora", "qtd_atendimentos": "inteiro",
                     "qtde_mensagens": "inteiro", "quantidade_de_tickets": "inteiro"}
+
+_TIPOS_ANALITICO_HISPANA = {"data_contato": "data_hora", "encerrado_em": "data_hora_ou_serial", "cant_de_atendimientos": "inteiro",
+                            "solucao_aplicada": "inteiro", "qtde_mensagens": "inteiro"}
 
 # tabelas que só existem quando a aba de origem existe (FonteExcel opcional)
 OPCIONAIS = {"expurgo_dynamics_sla"}
@@ -241,4 +248,28 @@ TABELAS = {
     "mkt_healthcheck": (["healthcheck_2025"], MesmasColunas({
         "data": "data", "qtde_agendamento": "inteiro", "qtde_recebidos": "inteiro", "qtde_protocolos": "inteiro"})),
     "mkt_salesforce_analistas": (["salesforce_cf_encerrados_analistas"], MesmasColunas()),
+    # --- fontes do fluxo Hispana ---
+    "hispana_analitico": (["mkt_analitico_hispana"], MesmasColunas(_TIPOS_ANALITICO_HISPANA)),
+    "hispana_base_mtk": (["base_mtk"], MesmasColunas(_TIPOS_ANALITICO_HISPANA)),
+    "hispana_base_mtk_historico": (["base_mtk_historico"], MesmasColunas(_TIPOS_ANALITICO_HISPANA)),
+    "hispana_completo": (["mkt_hispana_completo"], MesmasColunas({
+        "atendimentos_first_message_at": "data_hora", "data_criacao": "data_hora", "inicio_atendimento": "data_hora",
+        "atendido": "data_hora", "data_conclusao": "data_hora", "ultima_mensagem": "data_hora",
+        "qtde_mensagens": "inteiro"})),
+    "hispana_tickets": (["tickets_hispana"], MesmasColunas({
+        "data_de_criacao_do_atendimento": "data_hora", "data_de_finalizacao": "data_hora",
+        "data_de_criacao_do_ticket": "data_hora", "cant_de_atendimientos": "inteiro"})),
+    "hispana_auxiliar": (["auxiliar_hispana"], MesmasColunas()),
+    "hispana_registro_de_grupos": (["registro_de_grupos_hispana"], MesmasColunas(
+        {"fecha_del_contacto": "data_hora", "solucion_aplicada": "inteiro"}, excluir=("coluna_12", "coluna_13"))),
+    "hispana_resenhas_appsheets": (["resenhas_ois"], MesmasColunas(
+        {"fecha_de_la_respuesta": "data", "fecha_de_la_respuesta_exp": "data_hora"})),
+    "hispana_resenhas_lojas": (["app_natura", "app_avon", "resenhas_latam", "mi_negocio"], _REVIEWS_GOOGLE_PLAY),
+    "hispana_ticket_medio": (["ticket_medio_hispana"], MesmasColunas({"valor_por_pedido": "decimal", "data_contato": "data"})),
+    "hispana_ticket_medio_pais": (["ticket_medio_por_pais"], MesmasColunas({"valor_por_pedido": "decimal"})),
+    "hispana_exento": (["base_exento"], MesmasColunas({"autorizado_por_natura": "data"})),
+    "hispana_servicenow": (["base_sn_ois"], MesmasColunas(
+        {"aberto": "data_hora", "atualizado_em": "data_hora", "encerrado": "data_hora", "resolvido": "data_hora",
+         "ultima_reabertura_em": "data_hora", "contagem_de_reaberturas": "inteiro"},
+        excluir=("numero_de_cpf", "qual_e_a_localidade", "termino_real", "inicio_real"))),
 }

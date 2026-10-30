@@ -56,6 +56,21 @@ FONTES_EXCEL = [
     FonteExcel("ticket_medio", "google_sheets", "ticket_medio", "Página1"),
     FonteExcel("healthcheck_2025", "google_sheets", "healthcheck_2025", "Página1"),
     FonteExcel("resenhas_appsheets", "google_sheets", "resenhas_appsheets", "BaseDados"),
+    # Daily Hispana (App Natura e App_Avon vêm das mesmas planilhas do Brasil)
+    FonteExcel("mkt_analitico_hispana", "drive", "mkt_analitico_hispana", "Planilha1"),
+    FonteExcel("mkt_hispana_completo", "drive", "mkt_hispana_completo", "Sheet1"),
+    FonteExcel("tickets_hispana", "drive", "tickets_hispana", "Planilha1"),
+    FonteExcel("base_mtk", "drive", "base_mtk", "Base"),
+    FonteExcel("base_mtk_historico", "drive", "base_mtk_historico", "Base"),
+    FonteExcel("base_sn_ois", "drive", "base_sn_ois", "Page 1"),
+    FonteExcel("resenhas_latam", "drive", "resenhas_latam", "in"),
+    FonteExcel("mi_negocio", "drive", "mi_negocio", "reviews_reviews_net.natura.mine"),
+    FonteExcel("auxiliar_hispana", "google_sheets", "auxiliar_hispana", "Funcao do Sistema"),
+    FonteExcel("registro_de_grupos_hispana", "google_sheets", "registro_de_grupos_hispana", "Página1"),
+    FonteExcel("resenhas_ois", "google_sheets", "resenhas_ois", "BaseDados"),
+    FonteExcel("ticket_medio_hispana", "google_sheets", "ticket_medio_hispana", "Ticket Medio"),
+    FonteExcel("ticket_medio_por_pais", "google_sheets", "ticket_medio_por_pais", "Ticket Medio"),
+    FonteExcel("base_exento", "google_sheets", "base_exento", "Página1"),
 ]
 
 # Só o Brasil está no escopo; os brutos de Hispana e NCC já ficam guardados no volume para quando entrarem.

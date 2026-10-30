@@ -62,10 +62,12 @@ O pipeline não depende de nada do Tableau Prep: lê só os arquivos do volume e
 
 1. 9h (com até ~15 min de folga): o Apps Script exporta as 12 Google Sheets para `Fontes de Dados\auto\google_sheets`
    e grava `_ultima_exportacao.json` com o horário e o resultado.
-2. Rodar o notebook do Selenium (`logic\mktzap\new_pipeline_mktzap.ipynb`) como hoje.
+2. Rodar o notebook do Selenium (`logic-local\mktzap\new_pipeline_mktzap.ipynb`, kernel `base`), que grava os
+   consolidados nas pastas oficiais de `Fontes de Dados`.
 3. Abrir `coleta\rotina_manual.ipynb` no VS Code (abrindo a pasta `logic-local`, o Python do `.venv` já vem escolhido)
    e rodar as células em ordem: confere a exportação das Google Sheets, envia os arquivos, dispara o job
    `dexp_daily_experiencia` (bronze → silver → gold, uns 15 minutos), acompanha e mostra as tabelas atualizadas.
+   O job precisa ter terminado antes das 9h30, quando o Tableau Cloud atualiza as fontes: dispare até umas 9h15.
 
 Quando a rotina for ficar automática, a tarefa agendada roda `coleta\rotina_diaria.ps1` (mesmo envio + job, com log
 em `coleta\.estado\logs\`). Pela linha de comando, a partir da pasta `daily-experiencia`:
@@ -178,6 +180,25 @@ Melhorias de visualização ficam em versões novas do workbook, geradas a parti
   anterior e do atual, meta pontilhada, cor pela meta: verde-água dentro, laranja até 10 pontos abaixo, vermelho
   mais abaixo); volumes de um mês passam a mostrar 6 meses; o laranja sai das visões que não são indicador; filtros
   de data sem fim fixo.
+
+## Fontes publicadas no Tableau Cloud
+
+Para quem consome o painel não precisar de acesso ao Databricks, `coleta/publicar_tableau.py` cria 18 fontes
+`dexp - <nome>` em `3. SANDBOX` (lista em `[tableau.fontes]` de `coleta/fontes.toml`), como extrações com o token do
+Databricks embutido e atualização diária às 9h30 no próprio Tableau Cloud. Roda uma vez, e de novo só quando uma fonte
+mudar de colunas ou o job terminar depois das 9h30, porque o site não permite atualização manual. Republicar mantém o
+agendamento. Os tokens ficam no cofre de credenciais do Windows.
+
+```powershell
+.venv\Scripts\python.exe coleta\publicar_tableau.py --guardar-tokens
+.venv\Scripts\python.exe coleta\publicar_tableau.py
+```
+
+`ferramentas/ligar_fontes_publicadas_tableau.py <original.twbx> <saída.twbx>` liga um workbook a essas fontes.
+
+O Daily Hispana (fluxo "Daily Experiencia OIS") usa o mesmo processo: gold em `src/gold/hispana.py`, tabelas
+`dexp_gold_hispana_*`, 8 fontes a mais e painel gerado por `ferramentas/ligar_hispana_tableau.py`. Validação em
+`docs/validacao_hispana.md`; para comparar de novo, `sh ferramentas/comparar_hispana.sh`.
 
 ## Validação contra o Tableau
 

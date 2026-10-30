@@ -41,6 +41,13 @@ validacao/
 # Log gerado pela API do Hyper ao ler extracts
 hyperd*.log
 
+# Extração do MKTZap: só o notebook e a documentação; perfis do Chrome, brutos, backups e demais pastas ficam fora
+mktzap/*
+!mktzap/new_pipeline_mktzap.ipynb
+!mktzap/documentacao_automacao_mktzap.md
+!mktzap/documentacao_automacao_mktzap.txt
+!mktzap/fluxograma_automacao_mktzap.txt
+
 # Vídeos e gravações (não versionar)
 *.mp4
 *.mov
