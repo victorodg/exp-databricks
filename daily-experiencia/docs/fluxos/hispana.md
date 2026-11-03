@@ -222,13 +222,26 @@ END
 5. Renomear `Grupo de WhatsApp` → `Origem`
 6. Renomear `País Afectado` → `Pais`
 7. Remapear `Pais`: "Chile" ← "CHILE"; "Colombia" ← "COLOMBIA"; "Mexico" ← "MEXICO"; "Peru" ← "PERU"
-8. Renomear `Usuario Afectado` → `Código CN`
-9. Renomear `Solución aplicada` → `Solução Aplicada`
-10. Renomear `Pedido Finalizado` → `Pedidos Finalizados`
-11. Renomear `Status de finalización` → `Status de finalização`
-12. Renomear `Plataforma` → `Status de Classificação`
-13. Renomear `Función del sistema` → `Função do Sistema`
-14. Calcular `Nivel`:
+8. Calcular `Setor Fim`:
+
+```
+// A planilha do AppSheets não tem setor: usa o código do país, como o Setor Fim do MKT Zap
+CASE UPPER([Pais])
+    WHEN "ARGENTINA" THEN "AR"
+    WHEN "CHILE" THEN "CL"
+    WHEN "COLOMBIA" THEN "CO"
+    WHEN "ECUADOR" THEN "EC"
+    WHEN "MEXICO" THEN "MX"
+    WHEN "PERU" THEN "PE"
+END
+```
+9. Renomear `Usuario Afectado` → `Código CN`
+10. Renomear `Solución aplicada` → `Solução Aplicada`
+11. Renomear `Pedido Finalizado` → `Pedidos Finalizados`
+12. Renomear `Status de finalización` → `Status de finalização`
+13. Renomear `Plataforma` → `Status de Classificação`
+14. Renomear `Función del sistema` → `Função do Sistema`
+15. Calcular `Nivel`:
 
 ```
 IF [Data Contato Fuso] < #2026-03-01# THEN
@@ -401,7 +414,7 @@ ELSE
     END
 END
 ```
-15. Excluir `Status de finalização` em ['"VALIDACION DE LLAMADO"']
+16. Excluir `Status de finalização` em ['"VALIDACION DE LLAMADO"']
 
 → [34] Limpar 8
 

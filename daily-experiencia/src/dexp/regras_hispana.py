@@ -215,6 +215,8 @@ PAIS_ANALITICO = {'APP NATURA': 'Latam',
  'PE-LIDER': 'Peru',
  'APP AVON': 'Latam'}
 
+SETOR_REGISTRO_GRUPOS = {'ARGENTINA': 'AR', 'CHILE': 'CL', 'COLOMBIA': 'CO', 'ECUADOR': 'EC', 'MEXICO': 'MX', 'PERU': 'PE'}
+
 NIVEL_REGISTRO_GRUPOS = [{'rotulos': {'N2': ['DIRECCIONADO - PLCOM',
                      'DIRECCIONADO - TD LOCAL',
                      'INCIDENTE CRITICO',

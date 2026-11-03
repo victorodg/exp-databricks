@@ -307,6 +307,7 @@ registro = (
     .withColumnRenamed("analista", "responsavel").withColumnRenamed("grupo_de_whatsapp", "origem")
     .withColumnRenamed("pais_afectado", "pais")
     .withColumn("pais", remapear("pais", {"Chile": ["CHILE"], "Colombia": ["COLOMBIA"], "Mexico": ["MEXICO"], "Peru": ["PERU"]}))
+    .withColumn("setor_fim", por_setor("pais", R.SETOR_REGISTRO_GRUPOS))  # a planilha não tem setor: código do país
     .withColumnRenamed("usuario_afectado", "codigo_cn").withColumnRenamed("solucion_aplicada", "solucao_aplicada")
     .withColumnRenamed("pedido_finalizado", "pedidos_finalizados").withColumnRenamed("status_de_finalizacion", "status_de_finalizacao")
     .withColumnRenamed("plataforma", "status_de_classificacao").withColumnRenamed("funcion_del_sistema", "funcao_do_sistema")

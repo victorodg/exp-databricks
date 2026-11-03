@@ -20,6 +20,11 @@ def mapa_setor(expressao):
     return dict(re.findall(r'\[Setor Fim\]\s*=\s*"([^"]+)"\s*THEN\s*"([^"]+)"', expressao))
 
 
+def mapa_case(expressao):
+    """CASE ... WHEN "X" THEN "Y" ... -> {"X": "Y"}."""
+    return dict(re.findall(r'WHEN\s*"([^"]+)"\s*THEN\s*"([^"]+)"', expressao))
+
+
 def regra_nivel(trecho):
     """Um CASE do Nível -> {"rotulos": {nível: [status]}, "senao": nível}."""
     rotulos = {}
@@ -49,6 +54,7 @@ def main():
         "PAIS_COMPLETO": mapa_setor(acao(nos, "Tipo, Pais, Segundos", "AddColumn", "Pais")["expression"]),
         "TIPO_ANALITICO": mapa_setor(acao(nos, "Segundos, Tipo, SLA e Pais", "AddColumn", "Tipo")["expression"]),
         "PAIS_ANALITICO": mapa_setor(acao(nos, "Segundos, Tipo, SLA e Pais", "AddColumn", "Pais")["expression"]),
+        "SETOR_REGISTRO_GRUPOS": mapa_case(acao(nos, "Renomear colunas", "AddColumn", "Setor Fim")["expression"]),
         "NIVEL_REGISTRO_GRUPOS": regras_nivel(acao(nos, "Renomear colunas", "AddColumn", "Nivel")["expression"]),
         "NIVEL_TICKETS": regras_nivel(acao(nos, "Limpar 18", "AddColumn", "Nivel")["expression"]),
         "NIVEL_ANALITICO": regras_nivel(acao(nos, "Segundos, Tipo, SLA e Pais", "AddColumn", "Nivel")["expression"]),
