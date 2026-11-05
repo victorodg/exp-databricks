@@ -1,0 +1,667 @@
+{
+ "Mercado_Sur_Vol_Retencao": {
+  "Volumetria Total": "2244",
+  "Argentina (Vol)": "1472",
+  "Chile (Vol)": "772",
+  "Retenção N1": "76,22%"
+ },
+ "Mercado_Sur_Cards1": {
+  "Valor de pedido convertido (Geral)": "R$ 1.180.429,79",
+  "Quantidade de pedidos convertidos": "1691",
+  "Volume de Casos Recebidos WhatsApp": "1485",
+  "Volume de E-mails Recebidos": "644",
+  "Health Check": "689",
+  "Acionamentos Recebidos nos Grupos": "115",
+  "Pedidos Convertidos - Argentina 🇦🇷": "R$ 756.465,96",
+  "Pedidos Convertidos - Chile 🇨🇱": "R$ 423.963,83",
+  "SLA WhatsApp Global": "96,43%",
+  "Comentarios": "Em setembro, o Mercado Sur apresentou uma leve redução de 4,8% no volume total de atendimento de seus canais principais em relação a agosto, caindo de 2.356 para 2.244 interações, o que representa uma diminuição absoluta de 112 casos. Em contrapartida a essa queda na demanda de suporte, os resultados comerciais tiveram um crescimento expressivo: a quantidade de pedidos convertidos subiu de 1.482 para 1.691, impulsionando fortemente o valor de pedido convertido (geral), que saltou de R$ 848.267,16 em agosto para R$ 1.180.429,79 em setembro.   \r\n\r\nO excelente resultado financeiro consolidado do mercado foi impulsionado majoritariamente pela Argentina, cujo valor de pedidos convertidos disparou de R$ 443.022,12 para R$ 756.465,96 no período. O Chile também acompanhou a tendência positiva, porém de forma mais contida, crescendo sua conversão de R$ 405.245,04 para R$ 423.963,83.   \r\n\r\nAnalisando a volumetria por canais, a redução no atendimento consolidado foi exclusivamente puxada pelo Volume de E-mails Recebidos, que caiu de 881 para 644 casos (-26,9%). Em sentido oposto, o WhatsApp, que é o principal canal da região, apresentou leve alta ao passar de 1.414 para 1.485 interações (+5,0%). Os Acionamentos Recebidos nos Grupos também cresceram proporcionalmente, subindo de 61 para 115 interações (+88,5%).   \r\n\r\nNos indicadores operacionais e de proatividade, o mês de setembro refletiu melhorias consideráveis: o SLA do WhatsApp apresentou uma ótima recuperação, evoluindo de 91,72% em agosto para 96,43% em setembro. O volume de ações preventivas também acompanhou esse ritmo de alta, com os disparos de Health Check crescendo de 597 para 689 no período.   "
+ },
+ "Mercado_Sur_Cards2": {
+  "SLA WhatsApp": "96,43%",
+  "TMA E-mail": "03:41:53",
+  "Retenção WhatsApp": "71,39%",
+  "Retenção E-mail": "83,93%",
+  "Volumetria Total": "2244"
+ },
+ "Mercado_Sur_Desempenho_Pais": [
+  {
+   "País": "Chile",
+   "SLA": "95,62%",
+   "Comparativo / Observação": "+7,50 p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Argentina",
+   "SLA": "96,65%",
+   "Comparativo / Observação": "+3,64 p.p. em relação ao mês anterior"
+  }
+ ],
+ "Mercado_Sur_Top3_Motivo_Contato": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "995",
+   "Motivo do Contato": "Error al cargar tu información",
+   "Volume do Motivo": "271",
+   "Percentual (%)": "27,24%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "995",
+   "Motivo do Contato": "Regalos no cargan",
+   "Volume do Motivo": "116",
+   "Percentual (%)": "11,66%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "995",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "108",
+   "Percentual (%)": "10,85%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "372",
+   "Motivo do Contato": "Error de integracion con gera",
+   "Volume do Motivo": "59",
+   "Percentual (%)": "15,86%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "372",
+   "Motivo do Contato": "CB Bloqueada",
+   "Volume do Motivo": "47",
+   "Percentual (%)": "12,63%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "372",
+   "Motivo do Contato": "Registro - Rechazado",
+   "Volume do Motivo": "39",
+   "Percentual (%)": "10,48%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "302",
+   "Motivo do Contato": "Iniciar Sesion",
+   "Volume do Motivo": "265",
+   "Percentual (%)": "87,75%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "302",
+   "Motivo do Contato": "Perfil",
+   "Volume do Motivo": "5",
+   "Percentual (%)": "1,66%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "302",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "5",
+   "Percentual (%)": "1,66%"
+  }
+ ],
+ "Mercado_Sur_Solicitacoes_Dia": [
+  {
+   "Data": "01/09",
+   "N1": "55",
+   "N2": "14",
+   "Total Diário": "69"
+  },
+  {
+   "Data": "02/09",
+   "N1": "89",
+   "N2": "36",
+   "Total Diário": "125"
+  },
+  {
+   "Data": "03/09",
+   "N1": "76",
+   "N2": "16",
+   "Total Diário": "92"
+  },
+  {
+   "Data": "04/09",
+   "N1": "83",
+   "N2": "9",
+   "Total Diário": "92"
+  },
+  {
+   "Data": "05/09",
+   "N1": "2",
+   "N2": "1",
+   "Total Diário": "3"
+  },
+  {
+   "Data": "07/09",
+   "N1": "62",
+   "N2": "14",
+   "Total Diário": "76"
+  },
+  {
+   "Data": "08/09",
+   "N1": "68",
+   "N2": "20",
+   "Total Diário": "88"
+  },
+  {
+   "Data": "09/09",
+   "N1": "71",
+   "N2": "23",
+   "Total Diário": "94"
+  },
+  {
+   "Data": "10/09",
+   "N1": "53",
+   "N2": "20",
+   "Total Diário": "73"
+  },
+  {
+   "Data": "11/09",
+   "N1": "40",
+   "N2": "15",
+   "Total Diário": "55"
+  },
+  {
+   "Data": "12/09",
+   "N1": "5",
+   "N2": "0",
+   "Total Diário": "5"
+  },
+  {
+   "Data": "13/09",
+   "N1": "1",
+   "N2": "0",
+   "Total Diário": "1"
+  },
+  {
+   "Data": "14/09",
+   "N1": "73",
+   "N2": "21",
+   "Total Diário": "94"
+  },
+  {
+   "Data": "15/09",
+   "N1": "71",
+   "N2": "24",
+   "Total Diário": "95"
+  },
+  {
+   "Data": "16/09",
+   "N1": "63",
+   "N2": "19",
+   "Total Diário": "82"
+  },
+  {
+   "Data": "17/09",
+   "N1": "43",
+   "N2": "13",
+   "Total Diário": "56"
+  },
+  {
+   "Data": "18/09",
+   "N1": "21",
+   "N2": "5",
+   "Total Diário": "26"
+  },
+  {
+   "Data": "19/09",
+   "N1": "2",
+   "N2": "1",
+   "Total Diário": "3"
+  },
+  {
+   "Data": "21/09",
+   "N1": "38",
+   "N2": "18",
+   "Total Diário": "56"
+  },
+  {
+   "Data": "22/09",
+   "N1": "92",
+   "N2": "16",
+   "Total Diário": "108"
+  },
+  {
+   "Data": "23/09",
+   "N1": "102",
+   "N2": "34",
+   "Total Diário": "136"
+  },
+  {
+   "Data": "24/09",
+   "N1": "61",
+   "N2": "20",
+   "Total Diário": "81"
+  },
+  {
+   "Data": "25/09",
+   "N1": "45",
+   "N2": "21",
+   "Total Diário": "66"
+  },
+  {
+   "Data": "26/09",
+   "N1": "4",
+   "N2": "1",
+   "Total Diário": "5"
+  },
+  {
+   "Data": "28/09",
+   "N1": "68",
+   "N2": "18",
+   "Total Diário": "86"
+  },
+  {
+   "Data": "29/09",
+   "N1": "82",
+   "N2": "30",
+   "Total Diário": "112"
+  },
+  {
+   "Data": "30/09",
+   "N1": "53",
+   "N2": "35",
+   "Total Diário": "88"
+  }
+ ],
+ "Mercado_Sur_Pais": [
+  {
+   "Pais": "Argentina",
+   "Volumetria Total": "1365",
+   "WhatsApp (Vol)": "1125",
+   "E-mail (Vol)*": "240",
+   "SLA WhatsApp": "96,65%",
+   "N1 Dentro do Prazo": "76,08%"
+  },
+  {
+   "Pais": "Chile",
+   "Volumetria Total": "764",
+   "WhatsApp (Vol)": "360",
+   "E-mail (Vol)*": "404",
+   "SLA WhatsApp": "95,62%",
+   "N1 Dentro do Prazo": "76%"
+  }
+ ],
+ "Mercado_Sur_TMA": [
+  {
+   "Pais": "Argentina",
+   "TMA E-mail": "07:21:35"
+  },
+  {
+   "Pais": "Chile",
+   "TMA E-mail": "01:36:44"
+  }
+ ],
+ "Mercado_Sur_Causa_Raiz_N1": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "803",
+   "Vol Argentina": "387",
+   "Vol Chile": "416",
+   "Motivo Causa Raiz (N1)": "Error al cargar tu información",
+   "Volume Motivo": "252",
+   "Percentual (%)": "31,38%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "803",
+   "Vol Argentina": "387",
+   "Vol Chile": "416",
+   "Motivo Causa Raiz (N1)": "Regalos no cargan",
+   "Volume Motivo": "107",
+   "Percentual (%)": "13,33%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "803",
+   "Vol Argentina": "387",
+   "Vol Chile": "416",
+   "Motivo Causa Raiz (N1)": "Inconsistencia en el sistema",
+   "Volume Motivo": "86",
+   "Percentual (%)": "10,71%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "231",
+   "Vol Argentina": "144",
+   "Vol Chile": "87",
+   "Motivo Causa Raiz (N1)": "CB Bloqueada",
+   "Volume Motivo": "44",
+   "Percentual (%)": "19,05%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "231",
+   "Vol Argentina": "144",
+   "Vol Chile": "87",
+   "Motivo Causa Raiz (N1)": "Registro rechazado",
+   "Volume Motivo": "38",
+   "Percentual (%)": "16,45%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "231",
+   "Vol Argentina": "144",
+   "Vol Chile": "87",
+   "Motivo Causa Raiz (N1)": "Registro aprobado",
+   "Volume Motivo": "33",
+   "Percentual (%)": "14,29%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "223",
+   "Vol Argentina": "204",
+   "Vol Chile": "19",
+   "Motivo Causa Raiz (N1)": "Iniciar sesion",
+   "Volume Motivo": "205",
+   "Percentual (%)": "91,93%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "223",
+   "Vol Argentina": "204",
+   "Vol Chile": "19",
+   "Motivo Causa Raiz (N1)": "Perfil",
+   "Volume Motivo": "5",
+   "Percentual (%)": "2,24%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "223",
+   "Vol Argentina": "204",
+   "Vol Chile": "19",
+   "Motivo Causa Raiz (N1)": "Inconsistencia en el sistema",
+   "Volume Motivo": "3",
+   "Percentual (%)": "1,35%"
+  }
+ ],
+ "Mercado_Sur_Causa_Raiz_N2": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "125",
+   "Vol Argentina": "62",
+   "Vol Chile": "63",
+   "Motivo Causa Raiz (N2)": "Pedido Gera Error Invalid Address",
+   "Volume Motivo": "20",
+   "Percentual (%)": "16,00%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "125",
+   "Vol Argentina": "62",
+   "Vol Chile": "63",
+   "Motivo Causa Raiz (N2)": "Inconsistencia en el sistema",
+   "Volume Motivo": "20",
+   "Percentual (%)": "16,00%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "125",
+   "Vol Argentina": "62",
+   "Vol Chile": "63",
+   "Motivo Causa Raiz (N2)": "Error al cargar tu información",
+   "Volume Motivo": "15",
+   "Percentual (%)": "12,00%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "117",
+   "Vol Argentina": "80",
+   "Vol Chile": "37",
+   "Motivo Causa Raiz (N2)": "Error de integracion con GERA",
+   "Volume Motivo": "46",
+   "Percentual (%)": "39,32%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "117",
+   "Vol Argentina": "80",
+   "Vol Chile": "37",
+   "Motivo Causa Raiz (N2)": "Divergencia GPP",
+   "Volume Motivo": "21",
+   "Percentual (%)": "17,95%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "117",
+   "Vol Argentina": "80",
+   "Vol Chile": "37",
+   "Motivo Causa Raiz (N2)": "Registro en processo",
+   "Volume Motivo": "11",
+   "Percentual (%)": "9,40%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "99",
+   "Vol Argentina": "43",
+   "Vol Chile": "56",
+   "Motivo Causa Raiz (N2)": "Promocion no aplica descuento",
+   "Volume Motivo": "34",
+   "Percentual (%)": "34,34%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "99",
+   "Vol Argentina": "43",
+   "Vol Chile": "56",
+   "Motivo Causa Raiz (N2)": "Producto no encontrado",
+   "Volume Motivo": "21",
+   "Percentual (%)": "21,21%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "99",
+   "Vol Argentina": "43",
+   "Vol Chile": "56",
+   "Motivo Causa Raiz (N2)": "Regalos no cargan",
+   "Volume Motivo": "12",
+   "Percentual (%)": "12,12%"
+  }
+ ],
+ "Mercado_Sur_CSAT_3_Meses": {
+  "C-SAT (%)": "82,37%",
+  "Enquetes Enviadas": "1032",
+  "Enquetes Respondidas": "465",
+  "Response Rate (%)": "45,06%"
+ },
+ "Mercado_Sur_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "82,37%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "7,96%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "9,68%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "340"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "43"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "37"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "15"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "30"
+  }
+ ],
+ "Mercado_Sur_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "11"
+  },
+  {
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "5"
+  },
+  {
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "5"
+  }
+ ],
+ "Mercado_Sur_CSAT_Analise_Quald": [
+  {
+   "Avaliação de Qualidade": "Atendimento Correto",
+   "Volume de Casos": "35"
+  },
+  {
+   "Avaliação de Qualidade": "Atendimento Inconforme",
+   "Volume de Casos": "10"
+  }
+ ],
+ "Mercado_Sur_CSAT_Comentarios": [
+  {
+   "Detalhamento Textual": "Das 45 avaliações detratoras analisadas, 10 apresentaram oportunidades de melhoria relacionadas diretamente ao time de Experiência — principalmente por respostas não alinhadas à solicitação, encerramento prematuro e atenção ao atendimento.\n\nEm 10 casos houveram abertura de chamados, 25 avaliações referem-se a orientações sobre regras comerciais e processos."
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_3_Meses": [
+  {
+   "Pais": "Argentina",
+   "C-SAT (%)": "80,22%",
+   "Response Rate (%)": "45,50%"
+  },
+  {
+   "Pais": "Chile",
+   "C-SAT (%)": "90,63%",
+   "Response Rate (%)": "43,44%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Classifi": [
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "80,22%"
+  },
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "8,94%"
+  },
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "10,84%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "90,63%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "4,17%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "5,21%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Notas": [
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "256"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "40"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "33"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "15"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "25"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "84"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "3"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "4"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "0"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "5"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Ofensor": [
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "10",
+   "Texto do Comentário": "Das 40 respostas detratoras analisadas, 21 apresentaram orientações adequadas e alinhadas à solicitação e 09 casos estiveram relacionadas à abertura de chamados, enquanto os 10 casos restantes evidenciaram oportunidades de respostas não alinhadas à solicitação, encerramento prematuro e atenção ao atendimento."
+  },
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Inconsistencia el el sistema",
+   "Volume de Casos": "5",
+   "Texto do Comentário": "Das 40 respostas detratoras analisadas, 21 apresentaram orientações adequadas e alinhadas à solicitação e 09 casos estiveram relacionadas à abertura de chamados, enquanto os 10 casos restantes evidenciaram oportunidades de respostas não alinhadas à solicitação, encerramento prematuro e atenção ao atendimento."
+  },
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Pedido pendiente",
+   "Volume de Casos": "3",
+   "Texto do Comentário": "Das 40 respostas detratoras analisadas, 21 apresentaram orientações adequadas e alinhadas à solicitação e 09 casos estiveram relacionadas à abertura de chamados, enquanto os 10 casos restantes evidenciaram oportunidades de respostas não alinhadas à solicitação, encerramento prematuro e atenção ao atendimento."
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Error al cargar tu informacion",
+   "Volume de Casos": "2",
+   "Texto do Comentário": "Das 05 respostas detratoras analisadas, 04 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso relacionado a abertura de chamado."
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Promocion no aplica descuento",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 05 respostas detratoras analisadas, 04 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso relacionado a abertura de chamado."
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 05 respostas detratoras analisadas, 04 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso relacionado a abertura de chamado."
+  }
+ ]
+}

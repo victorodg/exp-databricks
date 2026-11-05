@@ -1,0 +1,652 @@
+{
+ "Mercado_Sur_Vol_Retencao": {
+  "Volumetria Total": "2.960",
+  "Argentina (Vol)": "1.568",
+  "Chile (Vol)": "1.392",
+  "Retenção N1": "76,97%"
+ },
+ "Mercado_Sur_Cards1": {
+  "Valor de pedido convertido (Geral)": "R$ 1.798.581,25",
+  "Quantidade de pedidos convertidos": "2.347",
+  "Volume de Casos Recebidos WhatsApp": "1.682",
+  "Volume de E-mails Recebidos": "1.248",
+  "Health Check": "a investigar",
+  "Acionamentos Recebidos nos Grupos": "30",
+  "Pedidos Convertidos - Argentina 🇦🇷": "R$ 910.570,29",
+  "Pedidos Convertidos - Chile 🇨🇱": "R$ 888.010,96",
+  "SLA WhatsApp Global": "95,18%",
+  "Comentarios": "manual"
+ },
+ "Mercado_Sur_Cards2": {
+  "SLA WhatsApp": "95,18%",
+  "TMA E-mail": "02:20:48",
+  "Retenção WhatsApp": "73,59%",
+  "Retenção E-mail": "83,38%",
+  "Volumetria Total": "2.960"
+ },
+ "Mercado_Sur_Desempenho_Pais": [
+  {
+   "País": "Chile",
+   "SLA": "95,67%",
+   "Comparativo / Observação": "+0,05 p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Argentina",
+   "SLA": "94,99%",
+   "Comparativo / Observação": "-1,66 p.p. em relação ao mês anterior"
+  }
+ ],
+ "Mercado_Sur_Top3_Motivo_Contato": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1.473",
+   "Motivo do Contato": "Pedido pendiente",
+   "Volume do Motivo": "244",
+   "Percentual (%)": "16,56%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1.473",
+   "Motivo do Contato": "Error al cargar tu información",
+   "Volume do Motivo": "192",
+   "Percentual (%)": "13,03%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1.473",
+   "Motivo do Contato": "Pedido aprobado",
+   "Volume do Motivo": "154",
+   "Percentual (%)": "10,45%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "388",
+   "Motivo do Contato": "Error de integracion con gera",
+   "Volume do Motivo": "73",
+   "Percentual (%)": "18,81%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "388",
+   "Motivo do Contato": "Registro aprobado",
+   "Volume do Motivo": "48",
+   "Percentual (%)": "12,37%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "388",
+   "Motivo do Contato": "Registro nuevo borrador",
+   "Volume do Motivo": "34",
+   "Percentual (%)": "8,76%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Iniciar sesion",
+   "Volume do Motivo": "94",
+   "Percentual (%)": "54,97%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Reportes",
+   "Volume do Motivo": "19",
+   "Percentual (%)": "11,11%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "16",
+   "Percentual (%)": "9,36%"
+  }
+ ],
+ "Mercado_Sur_Solicitacoes_Dia": [
+  {
+   "Data": "01/10",
+   "N1": "55",
+   "N2": "29",
+   "Total Diário": "84"
+  },
+  {
+   "Data": "02/10",
+   "N1": "46",
+   "N2": "28",
+   "Total Diário": "74"
+  },
+  {
+   "Data": "03/10",
+   "N1": "8",
+   "N2": "2",
+   "Total Diário": "10"
+  },
+  {
+   "Data": "05/10",
+   "N1": "64",
+   "N2": "24",
+   "Total Diário": "88"
+  },
+  {
+   "Data": "06/10",
+   "N1": "59",
+   "N2": "19",
+   "Total Diário": "78"
+  },
+  {
+   "Data": "07/10",
+   "N1": "55",
+   "N2": "15",
+   "Total Diário": "70"
+  },
+  {
+   "Data": "08/10",
+   "N1": "65",
+   "N2": "20",
+   "Total Diário": "85"
+  },
+  {
+   "Data": "09/10",
+   "N1": "44",
+   "N2": "14",
+   "Total Diário": "58"
+  },
+  {
+   "Data": "10/10",
+   "N1": "10",
+   "N2": "3",
+   "Total Diário": "13"
+  },
+  {
+   "Data": "12/10",
+   "N1": "1",
+   "N2": "0",
+   "Total Diário": "1"
+  },
+  {
+   "Data": "13/10",
+   "N1": "108",
+   "N2": "36",
+   "Total Diário": "144"
+  },
+  {
+   "Data": "14/10",
+   "N1": "151",
+   "N2": "37",
+   "Total Diário": "188"
+  },
+  {
+   "Data": "15/10",
+   "N1": "152",
+   "N2": "22",
+   "Total Diário": "174"
+  },
+  {
+   "Data": "16/10",
+   "N1": "105",
+   "N2": "35",
+   "Total Diário": "140"
+  },
+  {
+   "Data": "17/10",
+   "N1": "6",
+   "N2": "0",
+   "Total Diário": "6"
+  },
+  {
+   "Data": "19/10",
+   "N1": "87",
+   "N2": "25",
+   "Total Diário": "112"
+  },
+  {
+   "Data": "20/10",
+   "N1": "101",
+   "N2": "22",
+   "Total Diário": "123"
+  },
+  {
+   "Data": "21/10",
+   "N1": "73",
+   "N2": "18",
+   "Total Diário": "91"
+  },
+  {
+   "Data": "22/10",
+   "N1": "87",
+   "N2": "25",
+   "Total Diário": "112"
+  },
+  {
+   "Data": "23/10",
+   "N1": "46",
+   "N2": "18",
+   "Total Diário": "64"
+  },
+  {
+   "Data": "24/10",
+   "N1": "2",
+   "N2": "3",
+   "Total Diário": "5"
+  },
+  {
+   "Data": "26/10",
+   "N1": "73",
+   "N2": "25",
+   "Total Diário": "98"
+  },
+  {
+   "Data": "27/10",
+   "N1": "80",
+   "N2": "27",
+   "Total Diário": "107"
+  },
+  {
+   "Data": "28/10",
+   "N1": "91",
+   "N2": "23",
+   "Total Diário": "114"
+  },
+  {
+   "Data": "29/10",
+   "N1": "70",
+   "N2": "16",
+   "Total Diário": "86"
+  },
+  {
+   "Data": "30/10",
+   "N1": "43",
+   "N2": "18",
+   "Total Diário": "61"
+  },
+  {
+   "Data": "31/10",
+   "N1": "2",
+   "N2": "0",
+   "Total Diário": "2"
+  }
+ ],
+ "Mercado_Sur_Pais": [
+  {
+   "Pais": "Argentina",
+   "Volumetria Total": "1.568",
+   "WhatsApp (Vol)": "1.089",
+   "E-mail (Vol)*": "453",
+   "SLA WhatsApp": "94,99%",
+   "N1 Dentro do Prazo": "73,95%"
+  },
+  {
+   "Pais": "Chile",
+   "Volumetria Total": "1.392",
+   "WhatsApp (Vol)": "593",
+   "E-mail (Vol)*": "795",
+   "SLA WhatsApp": "95,67%",
+   "N1 Dentro do Prazo": "80,29%"
+  }
+ ],
+ "Mercado_Sur_TMA": [
+  {
+   "Pais": "Argentina",
+   "TMA E-mail": "02:38:36"
+  },
+  {
+   "Pais": "Chile",
+   "TMA E-mail": "02:15:28"
+  }
+ ],
+ "Mercado_Sur_Causa_Raiz_N1": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "1.112",
+   "Vol Argentina": "425",
+   "Vol Chile": "687",
+   "Motivo Causa Raiz (N1)": "Error al cargar tu información",
+   "Volume Motivo": "177",
+   "Percentual (%)": "15,92%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "1.112",
+   "Vol Argentina": "425",
+   "Vol Chile": "687",
+   "Motivo Causa Raiz (N1)": "Pedido pendiente",
+   "Volume Motivo": "162",
+   "Percentual (%)": "14,57%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "1.112",
+   "Vol Argentina": "425",
+   "Vol Chile": "687",
+   "Motivo Causa Raiz (N1)": "Pedido aprobado",
+   "Volume Motivo": "150",
+   "Percentual (%)": "13,49%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "204",
+   "Vol Argentina": "127",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N1)": "Registro aprobado",
+   "Volume Motivo": "47",
+   "Percentual (%)": "23,04%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "204",
+   "Vol Argentina": "127",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N1)": "Cb bloqueada / cesada o desactivada",
+   "Volume Motivo": "29",
+   "Percentual (%)": "14,22%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "204",
+   "Vol Argentina": "127",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N1)": "Registro nuevo borrador",
+   "Volume Motivo": "28",
+   "Percentual (%)": "13,73%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "141",
+   "Vol Argentina": "118",
+   "Vol Chile": "23",
+   "Motivo Causa Raiz (N1)": "Iniciar sesion",
+   "Volume Motivo": "105",
+   "Percentual (%)": "74,47%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "141",
+   "Vol Argentina": "118",
+   "Vol Chile": "23",
+   "Motivo Causa Raiz (N1)": "Perfil",
+   "Volume Motivo": "15",
+   "Percentual (%)": "10,64%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total": "141",
+   "Vol Argentina": "118",
+   "Vol Chile": "23",
+   "Motivo Causa Raiz (N1)": "Reportes",
+   "Volume Motivo": "7",
+   "Percentual (%)": "4,96%"
+  }
+ ],
+ "Mercado_Sur_Causa_Raiz_N2": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "152",
+   "Vol Argentina": "75",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N2)": "Pedido pendiente",
+   "Volume Motivo": "22",
+   "Percentual (%)": "14,47%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "152",
+   "Vol Argentina": "75",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N2)": "Error al cargar tu información",
+   "Volume Motivo": "15",
+   "Percentual (%)": "9,87%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "152",
+   "Vol Argentina": "75",
+   "Vol Chile": "77",
+   "Motivo Causa Raiz (N2)": "Inconsistencia en el sistema",
+   "Volume Motivo": "15",
+   "Percentual (%)": "9,87%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "151",
+   "Vol Argentina": "90",
+   "Vol Chile": "61",
+   "Motivo Causa Raiz (N2)": "Error de integracion con gera",
+   "Volume Motivo": "60",
+   "Percentual (%)": "39,74%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "151",
+   "Vol Argentina": "90",
+   "Vol Chile": "61",
+   "Motivo Causa Raiz (N2)": "Error al alocar la estructura comercial",
+   "Volume Motivo": "23",
+   "Percentual (%)": "15,23%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "151",
+   "Vol Argentina": "90",
+   "Vol Chile": "61",
+   "Motivo Causa Raiz (N2)": "Registro en proceso",
+   "Volume Motivo": "9",
+   "Percentual (%)": "5,96%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "91",
+   "Vol Argentina": "53",
+   "Vol Chile": "38",
+   "Motivo Causa Raiz (N2)": "Promoción no aplica descuento",
+   "Volume Motivo": "23",
+   "Percentual (%)": "25,27%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "91",
+   "Vol Argentina": "53",
+   "Vol Chile": "38",
+   "Motivo Causa Raiz (N2)": "Producto no encontrado",
+   "Volume Motivo": "22",
+   "Percentual (%)": "24,18%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "91",
+   "Vol Argentina": "53",
+   "Vol Chile": "38",
+   "Motivo Causa Raiz (N2)": "Regalos no cargan",
+   "Volume Motivo": "13",
+   "Percentual (%)": "14,29%"
+  }
+ ],
+ "Mercado_Sur_CSAT_3_Meses": {
+  "C-SAT (%)": "79,17%",
+  "Enquetes Enviadas": "1.102",
+  "Enquetes Respondidas": "480",
+  "Response Rate (%)": "43,56%"
+ },
+ "Mercado_Sur_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "79,17%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "8,96%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "11,88%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "331"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "49"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "43"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "11"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "46"
+  }
+ ],
+ "Mercado_Sur_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "9"
+  },
+  {
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "6"
+  },
+  {
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "5"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_3_Meses": [
+  {
+   "Pais": "Argentina",
+   "C-SAT (%)": "76,95%",
+   "Response Rate (%)": "43,98%"
+  },
+  {
+   "Pais": "Chile",
+   "C-SAT (%)": "84,96%",
+   "Response Rate (%)": "42,49%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Classifi": [
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "76,95%"
+  },
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "9,80%"
+  },
+  {
+   "Pais": "Argentina",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "13,26%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "84,96%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "6,77%"
+  },
+  {
+   "Pais": "Chile",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "8,27%"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Notas": [
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "226"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "41"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "34"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "10"
+  },
+  {
+   "Pais": "Argentina",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "36"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "105"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "8"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "9"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "1"
+  },
+  {
+   "Pais": "Chile",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "10"
+  }
+ ],
+ "Mercado_Sur_CSAT_Paises_Ofensor": [
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "8",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "5",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "Argentina",
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "5",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Promoción no aplica descuento",
+   "Volume de Casos": "3",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Cantidad máxima de pedidos pendientes",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "Chile",
+   "Ofensor Detrator": "Consulta/duda autoconsumo",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "manual"
+  }
+ ]
+}

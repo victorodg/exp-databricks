@@ -487,8 +487,11 @@ consolidado_historico = (
     .select(F.col("protocolo").alias("protocolo_analitico"), "status_de_classificacao", "funcao_do_sistema")
 )
 classificacao = uniao(consolidado_historico, tickets_email.select(F.col("protocolo").alias("protocolo_analitico"), "funcao_do_sistema", "status_de_classificacao"))
+# [85] Correção de 04/11/2026 (também no Prep): sem Status do Completo vale o Status de finalização da linha, que é o
+# do próprio ticket de e-mail; antes o ticket ficava com status nulo
 concluidos = (
-    remover(completo_final.withColumn("data_hibrida_do_dashboard", F.col("data_conclusao")).where(excluir("situacao", "Em aberto")),
+    remover(completo_final.withColumn("data_hibrida_do_dashboard", F.col("data_conclusao")).where(excluir("situacao", "Em aberto"))
+            .withColumn("status", F.coalesce("status", "status_de_finalizacao")),
             "status_de_finalizacao", "tempo_segundos", "nome", "atendimentos_first_message_at", "inicio_atendimento", "atendido",
             "ultima_mensagem", "tipo_canal", "telefone", "regra_status", "situacao", "tempo_medio_ate_ser_atendidos",
             "tempo_medio_primeira_espera", "tempo_medio_atendimento", "tempo_medio_espera", "tempo_medio_operacional")

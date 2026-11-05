@@ -1,0 +1,441 @@
+{
+  "_origem": "Planilha Book Executivo Exp Brasil (14g2lCXJju4MKXjC0ZgRocMPJZL8ZLH430aBz5-dZla4), linha 2026-09, lida em 04/11/2026",
+  "Exp_Br_Indicadores_Contratuais": {
+    "TPR - Tempo de Primeira Resposta - Atendimento Gerentes": "98,85%",
+    "TMR - SLA de Resolução -E-mail (N1)": "66,80%",
+    "Notificação de Incidente": "57,14%",
+    "Retenção em N1": "70,39%",
+    "CSAT": "88,97%",
+    "Quality Assurance": "88,00%",
+    "Pedidos convertidos": "609",
+    "Valor de pedido convertido": "R$ 423.699,57"
+  },
+  "Exp_Br_Indicadores_Monitoracao": {
+    "TPA - Tempo de Primeiro Atendimento - Atendimento Resenhas": "52,45%",
+    "TMR - SLA de Resolução - Prazo Cliente (Protocolo Atendimento)": "96,62%",
+    "TMR - SLA de Resolução -E-mail (origem whatsapp) N2": "04 dias",
+    "TMR - SLA de Resolução -E-mail (origem whatsapp) N3": "104 dias",
+    "TMR - SLA de Resolução -E-mail (origem e-mail) N2": "13 dias",
+    "TMR - SLA de Resolução -E-mail (origem e-mail) N3": "19 dias"
+  },
+  "Exp_Br_Cards01": {
+    "Valor de pedido convertido": "R$ 423.699,57",
+    "Pedidos convertidos": "609",
+    "Volume de Casos Recebidos WhatsApp": "2.185",
+    "Volume de E-mails Recebidos": "861",
+    "Health Check Agendados": "842",
+    "Monitoração Dynatrace": "1110",
+    "Resenhas 1 a 3": "347",
+    "Resenhas 4 e 5": "367",
+    "Protocolos Central CB e CF": "2.178",
+    "E-mails Loja": "91",
+    "Requisições Eventuais": "6"
+  },
+  "Exp_Br_Retencao": {
+    "Volumetria Total": "4.937",
+    "WhatsApp": "2185",
+    "E-mail": "861",
+    "Ocorrências": "1891",
+    "Retenção N1": "70,39%"
+  },
+  "Exp_Br_Cards2": {
+    "SLA WhatsApp": "98,85%",
+    "TMA E-mail": "01:34:47",
+    "SLA Tarefas": "85,99%",
+    "Retenção WhatsApp": "64,38%",
+    "Retenção E-mail": "54,50%",
+    "Retenção Tarefas": "76,04%",
+    "Volumetria Total": "4937"
+  },
+  "Exp_Br_Reativos_WA_Mensal": {
+    "Quantidade de Acionamentos": "1.834",
+    "SLA (≥ 95%)": "98,85%",
+    "Volume N1": "862",
+    "Volume N2": "477",
+    "N1 (% dentro do prazo ≥ 70%)": "64,38%"
+  },
+  "Exp_Br_WA_GN_Mensal": {
+    "Quantidade de Acionamentos": "1712",
+    "SLA (≥ 95%)": "99,07%",
+    "Volume N1": "744",
+    "Volume N2": "434",
+    "N1 (% dentro do prazo ≥ 70%)": "63,16%"
+  },
+  "Exp_Br_WA_GV_Mensal": {
+    "Quantidade de Acionamentos": "69",
+    "SLA (≥ 95%)": "95,65%",
+    "Volume N1": "90",
+    "Volume N2": "37",
+    "N1 (% dentro do prazo ≥ 70%)": "70,87%"
+  },
+  "Exp_Br_WA_Franq_Mensal": {
+    "Quantidade de Acionamentos": "13",
+    "SLA (≥ 95%)": "92,31%",
+    "Volume N1": "4",
+    "Volume N2": "2",
+    "N1 (% dentro do prazo ≥ 70%)": "66,67%"
+  },
+  "Exp_Br_WA_CBCom_Mensal": {
+    "Quantidade de Acionamentos": "29",
+    "SLA (≥ 95%)": "96,55%",
+    "Volume N1": "20",
+    "Volume N2": "3",
+    "N1 (% dentro do prazo ≥ 70%)": "86,96%"
+  },
+  "Exp_Br_Email_Mensal": {
+    "Quantidade de Acionamentos": "496",
+    "Tempo Médio Operacional N1": "01:34:47",
+    "Volume N1": "115",
+    "Volume N2": "96",
+    "N1 (% dentro do prazo ≥ 70%)": "54,50%"
+  },
+  "Exp_Br_Email_TMO": {
+    "TMO N2 - Origem WhatsApp": "203:05:27",
+    "TMO N2 - Origem E-mail": "332:55:41",
+    "TMO N3 - Origem WhatsApp": "2516:37:49",
+    "TMO N3 - Origem E-mail": "471:15:04"
+  },
+  "Exp_Br_Tarefas_Historico_Mensal": {
+    "Protocolos Abertos": "2.270",
+    "Protocolos Fechados": "1.891",
+    "Retrabalho": "287",
+    "N1 (% dentro do prazo): geral 70%": "76,04%",
+    "SLA Cliente": "96,62%",
+    "Até 24h": "85,99%",
+    "Até 5h": "58,28%"
+  },
+  "Exp_Br_Tarefas_CB_Mensal": {
+    "Protocolos Abertos": "2.014",
+    "Protocolos Fechados": "1736",
+    "Retrabalho": "187",
+    "N1 (% dentro do prazo): geral 70%": "74,19%",
+    "SLA Cliente": "96,72%",
+    "Até 24h": "86,92%",
+    "Até 5h": "60,20%"
+  },
+  "Exp_Br_Tarefas_CF_Mensal": {
+    "Protocolos Abertos": "256",
+    "Protocolos Fechados": "155",
+    "Retrabalho": "100",
+    "N1 (% dentro do prazo): geral 70%": "78%",
+    "SLA Cliente": "95,48%",
+    "Até 24h": "75,48%",
+    "Até 5h": "36,77%"
+  },
+  "Exp_Br_Tarefas_CB_Fase": {
+    "Fase 1 - Volume": "1.288",
+    "Fase 1 - % SLA 24h (≥ 85%)": "100%",
+    "Fase 2 - Volume": "448",
+    "Fase 2 - % SLA 24h (≥ 85%)": "50,45%"
+  },
+  "Exp_Br_Tarefas_CF_Fase": {
+    "Fase 1 - Volume": "150",
+    "Fase 1 - % SLA 24h (≥ 85%)": "78%",
+    "Fase 2 - Volume": "5",
+    "Fase 2 - % SLA 24h (≥ 85%)": "0%"
+  },
+  "Exp_Br_ReqEvent_Mensal": {
+    "Quantidade de Acionamentos": "6",
+    "Volume N1": "1",
+    "Volume N2": "2"
+  },
+  "Exp_Br_Reativos_WA_Motivos_N1": [
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "195",
+      "Motivo do Contato": "Cadastro",
+      "Volume Motivo": "104",
+      "Percentual (%)": "53,33%"
+    },
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "195",
+      "Motivo do Contato": "Minha Loja",
+      "Volume Motivo": "90",
+      "Percentual (%)": "46,15%"
+    },
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "195",
+      "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+      "Volume Motivo": "1",
+      "Percentual (%)": "0,51%"
+    },
+    {
+      "Plataforma": "FV",
+      "Volume Total Plataforma": "156",
+      "Motivo do Contato": "Painel de Indicadores",
+      "Volume Motivo": "61",
+      "Percentual (%)": "39,10%"
+    },
+    {
+      "Plataforma": "FV",
+      "Volume Total Plataforma": "156",
+      "Motivo do Contato": "Relatório",
+      "Volume Motivo": "43",
+      "Percentual (%)": "27,56%"
+    },
+    {
+      "Plataforma": "FV",
+      "Volume Total Plataforma": "156",
+      "Motivo do Contato": "Rescisão",
+      "Volume Motivo": "39",
+      "Percentual (%)": "25,00%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "172",
+      "Motivo do Contato": "Acesso",
+      "Volume Motivo": "172",
+      "Percentual (%)": "100,00%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "172",
+      "Motivo do Contato": "Menu",
+      "Volume Motivo": "4",
+      "Percentual (%)": "2,33%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "172",
+      "Motivo do Contato": "Reset de senha",
+      "Volume Motivo": "2",
+      "Percentual (%)": "1,16%"
+    }
+  ],
+  "Exp_Br_Tarefas_CB_Motivo_N1": [
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "425",
+      "Motivo do Contato": "Cadastro",
+      "Volume Motivo": "223",
+      "Percentual (%)": "52%"
+    },
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "425",
+      "Motivo do Contato": "Minha Loja",
+      "Volume Motivo": "201",
+      "Percentual (%)": "47%"
+    },
+    {
+      "Plataforma": "AIBV",
+      "Volume Total Plataforma": "425",
+      "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+      "Volume Motivo": "1",
+      "Percentual (%)": "0%"
+    },
+    {
+      "Plataforma": "Exp. Compras",
+      "Volume Total Plataforma": "240",
+      "Motivo do Contato": "Captação",
+      "Volume Motivo": "103",
+      "Percentual (%)": "43%"
+    },
+    {
+      "Plataforma": "Exp. Compras",
+      "Volume Total Plataforma": "240",
+      "Motivo do Contato": "Pedido",
+      "Volume Motivo": "63",
+      "Percentual (%)": "26%"
+    },
+    {
+      "Plataforma": "Exp. Compras",
+      "Volume Total Plataforma": "240",
+      "Motivo do Contato": "Cancelamento de pedido",
+      "Volume Motivo": "36",
+      "Percentual (%)": "15%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "167",
+      "Motivo do Contato": "Acesso",
+      "Volume Motivo": "127",
+      "Percentual (%)": "76%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "167",
+      "Motivo do Contato": "Manu",
+      "Volume Motivo": "29",
+      "Percentual (%)": "17%"
+    },
+    {
+      "Plataforma": "Cognito",
+      "Volume Total Plataforma": "167",
+      "Motivo do Contato": "Reset de senha",
+      "Volume Motivo": "11",
+      "Percentual (%)": "7%"
+    }
+  ],
+  "Exp_Br_Proativos_Mensal": {
+    "Total de Monitorações": "1110",
+    "Contatos Bem-Sucedidos (Com Sucesso)": "43",
+    "Sem Sucesso": "1067",
+    "Pedidos Finalizados com Contato": "14",
+    "Taxa de Sucesso dos Contatos": "32,56%"
+  },
+  "Exp_Br_Proativos_Contatos_Pedidos": {
+    "Contatos Realizados": "43",
+    "Pedidos Finalizados": "14"
+  },
+  "Exp_Br_Proativos_HC_Mensal": {
+    "Qtd Agendamento": "842",
+    "Qtd Recebidos": "686",
+    "Conversão (Atendimento com o Expcb)": "81,47%",
+    "Alcance %": "7,09%"
+  },
+  "Exp_Br_Email_Natura_Expcb_Mensal": {
+    "Volumetria": "37",
+    "Tempo Médio Operacional (TMO)": "31:21:38"
+  },
+  "Exp_Br_Email_Natura_Expcb_SLA": {
+    "SLA D+1": "67,57%",
+    "SLA >D+2": "32,43%"
+  },
+  "Exp_Br_Email_AppNatura_Mensal": {
+    "Volumetria": "58",
+    "Tempo Médio Operacional (TMO)": "27:47:32"
+  },
+  "Exp_Br_Email_AppNatura_SLA": {
+    "SLA D+1": "79,31%",
+    "SLA >D+2": "20,69%"
+  },
+  "Exp_Br_Email_AppAvon_Mensal": {
+    "Volumetria": "0",
+    "Tempo Médio Operacional (TMO)": "Sem dados"
+  },
+  "Exp_Br_Email_AppAvon_SLA": {
+    "SLA D+1": "Sem dados",
+    "SLA >D+2": "Sem dados"
+  },
+  "Exp_Br_CSAT_3Meses": {
+    "C-SAT (%)": "88,22%",
+    "Enquetes Enviadas": "1112",
+    "Enquetes Respondidas": "679",
+    "Response Rate (%)": "61,06%"
+  },
+  "Exp_Br_CSAT_Classificacao": [
+    {
+      "Classificação C-SAT": "Promotor",
+      "Percentual (%)": "88,22%"
+    },
+    {
+      "Classificação C-SAT": "Neutro",
+      "Percentual (%)": "7,51%"
+    },
+    {
+      "Classificação C-SAT": "Detrator",
+      "Percentual (%)": "4,27%"
+    }
+  ],
+  "Exp_Br_CSAT_Nota": [
+    {
+      "Nota Avaliada": "Totalmente Satisfeito",
+      "Volume de Respostas": "484"
+    },
+    {
+      "Nota Avaliada": "Satisfeito",
+      "Volume de Respostas": "115"
+    },
+    {
+      "Nota Avaliada": "Neutro",
+      "Volume de Respostas": "51"
+    },
+    {
+      "Nota Avaliada": "Insatisfeito",
+      "Volume de Respostas": "15"
+    },
+    {
+      "Nota Avaliada": "Totalmente Insatisfeito",
+      "Volume de Respostas": "14"
+    }
+  ],
+  "Exp_Br_CSAT_Mercado": [
+    {
+      "Mercado": "Amazônia",
+      "Nota": "98,53%"
+    },
+    {
+      "Mercado": "Araucária",
+      "Nota": "88,89%"
+    },
+    {
+      "Mercado": "Atlântica",
+      "Nota": "86,46%"
+    },
+    {
+      "Mercado": "Caatinga",
+      "Nota": "88,97%"
+    },
+    {
+      "Mercado": "Cerrado",
+      "Nota": "86,07%"
+    }
+  ],
+  "Exp_Br_CSAT_Ofensores_Detr": [
+    {
+      "Ofensor Detrator": "Acesso",
+      "Volume de Casos": "9"
+    },
+    {
+      "Ofensor Detrator": "Rescisão Líder",
+      "Volume de Casos": "3"
+    },
+    {
+      "Ofensor Detrator": "Gestão de grupos",
+      "Volume de Casos": "2"
+    }
+  ],
+  "Exp_Br_Resenhas_Minha_Consultoria_01": {
+    "Classificação Mensal": "3,5",
+    "Consolidado Geral (★)": "4,4"
+  },
+  "Exp_Br_Resenhas_Minha_Consultoria_02": {
+    "Volumetria de Avaliação": "215"
+  },
+  "Exp_Br_Resenhas_Minha_Consultoria_03": [
+    {
+      "Nota (Estrelas)": "1",
+      "Volume de Resenhas": "60"
+    },
+    {
+      "Nota (Estrelas)": "2",
+      "Volume de Resenhas": "13"
+    },
+    {
+      "Nota (Estrelas)": "3",
+      "Volume de Resenhas": "13"
+    },
+    {
+      "Nota (Estrelas)": "4",
+      "Volume de Resenhas": "12"
+    },
+    {
+      "Nota (Estrelas)": "5",
+      "Volume de Resenhas": "117"
+    }
+  ],
+  "Exp_Br_Resenhas_Minha_Consultoria_04": {
+    "SLA D+1": "57,50%",
+    "SLA >D+2": "42,50%"
+  },
+  "Exp_Br_Resenhas_AppNatura_01": {
+    "Classificação Mensal": "4,8",
+    "Consolidado Geral (★)": "4,6"
+  },
+  "Exp_Br_Resenhas_AppNatura_02": {
+    "Volumetria de Avaliação": "9504"
+  },
+  "Exp_Br_Resenhas_AppNatura_04": {
+    "SLA D+1": "49,60%",
+    "SLA >D+2": "50,40%"
+  },
+  "Exp_Br_Resenhas_FV_02": {
+    "Volumetria de Avaliação": "12"
+  },
+  "Exp_Br_Resenhas_AppAvon_02": {
+    "Volumetria de Avaliação": "926"
+  }
+}

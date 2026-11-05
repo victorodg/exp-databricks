@@ -162,6 +162,8 @@ def main():
         for extract, gold in SAIDAS_HISPANA.items():
             colunas = colunas_extract(hyper, EXTRACTS_HISPANA / f"{extract}.tdsx", pasta)
             definicoes.append(definicao_view(extract, gold, colunas, tipos_gold(gold)))
+        colunas = colunas_extract(hyper, RAIZ / "validacao" / "extracts_csat" / "Enquetes C-SAT.tdsx", pasta)
+        definicoes.append(definicao_view("Enquetes C-SAT", "dexp_gold_csat_enquetes", colunas, tipos_gold("dexp_gold_csat_enquetes")))
         for view, (extract, partes) in UNIOES.items():
             colunas = colunas_extract(hyper, EXTRACTS / f"{extract}.tdsx", pasta)
             definicoes.append((view, *definicao_uniao(view, extract, partes, colunas,

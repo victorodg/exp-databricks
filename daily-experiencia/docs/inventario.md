@@ -44,7 +44,7 @@ Dynamics e Resenhas ──(Dynamics Nivel)──► MKT
 | Auxiliar Brasil | gsheet | Página1 | `EXP BR\MKT\Auxiliares` | `1bboKHWs4Nni5XLxSKQXIt7dFhRPG9SQVVWzADq9NeYA` |
 | Base MKT | gsheet | MKT Brasil | `EXP BR\MKT\Auxiliares` | `1Huh-FLUWQ9yH21EhyvhX9GbT3F5D1N3jcHtGo2PKfe0` |
 | Mapeamento: Assunto / Função do sistema x Jornada (Tribo) | gsheet | Base_MKT_1309 | `EXP BR\Auxiliar` | `1y4uGJ1ik89sDJ4qYKJgtgduGfHbn6jnbvukCzGYNjWE` |
-| Monitoração Dynatrace | gsheet | Página1 | `EXP BR\Dynatrace` | `1TUhzUExoiv-3b835EJ3BehDPzBeNTrKER4vvMmnjdvA` |
+| Monitoração Dynatrace | gsheet | Página1 | `EXP BR\Dynatrace` | `1ClJFekzIxJ2wQ4RcCo-r4EfTrMRNKaq7JGOcIB54720` |
 | Registros Ate Julho | gsheet | Página1 | `EXP BR\Dynatrace` | `1nECQI_RirnwWPaNOw1NMGBMLl-H9mFvBRkw8P1Yv6TA` |
 | AppSheets Consolidado - Registros Experiência CB | gsheet | Registro | `EXP BR\AppSheets` | `1KoUKxm5LF5x5pgUXouQFfftr4ftnQBA_PuB95N4LPJA` |
 | Registros de Acionamentos | gsheet | Página1 | não localizado em Fontes de Dados | `1QId6xiTda8zlnVdBwKsczLqowpxifk2jiAWfxJ9OeO0` |
@@ -120,6 +120,23 @@ O painel também lê direto a Google Sheet `Healthcheck Paises Consolidado` (`EX
 ### Tamanho
 
 114 etapas: 19 entradas, 68 limpezas, 13 uniões, 5 joins, 9 saídas.
+
+## CSAT / GovEXP (levantado em 30/10/2026)
+
+Fluxo `logic\tableau\GovEXP - Metricas de Excelencia - CSAT.tflx`, especificação em `docs/fluxos/csat.md`. 34 etapas, uma saída: `Enquetes C-SAT` (509.165 linhas em 30/10, 59 colunas), que é cada enquete repetida por fatia do Modelo Gauge. Painel `logic\tableau\GovEXP - Métricas da Excelência(1).twbx` (134 planilhas, 16 painéis).
+
+| Fonte | Aba | Local | ID |
+|---|---|---|---|
+| Enquete MKT REATIVOS | Base | `Enquetes` | `16ti1yE1liFXXMgFVjdNK1W8qepn0_Ifh` |
+| Enquete BASE MTK | Base | `Enquetes` | `1dCXZ0f96bFv1y-07sWLcIu6upNQ42mE6` |
+| Enquete Malasia | Base | `Enquetes` | `1feuOAYjsnxKWijUICW9Xj_znVF12IvsZ` |
+| Enquete CES | CES | `Enquetes` | `1gmtV77YsfpejHbM7zewD2zT8AbKmnCqf` |
+| Analistas Enquetes | Planilha1 | `Enquetes` | `18XhADeWn7fy08VWuSmSW_ukoC8o4N_uk` |
+| BASE MALASIA | BASE MALASIA | `Enquetes` | `1IAyC7suo3A_Hx02QCfcti8IcRzw5PAs5` |
+| Nao modificar - Modelo Gauge - 5 Fatias | Página1 | `Enquetes` (no `.tflx` vai embutida) | |
+| MKT_Reativos, BASE MTK, BASE MTK Historico, MKT Analitico Hispana | | Já no pipeline | |
+
+Fontes do painel fora deste fluxo, que continuam na produção: `GovEXP_QA_OIS_V2`, `GovEXP_QA_OIS_V2_MediaFinal`, `GovEXP_QA_BR_V2`, `GovEXP_QA_BR_V2_MediaFinal`, `QA_IC_SEV3_Base_Consolidada`, `QA_IC_SEV3_Base_Analistas`, `QA_IC_SEV3_Base_Apontamentos`, `QA Monitoria WR`, `QA Incidentes N1`, `QA Mudancas TT`, `QA Gestao de Alertas`. Sem planilha: `Enquetes CSAT Teste`, `GovEXP_QABR_CES`.
 
 ## Tamanho dos fluxos
 

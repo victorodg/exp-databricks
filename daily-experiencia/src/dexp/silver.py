@@ -35,6 +35,14 @@ class MesmasColunas:
                 if not c.startswith("_") and c not in self.excluir]
 
 
+def sem_linhas_vazias(df):
+    """Tira as linhas sem nenhum valor nas colunas com cabeçalho. O Prep lê só as colunas que tinham cabeçalho quando
+    o fluxo foi montado, e uma linha com dados só em colunas sem cabeçalho (coluna_<n>) não chega à saída: na planilha
+    do ServiceNow, uma lista de problemas colada nas colunas AE:AH abaixo dos chamados virava 3.625 linhas vazias."""
+    nomeadas = [c for c in df.columns if not c.startswith("_") and not c.startswith("coluna_")]
+    return df.where(F.greatest(*[F.col(f"`{c}`").isNotNull() for c in nomeadas], F.lit(False))) if nomeadas else df
+
+
 def tipar(df, colunas):
     """Seleciona e tipa as colunas; mantém `_versao` (versão do arquivo de origem na bronze)."""
     return df.select([CONVERSORES[tipo](bronze).alias(silver) for silver, bronze, tipo in colunas] + ["_versao"])
@@ -118,6 +126,8 @@ _TIPOS_ANALITICO = {"data_contato": "data_hora", "encerrado_em": "data_hora", "q
 
 _TIPOS_ANALITICO_HISPANA = {"data_contato": "data_hora", "encerrado_em": "data_hora_ou_serial", "cant_de_atendimientos": "inteiro",
                             "solucao_aplicada": "inteiro", "qtde_mensagens": "inteiro"}
+
+_TIPOS_ENQUETE = {"data_do_contato": "data_hora", "enviado_em": "data_hora"}
 
 # tabelas que só existem quando a aba de origem existe (FonteExcel opcional)
 OPCIONAIS = {"expurgo_dynamics_sla"}
@@ -268,6 +278,14 @@ TABELAS = {
     "hispana_ticket_medio": (["ticket_medio_hispana"], MesmasColunas({"valor_por_pedido": "decimal", "data_contato": "data"})),
     "hispana_ticket_medio_pais": (["ticket_medio_por_pais"], MesmasColunas({"valor_por_pedido": "decimal"})),
     "hispana_exento": (["base_exento"], MesmasColunas({"autorizado_por_natura": "data"})),
+    # --- fontes do fluxo CSAT ---
+    "csat_enquete_brasil": (["enquete_mkt_reativos"], MesmasColunas(_TIPOS_ENQUETE)),
+    "csat_enquete_hispana": (["enquete_base_mtk"], MesmasColunas(_TIPOS_ENQUETE)),
+    "csat_enquete_ncc": (["enquete_malasia"], MesmasColunas(_TIPOS_ENQUETE)),
+    "csat_enquete_ces": (["enquete_ces"], MesmasColunas(_TIPOS_ENQUETE)),
+    "csat_analistas": (["analistas_enquetes"], MesmasColunas({"data_de_inclusao_na_lista": "data"})),
+    "csat_base_malasia": (["base_malasia"], MesmasColunas()),
+    "csat_modelo_gauge": (["modelo_gauge"], MesmasColunas()),
     "hispana_servicenow": (["base_sn_ois"], MesmasColunas(
         {"aberto": "data_hora", "atualizado_em": "data_hora", "encerrado": "data_hora", "resolvido": "data_hora",
          "ultima_reabertura_em": "data_hora", "contagem_de_reaberturas": "inteiro"},

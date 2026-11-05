@@ -1,0 +1,541 @@
+{
+ "Mercado_Mexico_Vol_Retencao": {
+  "Volumetria Total": "1.453",
+  "Retenção N1": "77,54%"
+ },
+ "Mercado_Mexico_Cards1": {
+  "Valor de pedido convertido (Geral)": "R$ 699.567,00",
+  "Quantidade de pedidos convertidos": "1.290",
+  "Volume de Casos Recebidos WhatsApp": "1.266",
+  "Volume de E-mails Recebidos": "33",
+  "Health Check": "289",
+  "Acionamentos Recebidos nos Grupos": "154",
+  "SLA WhatsApp Global": "97,56%",
+  "Comentarios": "Em setembro, o México apresentou uma forte redução de 26,3% no volume total de atendimento de seus canais principais em relação a agosto, caindo de 1.972 para 1.453 interações, o que representa uma diminuição absoluta de 519 casos.   \r\n\r\nEssa expressiva retração na demanda de suporte foi impulsionada principalmente pelo Volume de E-mails Recebidos, que despencou de 330 para apenas 33 registros (-90,0%). O WhatsApp, que se mantém como o canal predominante e de maior representatividade, também apresentou queda no período, reduzindo de 1.563 para 1.266 atendimentos (-19,0%). Em contrapartida a esse cenário de redução, os Acionamentos Recebidos nos Grupos quase dobraram, saltando de 79 para 154 interações (+94,9%).   \r\n\r\nNo aspecto operacional, o SLA do WhatsApp permaneceu em um patamar de excelência, apresentando apenas uma leve variação de 98,26% em agosto para 97,56% em setembro."
+ },
+ "Mercado_Mexico_Cards2": {
+  "SLA WhatsApp": "97,56%",
+  "TMA E-mail": "09:21:43",
+  "Retenção WhatsApp": "75,51%",
+  "Retenção E-mail": "96,43%",
+  "Volumetria Total": "1.453"
+ },
+ "Mercado_Mexico_Desempenho_Pais": [
+  {
+   "País": "Mexico",
+   "SLA": "97,56%",
+   "Comparativo / Observação": "-0,70 p.p. em relação ao mês anterior"
+  }
+ ],
+ "Mercado_Mexico_Top3_Motivo_Contato": [
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "561",
+   "Motivo do Contato": "Registro Aprobado",
+   "Volume do Motivo": "140",
+   "Percentual (%)": "24,96%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "561",
+   "Motivo do Contato": "Registro Rechazado",
+   "Volume do Motivo": "88",
+   "Percentual (%)": "15,69%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "561",
+   "Motivo do Contato": "Error de Validacion de documento",
+   "Volume do Motivo": "66",
+   "Percentual (%)": "11,76%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "438",
+   "Motivo do Contato": "Pedido Gera Error Invalid Attribute in",
+   "Volume do Motivo": "106",
+   "Percentual (%)": "24,20%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "438",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "56",
+   "Percentual (%)": "12,79%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "438",
+   "Motivo do Contato": "Pedido Pendiente",
+   "Volume do Motivo": "45",
+   "Percentual (%)": "10,27%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Iniciar Session",
+   "Volume do Motivo": "83",
+   "Percentual (%)": "48,54%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Reportes",
+   "Volume do Motivo": "26",
+   "Percentual (%)": "15,20%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "171",
+   "Motivo do Contato": "Pagos",
+   "Volume do Motivo": "12",
+   "Percentual (%)": "7,02%"
+  }
+ ],
+ "Mercado_Mexico_Solicitacoes_Dia": [
+  {
+   "Data": "01/09",
+   "N1": "51",
+   "N2": "17",
+   "Total Diário": "68"
+  },
+  {
+   "Data": "02/09",
+   "N1": "44",
+   "N2": "21",
+   "Total Diário": "65"
+  },
+  {
+   "Data": "03/09",
+   "N1": "65",
+   "N2": "14",
+   "Total Diário": "79"
+  },
+  {
+   "Data": "04/09",
+   "N1": "27",
+   "N2": "10",
+   "Total Diário": "37"
+  },
+  {
+   "Data": "05/09",
+   "N1": "3",
+   "N2": "0",
+   "Total Diário": "3"
+  },
+  {
+   "Data": "07/09",
+   "N1": "40",
+   "N2": "5",
+   "Total Diário": "45"
+  },
+  {
+   "Data": "08/09",
+   "N1": "44",
+   "N2": "11",
+   "Total Diário": "55"
+  },
+  {
+   "Data": "09/09",
+   "N1": "40",
+   "N2": "27",
+   "Total Diário": "67"
+  },
+  {
+   "Data": "10/09",
+   "N1": "52",
+   "N2": "16",
+   "Total Diário": "68"
+  },
+  {
+   "Data": "11/09",
+   "N1": "36",
+   "N2": "8",
+   "Total Diário": "44"
+  },
+  {
+   "Data": "12/09",
+   "N1": "6",
+   "N2": "2",
+   "Total Diário": "8"
+  },
+  {
+   "Data": "14/09",
+   "N1": "71",
+   "N2": "23",
+   "Total Diário": "94"
+  },
+  {
+   "Data": "15/09",
+   "N1": "34",
+   "N2": "7",
+   "Total Diário": "41"
+  },
+  {
+   "Data": "16/09",
+   "N1": "5",
+   "N2": "3",
+   "Total Diário": "8"
+  },
+  {
+   "Data": "17/09",
+   "N1": "30",
+   "N2": "14",
+   "Total Diário": "44"
+  },
+  {
+   "Data": "18/09",
+   "N1": "27",
+   "N2": "2",
+   "Total Diário": "29"
+  },
+  {
+   "Data": "19/09",
+   "N1": "9",
+   "N2": "0",
+   "Total Diário": "9"
+  },
+  {
+   "Data": "21/09",
+   "N1": "37",
+   "N2": "15",
+   "Total Diário": "52"
+  },
+  {
+   "Data": "22/09",
+   "N1": "86",
+   "N2": "11",
+   "Total Diário": "97"
+  },
+  {
+   "Data": "23/09",
+   "N1": "54",
+   "N2": "7",
+   "Total Diário": "61"
+  },
+  {
+   "Data": "24/09",
+   "N1": "46",
+   "N2": "11",
+   "Total Diário": "57"
+  },
+  {
+   "Data": "25/09",
+   "N1": "42",
+   "N2": "10",
+   "Total Diário": "52"
+  },
+  {
+   "Data": "26/09",
+   "N1": "15",
+   "N2": "2",
+   "Total Diário": "17"
+  },
+  {
+   "Data": "28/09",
+   "N1": "45",
+   "N2": "17",
+   "Total Diário": "62"
+  },
+  {
+   "Data": "29/09",
+   "N1": "53",
+   "N2": "25",
+   "Total Diário": "78"
+  },
+  {
+   "Data": "30/09",
+   "N1": "36",
+   "N2": "11",
+   "Total Diário": "47"
+  }
+ ],
+ "Mercado_Mexico_Pais": [
+  {
+   "Pais": "México",
+   "Volumetria Total": "1453",
+   "WhatsApp (Vol)": "1266",
+   "E-mail (Vol)*": "33",
+   "SLA WhatsApp": "97,56%",
+   "N1 Dentro do Prazo": "78%"
+  }
+ ],
+ "Mercado_Mexico_TMA": [
+  {
+   "Pais": "Mexico",
+   "TMA E-mail": "09:21:43"
+  }
+ ],
+ "Mercado_Mexico_Causa_Raiz_N1": [
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "456",
+   "Motivo Causa Raiz (N1)": "Registro aprobado",
+   "Volume Motivo": "134",
+   "Percentual (%)": "29,39%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "456",
+   "Motivo Causa Raiz (N1)": "Registro Rechazado",
+   "Volume Motivo": "86",
+   "Percentual (%)": "18,86%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "456",
+   "Motivo Causa Raiz (N1)": "Error de validacion de documento",
+   "Volume Motivo": "64",
+   "Percentual (%)": "14,04%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "281",
+   "Motivo Causa Raiz (N1)": "Inconsistencia en el sistema",
+   "Volume Motivo": "51",
+   "Percentual (%)": "18,15%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "281",
+   "Motivo Causa Raiz (N1)": "Pedido Gera error politica entrega não encontrado",
+   "Volume Motivo": "34",
+   "Percentual (%)": "12,10%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "281",
+   "Motivo Causa Raiz (N1)": "Pedido Gera Error Invalid Attribute In",
+   "Volume Motivo": "25",
+   "Percentual (%)": "8,90%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total": "85",
+   "Motivo Causa Raiz (N1)": "Iniciar Sesion",
+   "Volume Motivo": "53",
+   "Percentual (%)": "62,35%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total": "85",
+   "Motivo Causa Raiz (N1)": "Reportes",
+   "Volume Motivo": "18",
+   "Percentual (%)": "21,18%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total": "85",
+   "Motivo Causa Raiz (N1)": "Perfil",
+   "Volume Motivo": "3",
+   "Percentual (%)": "3,53%"
+  }
+ ],
+ "Mercado_Mexico_Causa_Raiz_N2": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "110",
+   "Motivo Causa Raiz (N2)": "Pedido Gera Error Invalid Attribute in",
+   "Volume Motivo": "79",
+   "Percentual (%)": "71,82%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "110",
+   "Motivo Causa Raiz (N2)": "Pedido Gera error politica entrega nao encontrado",
+   "Volume Motivo": "10",
+   "Percentual (%)": "9,09%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "110",
+   "Motivo Causa Raiz (N2)": "Inconsistencia en el sistema",
+   "Volume Motivo": "4",
+   "Percentual (%)": "3,64%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "74",
+   "Motivo Causa Raiz (N2)": "Ups Algo Salio Mal Direccion",
+   "Volume Motivo": "16",
+   "Percentual (%)": "21,62%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "74",
+   "Motivo Causa Raiz (N2)": "Error de integracion con Gera",
+   "Volume Motivo": "13",
+   "Percentual (%)": "17,57%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "74",
+   "Motivo Causa Raiz (N2)": "Registro Duplicado",
+   "Volume Motivo": "12",
+   "Percentual (%)": "16,22%"
+  },
+  {
+   "Plataforma": "Web Mi Negocio",
+   "Volume Total": "41",
+   "Motivo Causa Raiz (N2)": "Iniciar Sesion",
+   "Volume Motivo": "29",
+   "Percentual (%)": "70,73%"
+  },
+  {
+   "Plataforma": "Web Mi Negocio",
+   "Volume Total": "41",
+   "Motivo Causa Raiz (N2)": "Reportes",
+   "Volume Motivo": "6",
+   "Percentual (%)": "14,63%"
+  },
+  {
+   "Plataforma": "Web Mi Negocio",
+   "Volume Total": "41",
+   "Motivo Causa Raiz (N2)": "Gestion de Negocio",
+   "Volume Motivo": "3",
+   "Percentual (%)": "7,32%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_3_Meses": {
+  "C-SAT (%)": "88,95%",
+  "Enquetes Enviadas": "967",
+  "Enquetes Respondidas": "552",
+  "Response Rate (%)": "57,08%"
+ },
+ "Mercado_Mexico_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "88,95%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "5,25%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "5,80%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "434"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "57"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "29"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "9"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "23"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Indicadores",
+   "Volume de Casos": "6"
+  },
+  {
+   "Ofensor Detrator": "Registro nuevo - Borrador",
+   "Volume de Casos": "4"
+  },
+  {
+   "Ofensor Detrator": "Regisgro rechazado",
+   "Volume de Casos": "2"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Analise_Quald": [
+  {
+   "Avaliação de Qualidade": "Atendimento Correto",
+   "Volume de Casos": "25"
+  },
+  {
+   "Avaliação de Qualidade": "Atendimento Inconforme",
+   "Volume de Casos": "7"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Comentarios": [
+  {
+   "Detalhamento Textual": "Das 32 avaliações detratoras analisadas, 07 apresentaram oportunidades de melhoria relacionadas diretamente ao time de Experiência — principalmente por respostas não alinhadas à solicitação.\n\nEm 08 casos, houve abertura de chamados ou casos com incidentes críticos e 17 avaliações referem-se a orientações sobre regras comerciais e processos."
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_3_Meses": [
+  {
+   "Pais": "México",
+   "C-SAT (%)": "88,95%",
+   "Response Rate (%)": "57,08%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Classifi": [
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "88,95%"
+  },
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "5,25%"
+  },
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "5,80%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Notas": [
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "434"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "57"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "29"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "9"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "23"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Ofensor": [
+  {
+   "Pais": "México",
+   "Ofensor Detrato": "Indicadores",
+   "Volume de Caso": "6",
+   "Texto do Comentário": "Das 32 avaliações detratoras analisadas, 07 apresentaram oportunidades de melhoria relacionadas diretamente ao time de Experiência — principalmente por respostas não alinhadas à solicitação.\n\nEm 08 casos, houve abertura de chamados ou casos com incidentes críticos e 17 avaliações referem-se a orientações sobre regras comerciais e processos."
+  },
+  {
+   "Pais": "México",
+   "Ofensor Detrato": "Registro Nuevo - Borrador",
+   "Volume de Caso": "4",
+   "Texto do Comentário": "Das 32 avaliações detratoras analisadas, 07 apresentaram oportunidades de melhoria relacionadas diretamente ao time de Experiência — principalmente por respostas não alinhadas à solicitação.\n\nEm 08 casos, houve abertura de chamados ou casos com incidentes críticos e 17 avaliações referem-se a orientações sobre regras comerciais e processos."
+  },
+  {
+   "Pais": "México",
+   "Ofensor Detrato": "Registro Rechazado",
+   "Volume de Caso": "2",
+   "Texto do Comentário": "Das 32 avaliações detratoras analisadas, 07 apresentaram oportunidades de melhoria relacionadas diretamente ao time de Experiência — principalmente por respostas não alinhadas à solicitação.\n\nEm 08 casos, houve abertura de chamados ou casos com incidentes críticos e 17 avaliações referem-se a orientações sobre regras comerciais e processos."
+  }
+ ]
+}

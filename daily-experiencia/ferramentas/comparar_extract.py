@@ -68,6 +68,7 @@ NOMES_EM_COLISAO = {
     "PEDIDO FINALIZADO": "pedido_finalizado_ticket",
     "Hora Fim do Atendimento": "hora_fim_do_atendimento_ate_julho",
     "Erro Perceptível ao Usuário?": "erro_perceptivel_ao_usuario_ate_julho",
+    "Slice #": "slice_numero",
 }
 
 

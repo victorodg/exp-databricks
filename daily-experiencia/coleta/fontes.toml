@@ -49,6 +49,14 @@ base_mtk_historico = 'EXP OIS\MKT\BASE MTK Historico.xlsx'
 base_sn_ois = 'EXP OIS\SERVICE NOW\BASE SN OIS.xlsx'
 resenhas_latam = 'EXP OIS\Resenhas\Resenhas Latam.xlsx'
 mi_negocio = 'EXP OIS\Resenhas\Mi Negocio.xlsx'
+# CSAT
+enquete_mkt_reativos = 'Enquetes\Enquete MKT REATIVOS.xlsx'
+enquete_base_mtk = 'Enquetes\Enquete BASE MTK.xlsx'
+enquete_malasia = 'Enquetes\Enquete Malasia.xlsx'
+enquete_ces = 'Enquetes\Enquete CES.xlsx'
+analistas_enquetes = 'Enquetes\Analistas Enquetes.xlsx'
+base_malasia = 'Enquetes\BASE MALASIA.xlsx'
+modelo_gauge = 'Enquetes\Nao modificar - Modelo Gauge - 5 Fatias.xlsx'
 
 # Cópias das Google Sheets: mesmos nomes usados em PLANILHAS no exportar_planilhas.gs.
 [google_sheets]
@@ -110,7 +118,7 @@ caminho_http = "/sql/1.0/warehouses/dcb43c45e3a55fe4"
 "EXPBR - Chamados Servicenow" = "dexp_vw_servicenow_chamados"
 "Resenhas EXP BR AppSheets" = "dexp_vw_resenhas_appsheets"
 "Resenhas Brasil" = "dexp_vw_resenhas_brasil"
-# Daily Hispana (Experiencia Hispana Produtividade tem view, mas o painel não a usa)
+# Daily Hispana
 "Base MKT OIS" = "dexp_vw_hispana_base_mkt"
 "Base MKT HC OIS" = "dexp_vw_hispana_base_mkt_hc"
 "Base MKT Lojas OIS" = "dexp_vw_hispana_base_mkt_lojas"
@@ -119,3 +127,6 @@ caminho_http = "/sql/1.0/warehouses/dcb43c45e3a55fe4"
 "AppSheets Resenhas OIs" = "dexp_vw_hispana_appsheets_resenhas"
 "Experiencia Hispana - Chamados Servicenow" = "dexp_vw_hispana_chamados_servicenow"
 "Ticket Medio Hispana" = "dexp_vw_hispana_ticket_medio"
+"Experiencia Hispana Produtividade" = "dexp_vw_hispana_produtividade"
+# GovEXP (usa também Experiencia Brasil Nivel e Experiencia Hispana Produtividade)
+"Enquetes C-SAT" = "dexp_vw_csat_enquetes"

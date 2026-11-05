@@ -1626,6 +1626,71 @@ AS SELECT
   `data_contato` AS `Data Contato`
 FROM sandbox.sustentacao_bau_experiencias.dexp_gold_hispana_ticket_medio;
 
+-- Enquetes C-SAT
+CREATE OR REPLACE VIEW sandbox.sustentacao_bau_experiencias.dexp_vw_csat_enquetes
+COMMENT 'Daily Experiência BR: dexp_gold_csat_enquetes com os nomes de campo do extract "Enquetes C-SAT" (para o Tableau)'
+AS SELECT
+  `ois_funcao_do_sistema` AS `OIS Função do Sistema`,
+  `turno` AS `Turno`,
+  `chave_join` AS `Chave Join`,
+  `nota_da_csat_simple` AS `Nota da CSAT Simple`,
+  `chave_join_1` AS `Chave Join-1`,
+  `pais` AS `Pais`,
+  `analista_para_considerar_nas_enquetes` AS `Analista para considerar nas Enquetes`,
+  `fonte` AS `Fonte`,
+  `data` AS `Data`,
+  `c_sat` AS `C-SAT`,
+  `nota_da_csat` AS `Nota da CSAT`,
+  `enquete_respondida` AS `Enquete Respondida`,
+  `nota_csat` AS `Nota CSAT`,
+  `nota_csat_simple` AS `Nota CSAT Simple`,
+  `nota_ces` AS `Nota CES`,
+  `slice_numero` AS `Slice #`,
+  `slice` AS `Slice`,
+  `exp_br_gv` AS `Exp Br GV`,
+  `exp_br_funcao` AS `Exp Br FUNÇÃO`,
+  `exp_br_chamado` AS `Exp Br CHAMADO`,
+  `exp_br_qtd_atendimentos` AS `Exp Br  Qtd Atendimentos`,
+  `exp_br_funcao_do_sistema` AS `Exp Br Função do Sistema`,
+  `exp_br_mercado` AS `Exp Br MERCADO`,
+  `exp_br_primeiro_tempo_de_espera` AS `Exp Br Primeiro Tempo de Espera`,
+  `exp_br_setor_fim` AS `Exp Br Setor Fim`,
+  `exp_br_status_de_classificacao` AS `Exp Br Status de Classificação`,
+  `exp_br_status_de_finalizacao` AS `Exp Br Status de finalização`,
+  `ncc_function` AS `NCC FUNCTION`,
+  `ncc_solution_applied` AS `NCC SOLUTION APPLIED`,
+  `ncc_canal_de_entrada` AS `NCC Canal de Entrada`,
+  `ncc_setor_entrada` AS `NCC Setor Entrada`,
+  `ncc_setor_fim` AS `NCC Setor Fim`,
+  `ncc_status_de_classificacao` AS `NCC Status de Classificação`,
+  `ncc_status_de_finalizacao` AS `NCC Status de finalização`,
+  `time` AS `Time`,
+  `data_de_inclusao_na_lista` AS `Data de Inclusão na Lista`,
+  `data_do_contato` AS `Data do Contato`,
+  `enviado_em` AS `Enviado em`,
+  `respondido_em` AS `Respondido em`,
+  `protocolo` AS `Protocolo`,
+  `nome` AS `Nome`,
+  `canal` AS `Canal`,
+  `contato` AS `Contato`,
+  `responsavel` AS `Responsavel`,
+  `nota` AS `Nota`,
+  `ois_sistema` AS `OIS Sistema`,
+  `ois_detalhe_do_sistema` AS `OIS Detalhe do Sistema`,
+  `ois_solucao_aplicada` AS `OIS Solução Aplicada`,
+  `ois_tempo_ate_ser_atendido` AS `OIS Tempo até ser atendido`,
+  `ois_tempo_do_atendimento` AS `OIS Tempo do atendimento`,
+  `ois_primeiro_tempo_de_espera` AS `OIS Primeiro Tempo de Espera`,
+  `ois_tempo_medio_de_espera` AS `OIS Tempo Médio de Espera`,
+  `ois_tempo_de_operacao` AS `OIS Tempo de Operação`,
+  `ois_canal_de_entrada` AS `OIS Canal de Entrada`,
+  `ois_setor_entrada` AS `OIS Setor Entrada`,
+  `ois_setor_fim` AS `OIS Setor Fim`,
+  `ois_status_de_classificacao` AS `OIS Status de Classificação`,
+  `ois_status_de_finalizacao` AS `OIS Status de finalização`,
+  `ois_observacoes` AS `OIS Observações`
+FROM sandbox.sustentacao_bau_experiencias.dexp_gold_csat_enquetes;
+
 -- GN, GV, GV Antecipada, Franquia, CBCOM com os campos do extract "MKT Whats GN"
 CREATE OR REPLACE VIEW sandbox.sustentacao_bau_experiencias.dexp_vw_mkt_whats_detalhes
 COMMENT 'Daily Experiência BR: WhatsApp GN, GV, GV Antecipada, Franquia, CBCOM juntos, para o painel único (coluna Painel)'

@@ -1,0 +1,1264 @@
+{
+ "Exp_Br_Indicadores_Contratuais": {
+  "TPR - Tempo de Primeira Resposta - Atendimento Gerentes": "98,85%",
+  "TMR - SLA de Resolução -E-mail (N1)": "66,80%",
+  "Notificação de Incidente": "manual",
+  "Retenção em N1": "70,38%",
+  "CSAT": "88,97%",
+  "Quality Assurance": "manual",
+  "Pedidos convertidos": "609",
+  "Valor de pedido convertido": "R$ 423.699,57"
+ },
+ "Exp_Br_Indicadores_Monitoracao": {
+  "TPA - Tempo de Primeiro Atendimento - Atendimento Resenhas": "52,45%",
+  "TMR - SLA de Resolução - Prazo Cliente (Protocolo Atendimento)": "96,61%",
+  "TMR - SLA de Resolução -E-mail (origem whatsapp) N2": "04 dias",
+  "TMR - SLA de Resolução -E-mail (origem whatsapp) N3": "104 dias",
+  "TMR - SLA de Resolução -E-mail (origem e-mail) N2": "13 dias",
+  "TMR - SLA de Resolução -E-mail (origem e-mail) N3": "19 dias"
+ },
+ "Exp_Br_Cards01": {
+  "Valor de pedido convertido": "R$ 423.699,57",
+  "Pedidos convertidos": "609",
+  "Volume de Casos Recebidos WhatsApp": "2.185",
+  "Volume de E-mails Recebidos": "861",
+  "Health Check Agendados": "842",
+  "Monitoração Dynatrace": "1.110",
+  "Resenhas 1 a 3": "347",
+  "Resenhas 4 e 5": "a investigar",
+  "Protocolos Central CB e CF": "2.176",
+  "E-mails Loja": "91",
+  "Requisições Eventuais": "6"
+ },
+ "Exp_Br_Retencao": {
+  "Volumetria Total": "4.936",
+  "WhatsApp": "2.185",
+  "E-mail": "861",
+  "Ocorrências": "1.890",
+  "Retenção N1": "70,38%"
+ },
+ "Exp_Br_Cards2": {
+  "SLA WhatsApp": "98,85%",
+  "TMA E-mail": "01:34:47",
+  "SLA Tarefas": "86,03%",
+  "Retenção WhatsApp": "64,38%",
+  "Retenção E-mail": "54,50%",
+  "Retenção Tarefas": "76,03%",
+  "Volumetria Total": "4.936"
+ },
+ "Exp_Br_Reativos_WA_Mensal": {
+  "Quantidade de Acionamentos": "1.834",
+  "SLA (≥ 95%)": "98,85%",
+  "Volume N1": "862",
+  "Volume N2": "477",
+  "N1 (% dentro do prazo ≥ 70%)": "64,38%"
+ },
+ "Exp_Br_WA_GN_Mensal": {
+  "Quantidade de Acionamentos": "1.712",
+  "SLA (≥ 95%)": "99,07%",
+  "Volume N1": "744",
+  "Volume N2": "434",
+  "N1 (% dentro do prazo ≥ 70%)": "63,16%"
+ },
+ "Exp_Br_WA_GV_Mensal": {
+  "Quantidade de Acionamentos": "69",
+  "SLA (≥ 95%)": "95,65%",
+  "Volume N1": "90",
+  "Volume N2": "37",
+  "N1 (% dentro do prazo ≥ 70%)": "70,87%"
+ },
+ "Exp_Br_WA_Franq_Mensal": {
+  "Quantidade de Acionamentos": "13",
+  "SLA (≥ 95%)": "92,31%",
+  "Volume N1": "4",
+  "Volume N2": "2",
+  "N1 (% dentro do prazo ≥ 70%)": "66,67%"
+ },
+ "Exp_Br_WA_CBCom_Mensal": {
+  "Quantidade de Acionamentos": "29",
+  "SLA (≥ 95%)": "96,55%",
+  "Volume N1": "20",
+  "Volume N2": "3",
+  "N1 (% dentro do prazo ≥ 70%)": "86,96%"
+ },
+ "Exp_Br_Email_Mensal": {
+  "Quantidade de Acionamentos": "496",
+  "Tempo Médio Operacional N1": "01:34:47",
+  "Volume N1": "115",
+  "Volume N2": "96",
+  "N1 (% dentro do prazo ≥ 70%)": "54,50%"
+ },
+ "Exp_Br_Email_TMO": {
+  "TMO N2 - Origem WhatsApp": "114:44:46",
+  "TMO N2 - Origem E-mail": "332:55:41",
+  "TMO N3 - Origem WhatsApp": "2516:37:49",
+  "TMO N3 - Origem E-mail": "471:15:04"
+ },
+ "Exp_Br_Tarefas_Historico_Mensal": {
+  "Protocolos Abertos": "2.271",
+  "Protocolos Fechados": "1.890",
+  "Retrabalho": "286",
+  "N1 (% dentro do prazo): geral 70%": "76,03%",
+  "SLA Cliente": "96,61%",
+  "Até 24h": "86,03%",
+  "Até 5h": "58,31%"
+ },
+ "Exp_Br_Tarefas_CB_Mensal": {
+  "Protocolos Abertos": "2.014",
+  "Protocolos Fechados": "1.736",
+  "Retrabalho": "187",
+  "N1 (% dentro do prazo): geral 70%": "74,19%",
+  "SLA Cliente": "96,72%",
+  "Até 24h": "86,92%",
+  "Até 5h": "60,20%"
+ },
+ "Exp_Br_Tarefas_CF_Mensal": {
+  "Protocolos Abertos": "257",
+  "Protocolos Fechados": "154",
+  "Retrabalho": "99",
+  "N1 (% dentro do prazo): geral 70%": "96,75%",
+  "SLA Cliente": "95,45%",
+  "Até 24h": "75,97%",
+  "Até 5h": "37,01%"
+ },
+ "Exp_Br_Tarefas_CB_Fase": {
+  "Fase 1 - Volume": "1.288",
+  "Fase 1 - % SLA 24h (≥ 85%)": "99,61%",
+  "Fase 2 - Volume": "448",
+  "Fase 2 - % SLA 24h (≥ 85%)": "50,45%"
+ },
+ "Exp_Br_Tarefas_CF_Fase": {
+  "Fase 1 - Volume": "149",
+  "Fase 1 - % SLA 24h (≥ 85%)": "78,52%",
+  "Fase 2 - Volume": "5",
+  "Fase 2 - % SLA 24h (≥ 85%)": "0,00%"
+ },
+ "Exp_Br_ReqEvent_Mensal": {
+  "Quantidade de Acionamentos": "6",
+  "Volume N1": "a investigar",
+  "Volume N2": "a investigar"
+ },
+ "Exp_Br_Reativos_WA_Motivos_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "195",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "104",
+   "Percentual (%)": "53,33%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "195",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "90",
+   "Percentual (%)": "46,15%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "195",
+   "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+   "Volume Motivo": "1",
+   "Percentual (%)": "0,51%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "172",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "164",
+   "Percentual (%)": "95,35%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "172",
+   "Motivo do Contato": "Menu",
+   "Volume Motivo": "4",
+   "Percentual (%)": "2,33%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "172",
+   "Motivo do Contato": "Reset de senha",
+   "Volume Motivo": "2",
+   "Percentual (%)": "1,16%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "156",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "61",
+   "Percentual (%)": "39,10%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "156",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "43",
+   "Percentual (%)": "27,56%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "156",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "39",
+   "Percentual (%)": "25,00%"
+  }
+ ],
+ "Exp_Br_Reativos_WA_Motivos_N2": [
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "106",
+   "Percentual (%)": "58,24%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "27",
+   "Percentual (%)": "14,84%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "26",
+   "Percentual (%)": "14,29%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "154",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "124",
+   "Percentual (%)": "80,52%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "154",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "30",
+   "Percentual (%)": "19,48%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "55",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "38",
+   "Percentual (%)": "69,09%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "55",
+   "Motivo do Contato": "Status do Pedido",
+   "Volume Motivo": "8",
+   "Percentual (%)": "14,55%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "55",
+   "Motivo do Contato": "Limite de crédito",
+   "Volume Motivo": "5",
+   "Percentual (%)": "9,09%"
+  }
+ ],
+ "Exp_Br_WA_GN_Motivos_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "94",
+   "Percentual (%)": "51,65%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "87",
+   "Percentual (%)": "47,80%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "182",
+   "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+   "Volume Motivo": "1",
+   "Percentual (%)": "0,55%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "164",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "158",
+   "Percentual (%)": "96,34%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "164",
+   "Motivo do Contato": "Menu",
+   "Volume Motivo": "4",
+   "Percentual (%)": "2,44%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "164",
+   "Motivo do Contato": "Reset de senha",
+   "Volume Motivo": "2",
+   "Percentual (%)": "1,22%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "152",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "60",
+   "Percentual (%)": "39,47%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "152",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "43",
+   "Percentual (%)": "28,29%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "152",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "37",
+   "Percentual (%)": "24,34%"
+  }
+ ],
+ "Exp_Br_WA_GN_Motivos_N2": [
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "173",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "98",
+   "Percentual (%)": "56,65%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "173",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "27",
+   "Percentual (%)": "15,61%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "173",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "25",
+   "Percentual (%)": "14,45%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "130",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "105",
+   "Percentual (%)": "80,77%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "130",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "25",
+   "Percentual (%)": "19,23%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "52",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "35",
+   "Percentual (%)": "67,31%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "52",
+   "Motivo do Contato": "Status do Pedido",
+   "Volume Motivo": "8",
+   "Percentual (%)": "15,38%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "52",
+   "Motivo do Contato": "Limite de crédito",
+   "Volume Motivo": "5",
+   "Percentual (%)": "9,62%"
+  }
+ ],
+ "Exp_Br_WA_GV_Motivos_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "6",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "4",
+   "Percentual (%)": "66,67%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "6",
+   "Motivo do Contato": "MINHA LOJA",
+   "Volume Motivo": "2",
+   "Percentual (%)": "33,33%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "3",
+   "Percentual (%)": "60,00%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Status do Pedido",
+   "Volume Motivo": "2",
+   "Percentual (%)": "40,00%"
+  },
+  {
+   "Plataforma": "DCR",
+   "Volume Total Plataforma": "4",
+   "Motivo do Contato": "Movimentação",
+   "Volume Motivo": "3",
+   "Percentual (%)": "75,00%"
+  },
+  {
+   "Plataforma": "DCR",
+   "Volume Total Plataforma": "4",
+   "Motivo do Contato": "Treinamento",
+   "Volume Motivo": "1",
+   "Percentual (%)": "25,00%"
+  }
+ ],
+ "Exp_Br_WA_GV_Motivos_N2": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "24",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "19",
+   "Percentual (%)": "79,17%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "24",
+   "Motivo do Contato": "MINHA LOJA",
+   "Volume Motivo": "5",
+   "Percentual (%)": "20,83%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "8",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "7",
+   "Percentual (%)": "87,50%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "8",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "1",
+   "Percentual (%)": "12,50%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "2",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "2",
+   "Percentual (%)": "100,00%"
+  }
+ ],
+ "Exp_Br_WA_Franq_Motivos_N1": [
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "3",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "3",
+   "Percentual (%)": "100,00%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "1",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "1",
+   "Percentual (%)": "100,00%"
+  }
+ ],
+ "Exp_Br_WA_Franq_Motivos_N2": [
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "1",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "1",
+   "Percentual (%)": "100,00%"
+  },
+  {
+   "Plataforma": "SAP FI",
+   "Volume Total Plataforma": "1",
+   "Motivo do Contato": "Boleto",
+   "Volume Motivo": "1",
+   "Percentual (%)": "100,00%"
+  }
+ ],
+ "Exp_Br_WA_CBCom_Motivos_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "6",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "6",
+   "Percentual (%)": "100,00%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "3",
+   "Percentual (%)": "60,00%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "NAVEGAÇÃO NO APP",
+   "Volume Motivo": "2",
+   "Percentual (%)": "40,00%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "4",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "3",
+   "Percentual (%)": "75,00%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "4",
+   "Motivo do Contato": "Cupom de desconto",
+   "Volume Motivo": "1",
+   "Percentual (%)": "25,00%"
+  }
+ ],
+ "Exp_Br_WA_CBCom_Motivos_N2": [
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "1",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "1",
+   "Percentual (%)": "100,00%"
+  },
+  {
+   "Plataforma": "Experiencia de Vendas",
+   "Volume Total Plataforma": "1",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "1",
+   "Percentual (%)": "100,00%"
+  }
+ ],
+ "Exp_Br_Email_Motivos_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "42",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "27",
+   "Percentual (%)": "64,29%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "42",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "15",
+   "Percentual (%)": "35,71%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "26",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "14",
+   "Percentual (%)": "53,85%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "26",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "7",
+   "Percentual (%)": "26,92%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "26",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "4",
+   "Percentual (%)": "15,38%"
+  },
+  {
+   "Plataforma": "DCR",
+   "Volume Total Plataforma": "18",
+   "Motivo do Contato": "Contratação Líder",
+   "Volume Motivo": "10",
+   "Percentual (%)": "55,56%"
+  },
+  {
+   "Plataforma": "DCR",
+   "Volume Total Plataforma": "18",
+   "Motivo do Contato": "Extinção de grupo",
+   "Volume Motivo": "5",
+   "Percentual (%)": "27,78%"
+  },
+  {
+   "Plataforma": "DCR",
+   "Volume Total Plataforma": "18",
+   "Motivo do Contato": "Movimentação",
+   "Volume Motivo": "2",
+   "Percentual (%)": "11,11%"
+  }
+ ],
+ "Exp_Br_Email_Motivos_N2": [
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "65",
+   "Motivo do Contato": "Rescisão",
+   "Volume Motivo": "50",
+   "Percentual (%)": "76,92%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "65",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "8",
+   "Percentual (%)": "12,31%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "65",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "4",
+   "Percentual (%)": "6,15%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "11",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "8",
+   "Percentual (%)": "72,73%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "11",
+   "Motivo do Contato": "Status do Pedido",
+   "Volume Motivo": "8",
+   "Percentual (%)": "72,73%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "11",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "3",
+   "Percentual (%)": "27,27%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "11",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "2",
+   "Percentual (%)": "18,18%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "11",
+   "Motivo do Contato": "Revista Natura",
+   "Volume Motivo": "1",
+   "Percentual (%)": "9,09%"
+  }
+ ],
+ "Exp_Br_Tarefas_CB_Motivo_N1": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "427",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "225",
+   "Percentual (%)": "52,69%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "427",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "201",
+   "Percentual (%)": "47,07%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "427",
+   "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+   "Volume Motivo": "1",
+   "Percentual (%)": "0,23%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "240",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "103",
+   "Percentual (%)": "42,92%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "240",
+   "Motivo do Contato": "Pedido",
+   "Volume Motivo": "63",
+   "Percentual (%)": "26,25%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "240",
+   "Motivo do Contato": "Cancelamento de pedido",
+   "Volume Motivo": "36",
+   "Percentual (%)": "15,00%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "167",
+   "Motivo do Contato": "Acesso",
+   "Volume Motivo": "127",
+   "Percentual (%)": "76,05%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "167",
+   "Motivo do Contato": "Menu",
+   "Volume Motivo": "29",
+   "Percentual (%)": "17,37%"
+  },
+  {
+   "Plataforma": "Cognito",
+   "Volume Total Plataforma": "167",
+   "Motivo do Contato": "Reset de senha",
+   "Volume Motivo": "11",
+   "Percentual (%)": "6,59%"
+  }
+ ],
+ "Exp_Br_Tarefas_CB_Motivo_N2": [
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "169",
+   "Motivo do Contato": "Cadastro",
+   "Volume Motivo": "127",
+   "Percentual (%)": "75,15%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "169",
+   "Motivo do Contato": "Minha Loja",
+   "Volume Motivo": "40",
+   "Percentual (%)": "23,67%"
+  },
+  {
+   "Plataforma": "AIBV",
+   "Volume Total Plataforma": "169",
+   "Motivo do Contato": "Divergência Etiqueta x NF Pedido",
+   "Volume Motivo": "2",
+   "Percentual (%)": "1,18%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "134",
+   "Motivo do Contato": "Pedido",
+   "Volume Motivo": "60",
+   "Percentual (%)": "44,78%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "134",
+   "Motivo do Contato": "Captação",
+   "Volume Motivo": "27",
+   "Percentual (%)": "20,15%"
+  },
+  {
+   "Plataforma": "Exp. de Compras",
+   "Volume Total Plataforma": "134",
+   "Motivo do Contato": "Limite de crédito",
+   "Volume Motivo": "23",
+   "Percentual (%)": "17,16%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "51",
+   "Motivo do Contato": "Relatório",
+   "Volume Motivo": "18",
+   "Percentual (%)": "35,29%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "51",
+   "Motivo do Contato": "Painel de Indicadores",
+   "Volume Motivo": "16",
+   "Percentual (%)": "31,37%"
+  },
+  {
+   "Plataforma": "FV",
+   "Volume Total Plataforma": "51",
+   "Motivo do Contato": "Plano de Crescimento",
+   "Volume Motivo": "12",
+   "Percentual (%)": "23,53%"
+  }
+ ],
+ "Exp_Br_Tarefas_CF_Motivo_N1": [
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "141",
+   "Motivo do Contato": "Erro para finalizar pedido",
+   "Volume Motivo": "48",
+   "Percentual (%)": "34,04%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "141",
+   "Motivo do Contato": "Erro na aplicação do vale troca",
+   "Volume Motivo": "28",
+   "Percentual (%)": "19,86%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "141",
+   "Motivo do Contato": "Erro cadastro",
+   "Volume Motivo": "21",
+   "Percentual (%)": "14,89%"
+  }
+ ],
+ "Exp_Br_Tarefas_CF_Motivo_N2": [
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Erro de acesso\\login",
+   "Volume Motivo": "2",
+   "Percentual (%)": "40,00%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Erro na visualização de histórico de pedidos",
+   "Volume Motivo": "1",
+   "Percentual (%)": "20,00%"
+  },
+  {
+   "Plataforma": "JCF",
+   "Volume Total Plataforma": "5",
+   "Motivo do Contato": "Erro para finalizar pedido",
+   "Volume Motivo": "1",
+   "Percentual (%)": "20,00%"
+  }
+ ],
+ "Exp_Br_Proativos_Mensal": {
+  "Total de Monitorações": "1.110",
+  "Contatos Bem-Sucedidos (Com Sucesso)": "43",
+  "Sem Sucesso": "1.067",
+  "Pedidos Finalizados com Contato": "14",
+  "Taxa de Sucesso dos Contatos": "32,56%"
+ },
+ "Exp_Br_Proativos_Contatos_Pedidos": {
+  "Contatos Realizados": "43",
+  "Pedidos Finalizados": "14"
+ },
+ "Exp_Br_Proativos_HC_Mensal": {
+  "Qtd Agendamento": "842",
+  "Qtd Recebidos": "686",
+  "Conversão (Atendimento com o Expcb)": "81,47%",
+  "Alcance %": "a investigar"
+ },
+ "Exp_Br_Email_Natura_Expcb_Mensal": {
+  "Volumetria": "37",
+  "Tempo Médio Operacional (TMO)": "31:21:38"
+ },
+ "Exp_Br_Email_Natura_Expcb_SLA": {
+  "SLA D+1": "67,57%",
+  "SLA >D+2": "32,43%"
+ },
+ "Exp_Br_Email_AppNatura_Mensal": {
+  "Volumetria": "58",
+  "Tempo Médio Operacional (TMO)": "27:47:32"
+ },
+ "Exp_Br_Email_AppNatura_SLA": {
+  "SLA D+1": "79,31%",
+  "SLA >D+2": "20,69%"
+ },
+ "Exp_Br_Email_AppAvon_Mensal": {
+  "Volumetria": "0",
+  "Tempo Médio Operacional (TMO)": "Sem dados"
+ },
+ "Exp_Br_Email_AppAvon_SLA": {
+  "SLA D+1": "Sem dados",
+  "SLA >D+2": "Sem dados"
+ },
+ "Exp_Br_CSAT_3Meses": {
+  "C-SAT (%)": "88,22%",
+  "Enquetes Enviadas": "1.112",
+  "Enquetes Respondidas": "679",
+  "Response Rate (%)": "61,06%"
+ },
+ "Exp_Br_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "88,22%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "7,51%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "4,27%"
+  }
+ ],
+ "Exp_Br_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "484"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "115"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "51"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "15"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "14"
+  }
+ ],
+ "Exp_Br_CSAT_Mercado": [
+  {
+   "Mercado": "Amazônia",
+   "Nota": "98,53%"
+  },
+  {
+   "Mercado": "Araucária",
+   "Nota": "87,80%"
+  },
+  {
+   "Mercado": "Atlântica",
+   "Nota": "86,73%"
+  },
+  {
+   "Mercado": "Caatinga",
+   "Nota": "88,97%"
+  },
+  {
+   "Mercado": "Cerrado",
+   "Nota": "86,07%"
+  }
+ ],
+ "Exp_Br_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Acesso",
+   "Volume de Casos": "9"
+  },
+  {
+   "Ofensor Detrator": "Rescisão líder",
+   "Volume de Casos": "3"
+  },
+  {
+   "Ofensor Detrator": "Captação - retroativo",
+   "Volume de Casos": "2"
+  }
+ ],
+ "Exp_Br_Resenhas_Minha_Consultoria_01": {
+  "Classificação Mensal": "3,5",
+  "Consolidado Geral (★)": "4,4"
+ },
+ "Exp_Br_Resenhas_Minha_Consultoria_02": {
+  "Volumetria de Avaliação": "216"
+ },
+ "Exp_Br_Resenhas_Minha_Consultoria_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "61"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "13"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "13"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "12"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "117"
+  }
+ ],
+ "Exp_Br_Resenhas_Minha_Consultoria_04": {
+  "SLA D+1": "57,50%",
+  "SLA >D+2": "42,50%"
+ },
+ "Exp_Br_Resenhas_Minha_Consultoria_05": [
+  {
+   "Tipo de Comentário": "-",
+   "Volume": "80"
+  }
+ ],
+ "Exp_Br_Resenhas_Minha_Consultoria_06": [
+  {
+   "Motivo da Reclamação": "Perfomance App",
+   "Volume": "22"
+  },
+  {
+   "Motivo da Reclamação": "Captação",
+   "Volume": "21"
+  },
+  {
+   "Motivo da Reclamação": "Outros",
+   "Volume": "21"
+  },
+  {
+   "Motivo da Reclamação": "Acesso",
+   "Volume": "12"
+  },
+  {
+   "Motivo da Reclamação": "Atendimento",
+   "Volume": "2"
+  },
+  {
+   "Motivo da Reclamação": "Funcionalidade",
+   "Volume": "2"
+  }
+ ],
+ "Exp_Br_Resenhas_Minha_Consultoria_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: a investigar (linha 2 + linha 3)"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 80 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das a investigar avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ],
+ "Exp_Br_Resenhas_FV_01": {
+  "Classificação Mensal": "4,6",
+  "Consolidado Geral (★)": "4,1"
+ },
+ "Exp_Br_Resenhas_FV_02": {
+  "Volumetria de Avaliação": "12"
+ },
+ "Exp_Br_Resenhas_FV_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "1"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "0"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "0"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "1"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "10"
+  }
+ ],
+ "Exp_Br_Resenhas_FV_04": {
+  "SLA D+1": "0,00%",
+  "SLA >D+2": "100,00%"
+ },
+ "Exp_Br_Resenhas_FV_05": [
+  {
+   "Tipo de Comentário": "-",
+   "Volume": "1"
+  }
+ ],
+ "Exp_Br_Resenhas_FV_06": [
+  {
+   "Motivo da Reclamação": "Acesso",
+   "Volume": "1"
+  }
+ ],
+ "Exp_Br_Resenhas_FV_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: a investigar (linha 2 + linha 3)"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 1 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das a investigar avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ],
+ "Exp_Br_Resenhas_AppNatura_01": {
+  "Classificação Mensal": "4,8",
+  "Consolidado Geral (★)": "4,6"
+ },
+ "Exp_Br_Resenhas_AppNatura_02": {
+  "Volumetria de Avaliação": "9.504"
+ },
+ "Exp_Br_Resenhas_AppNatura_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "292"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "81"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "160"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "428"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "8.543"
+  }
+ ],
+ "Exp_Br_Resenhas_AppNatura_04": {
+  "SLA D+1": "49,60%",
+  "SLA >D+2": "50,40%"
+ },
+ "Exp_Br_Resenhas_AppNatura_05": [
+  {
+   "Tipo de Comentário": "-",
+   "Volume": "252"
+  }
+ ],
+ "Exp_Br_Resenhas_AppNatura_06": [
+  {
+   "Motivo da Reclamação": "Compra",
+   "Volume": "94"
+  },
+  {
+   "Motivo da Reclamação": "Outros",
+   "Volume": "62"
+  },
+  {
+   "Motivo da Reclamação": "Perfomance App",
+   "Volume": "36"
+  },
+  {
+   "Motivo da Reclamação": "Atendimento",
+   "Volume": "17"
+  },
+  {
+   "Motivo da Reclamação": "Transporte",
+   "Volume": "17"
+  },
+  {
+   "Motivo da Reclamação": "Acesso",
+   "Volume": "15"
+  },
+  {
+   "Motivo da Reclamação": "Pagamento",
+   "Volume": "11"
+  }
+ ],
+ "Exp_Br_Resenhas_AppNatura_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: a investigar (linha 2 + linha 3)"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 252 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das a investigar avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ],
+ "Exp_Br_Resenhas_AppAvon_01": {
+  "Classificação Mensal": "4,8",
+  "Consolidado Geral (★)": "4,6"
+ },
+ "Exp_Br_Resenhas_AppAvon_02": {
+  "Volumetria de Avaliação": "926"
+ },
+ "Exp_Br_Resenhas_AppAvon_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "28"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "4"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "15"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "50"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "829"
+  }
+ ],
+ "Exp_Br_Resenhas_AppAvon_04": {
+  "SLA D+1": "78,57%",
+  "SLA >D+2": "21,43%"
+ },
+ "Exp_Br_Resenhas_AppAvon_05": [
+  {
+   "Tipo de Comentário": "-",
+   "Volume": "14"
+  }
+ ],
+ "Exp_Br_Resenhas_AppAvon_06": [
+  {
+   "Motivo da Reclamação": "Outros",
+   "Volume": "5"
+  },
+  {
+   "Motivo da Reclamação": "Compra",
+   "Volume": "3"
+  },
+  {
+   "Motivo da Reclamação": "Acesso",
+   "Volume": "2"
+  },
+  {
+   "Motivo da Reclamação": "Perfomance App",
+   "Volume": "2"
+  },
+  {
+   "Motivo da Reclamação": "Pagamento",
+   "Volume": "1"
+  },
+  {
+   "Motivo da Reclamação": "Transporte",
+   "Volume": "1"
+  }
+ ],
+ "Exp_Br_Resenhas_AppAvon_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: a investigar (linha 2 + linha 3)"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 14 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das a investigar avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ]
+}

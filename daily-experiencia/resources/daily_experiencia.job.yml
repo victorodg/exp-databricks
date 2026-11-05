@@ -43,6 +43,15 @@ resources:
             base_parameters:
               catalog: ${var.catalog}
               schema: ${var.schema}
+        - task_key: gold_csat
+          depends_on:
+            - task_key: silver
+          existing_cluster_id: ${var.cluster_id}
+          notebook_task:
+            notebook_path: ../src/gold/csat.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
         - task_key: gold_mkt
           depends_on:
             - task_key: gold_dynamics_e_resenhas

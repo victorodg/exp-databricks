@@ -1,0 +1,532 @@
+{
+ "Mercado_Mexico_Vol_Retencao": {
+  "Volumetria Total": "2.072",
+  "Retenção N1": "82,39%"
+ },
+ "Mercado_Mexico_Cards1": {
+  "Valor de pedido convertido (Geral)": "R$ 948.943,80",
+  "Quantidade de pedidos convertidos": "1.715",
+  "Volume de Casos Recebidos WhatsApp": "1.670",
+  "Volume de E-mails Recebidos": "313",
+  "Health Check": "a investigar",
+  "Acionamentos Recebidos nos Grupos": "89",
+  "SLA WhatsApp Global": "97,38%",
+  "Comentarios": "manual"
+ },
+ "Mercado_Mexico_Cards2": {
+  "SLA WhatsApp": "97,38%",
+  "TMA E-mail": "29:43:41",
+  "Retenção WhatsApp": "81,86%",
+  "Retenção E-mail": "85,71%",
+  "Volumetria Total": "2.072"
+ },
+ "Mercado_Mexico_Desempenho_Pais": [
+  {
+   "País": "Mexico",
+   "SLA": "97,38%",
+   "Comparativo / Observação": "-0,18 p.p. em relação ao mês anterior"
+  }
+ ],
+ "Mercado_Mexico_Top3_Motivo_Contato": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "668",
+   "Motivo do Contato": "Pedido aprobado",
+   "Volume do Motivo": "223",
+   "Percentual (%)": "33,38%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "668",
+   "Motivo do Contato": "Pedido pendiente",
+   "Volume do Motivo": "162",
+   "Percentual (%)": "24,25%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "668",
+   "Motivo do Contato": "Linea de credito insuficiente",
+   "Volume do Motivo": "51",
+   "Percentual (%)": "7,63%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "477",
+   "Motivo do Contato": "Registro aprobado",
+   "Volume do Motivo": "137",
+   "Percentual (%)": "28,72%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "477",
+   "Motivo do Contato": "Registro nuevo borrador",
+   "Volume do Motivo": "61",
+   "Percentual (%)": "12,79%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "477",
+   "Motivo do Contato": "Registro rechazado por deuda",
+   "Volume do Motivo": "57",
+   "Percentual (%)": "11,95%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total Plataforma": "257",
+   "Motivo do Contato": "Pedido aprobado",
+   "Volume do Motivo": "143",
+   "Percentual (%)": "55,64%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total Plataforma": "257",
+   "Motivo do Contato": "Pedido pendiente",
+   "Volume do Motivo": "59",
+   "Percentual (%)": "22,96%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total Plataforma": "257",
+   "Motivo do Contato": "Pedido gera error invalid attribute in",
+   "Volume do Motivo": "37",
+   "Percentual (%)": "14,40%"
+  }
+ ],
+ "Mercado_Mexico_Solicitacoes_Dia": [
+  {
+   "Data": "01/10",
+   "N1": "38",
+   "N2": "9",
+   "Total Diário": "47"
+  },
+  {
+   "Data": "02/10",
+   "N1": "42",
+   "N2": "15",
+   "Total Diário": "57"
+  },
+  {
+   "Data": "03/10",
+   "N1": "12",
+   "N2": "0",
+   "Total Diário": "12"
+  },
+  {
+   "Data": "05/10",
+   "N1": "53",
+   "N2": "14",
+   "Total Diário": "67"
+  },
+  {
+   "Data": "06/10",
+   "N1": "64",
+   "N2": "21",
+   "Total Diário": "85"
+  },
+  {
+   "Data": "07/10",
+   "N1": "46",
+   "N2": "8",
+   "Total Diário": "54"
+  },
+  {
+   "Data": "08/10",
+   "N1": "47",
+   "N2": "25",
+   "Total Diário": "72"
+  },
+  {
+   "Data": "09/10",
+   "N1": "35",
+   "N2": "5",
+   "Total Diário": "40"
+  },
+  {
+   "Data": "10/10",
+   "N1": "1",
+   "N2": "1",
+   "Total Diário": "2"
+  },
+  {
+   "Data": "12/10",
+   "N1": "38",
+   "N2": "12",
+   "Total Diário": "50"
+  },
+  {
+   "Data": "13/10",
+   "N1": "72",
+   "N2": "15",
+   "Total Diário": "87"
+  },
+  {
+   "Data": "14/10",
+   "N1": "62",
+   "N2": "8",
+   "Total Diário": "70"
+  },
+  {
+   "Data": "15/10",
+   "N1": "63",
+   "N2": "7",
+   "Total Diário": "70"
+  },
+  {
+   "Data": "16/10",
+   "N1": "52",
+   "N2": "7",
+   "Total Diário": "59"
+  },
+  {
+   "Data": "17/10",
+   "N1": "3",
+   "N2": "1",
+   "Total Diário": "4"
+  },
+  {
+   "Data": "19/10",
+   "N1": "101",
+   "N2": "10",
+   "Total Diário": "111"
+  },
+  {
+   "Data": "20/10",
+   "N1": "119",
+   "N2": "15",
+   "Total Diário": "134"
+  },
+  {
+   "Data": "21/10",
+   "N1": "90",
+   "N2": "9",
+   "Total Diário": "99"
+  },
+  {
+   "Data": "22/10",
+   "N1": "48",
+   "N2": "10",
+   "Total Diário": "58"
+  },
+  {
+   "Data": "23/10",
+   "N1": "28",
+   "N2": "4",
+   "Total Diário": "32"
+  },
+  {
+   "Data": "24/10",
+   "N1": "2",
+   "N2": "2",
+   "Total Diário": "4"
+  },
+  {
+   "Data": "26/10",
+   "N1": "68",
+   "N2": "19",
+   "Total Diário": "87"
+  },
+  {
+   "Data": "27/10",
+   "N1": "43",
+   "N2": "13",
+   "Total Diário": "56"
+  },
+  {
+   "Data": "28/10",
+   "N1": "17",
+   "N2": "3",
+   "Total Diário": "20"
+  },
+  {
+   "Data": "29/10",
+   "N1": "16",
+   "N2": "10",
+   "Total Diário": "26"
+  },
+  {
+   "Data": "30/10",
+   "N1": "14",
+   "N2": "6",
+   "Total Diário": "20"
+  },
+  {
+   "Data": "31/10",
+   "N1": "5",
+   "N2": "3",
+   "Total Diário": "8"
+  }
+ ],
+ "Mercado_Mexico_Pais": [
+  {
+   "Pais": "México",
+   "Volumetria Total": "2.072",
+   "WhatsApp (Vol)": "1.670",
+   "E-mail (Vol)*": "313",
+   "SLA WhatsApp": "97,38%",
+   "N1 Dentro do Prazo": "82,39%"
+  }
+ ],
+ "Mercado_Mexico_TMA": [
+  {
+   "Pais": "Mexico",
+   "TMA E-mail": "29:43:41"
+  }
+ ],
+ "Mercado_Mexico_Causa_Raiz_N1": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "425",
+   "Motivo Causa Raiz (N1)": "Pedido aprobado",
+   "Volume Motivo": "214",
+   "Percentual (%)": "50,35%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "425",
+   "Motivo Causa Raiz (N1)": "Inconsistencia en el sistema",
+   "Volume Motivo": "30",
+   "Percentual (%)": "7,06%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "425",
+   "Motivo Causa Raiz (N1)": "Pedido pendiente",
+   "Volume Motivo": "30",
+   "Percentual (%)": "7,06%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "353",
+   "Motivo Causa Raiz (N1)": "Registro aprobado",
+   "Volume Motivo": "122",
+   "Percentual (%)": "34,56%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "353",
+   "Motivo Causa Raiz (N1)": "Registro nuevo borrador",
+   "Volume Motivo": "61",
+   "Percentual (%)": "17,28%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "353",
+   "Motivo Causa Raiz (N1)": "Registro rechazado por deuda",
+   "Volume Motivo": "54",
+   "Percentual (%)": "15,30%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "201",
+   "Motivo Causa Raiz (N1)": "Pedido aprobado",
+   "Volume Motivo": "142",
+   "Percentual (%)": "70,65%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "201",
+   "Motivo Causa Raiz (N1)": "Pedido pendiente",
+   "Volume Motivo": "55",
+   "Percentual (%)": "27,36%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "201",
+   "Motivo Causa Raiz (N1)": "Pedido con error de integración",
+   "Volume Motivo": "2",
+   "Percentual (%)": "1,00%"
+  }
+ ],
+ "Mercado_Mexico_Causa_Raiz_N2": [
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "82",
+   "Motivo Causa Raiz (N2)": "Error al alocar la estructura comercial",
+   "Volume Motivo": "14",
+   "Percentual (%)": "17,07%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "82",
+   "Motivo Causa Raiz (N2)": "Estructura comercial no encontrada",
+   "Volume Motivo": "10",
+   "Percentual (%)": "12,20%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "82",
+   "Motivo Causa Raiz (N2)": "Registro duplicado",
+   "Volume Motivo": "9",
+   "Percentual (%)": "10,98%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "57",
+   "Motivo Causa Raiz (N2)": "Pedido gera error invalid attribute in",
+   "Volume Motivo": "31",
+   "Percentual (%)": "54,39%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "57",
+   "Motivo Causa Raiz (N2)": "Linea de credito insuficiente",
+   "Volume Motivo": "8",
+   "Percentual (%)": "14,04%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "57",
+   "Motivo Causa Raiz (N2)": "Consultora fuera de su sector",
+   "Volume Motivo": "6",
+   "Percentual (%)": "10,53%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "49",
+   "Motivo Causa Raiz (N2)": "Pedido gera error invalid attribute in",
+   "Volume Motivo": "37",
+   "Percentual (%)": "75,51%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "49",
+   "Motivo Causa Raiz (N2)": "Pedido gera error politicaentreganaoencontrado",
+   "Volume Motivo": "8",
+   "Percentual (%)": "16,33%"
+  },
+  {
+   "Plataforma": "GERA",
+   "Volume Total": "49",
+   "Motivo Causa Raiz (N2)": "Pedido gera error valorccresidualinvalido",
+   "Volume Motivo": "2",
+   "Percentual (%)": "4,08%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_3_Meses": {
+  "C-SAT (%)": "94,54%",
+  "Enquetes Enviadas": "885",
+  "Enquetes Respondidas": "531",
+  "Response Rate (%)": "60,00%"
+ },
+ "Mercado_Mexico_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "94,54%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "2,45%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "3,01%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "464"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "38"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "13"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "7"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "9"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Linea de credito insuficiente",
+   "Volume de Casos": "3"
+  },
+  {
+   "Ofensor Detrator": "Registro aprobado",
+   "Volume de Casos": "3"
+  },
+  {
+   "Ofensor Detrator": "Divergencia gpp",
+   "Volume de Casos": "1"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_3_Meses": [
+  {
+   "Pais": "México",
+   "C-SAT (%)": "94,54%",
+   "Response Rate (%)": "60,00%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Classifi": [
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "94,54%"
+  },
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "2,45%"
+  },
+  {
+   "Pais": "México",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "3,01%"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Notas": [
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "464"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "38"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "13"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "7"
+  },
+  {
+   "Pais": "Mexico",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "9"
+  }
+ ],
+ "Mercado_Mexico_CSAT_Paises_Ofensor": [
+  {
+   "Pais": "México",
+   "Ofensor Detrator": "Linea de credito insuficiente",
+   "Volume de Casos": "3",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "México",
+   "Ofensor Detrator": "Registro aprobado",
+   "Volume de Casos": "3",
+   "Texto do Comentário": "manual"
+  },
+  {
+   "Pais": "México",
+   "Ofensor Detrator": "Divergencia gpp",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "manual"
+  }
+ ]
+}

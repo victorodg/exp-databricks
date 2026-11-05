@@ -47,3 +47,37 @@ produção nem na gold. Os dois têm os mesmos totais por mês (setembro/2026: 1
 - **Colunas repetidas na BASE MTK:** "Função do Sistema" e "Status de Classificação" aparecem duas vezes com o mesmo
   título; a segunda é a "1" do Prep. "Status de Finalização" (sistema) e "Status de finalização" (atendimento) são colunas diferentes.
 - **Horário útil:** 8h às 3h do dia seguinte (19 horas), diferente do Brasil. Os limites ficam nas fórmulas da gold.
+
+## Correção do status dos tickets de e-mail (04/11/2026)
+
+Na etapa [85] "Emails para Retenção" o Prep removia `Status de finalização` e renomeava `Status` (o do relatório
+Completo) para esse nome. Os tickets de e-mail (T-…) não têm `Status`, então ficavam com status nulo no painel, mesmo
+com o status preenchido no relatório de Tickets. A correção foi feita igual nos dois lados:
+
+- **Prep** (`Daily Experiencia OIS`, publicado no projeto EXPERIÊNCIA HISPANA / ANDINO / 4. DATASOURCES):
+  `Status de finalização novo = IFNULL([Status], [Status de finalização])`, depois remove `Status de finalização` e
+  `Status` e renomeia o novo campo.
+- **Gold** (`src/gold/hispana.py`, bloco [85]): `status = coalesce(status, status_de_finalizacao)` antes da remoção.
+
+Efeito medido em `dexp_gold_hispana_completo` (concluídos, sem Latam e sem WhatsApp, as mesmas 60 linhas nulas da
+Base MKT OIS publicada em 04/11):
+
+| Mês | Linhas | Status que passam a ter |
+|---|---|---|
+| 03/2026 | 21 atendimentos | o do analítico (ex.: EXPCN, DIRECCIONADO - ATENCION, LLAMADO ABIERTO PARA N2) |
+| 04/2026 | 3 atendimentos | o do analítico (EXPCN) |
+| 06 a 10/2026 | 36 tickets de e-mail (19, 3, 6, 2, 6) | o do próprio ticket |
+
+Os atendimentos com `Status` preenchido no Completo não mudam.
+
+## Casos de acompanhamento sem Função do Sistema (decidido em 04/11/2026)
+
+Os "Resuelto N2/N3" (classificações "EN ACOMPAÑAMIENTO TD" e "Pendientes – JIRA", nível Neutro) vêm do Completo sem
+Função do Sistema e são usados no TMO (outubro/2026: 172 linhas). No painel consolidado (Experiência Hispana - Daily) o
+gráfico "Funcion del Sistema - General" já os exclui por filtro de `Status de Classificação`; nos painéis Andino, Sur e
+México não há esse filtro e eles aparecem como Função nula.
+
+Decisão: os três painéis regionais recebem o mesmo filtro do consolidado. O filtro tira do gráfico todas as linhas com
+essas classificações, não só as sem função (outubro/2026: 916 linhas, 172 sem função e 744 com função). A gold não muda,
+porque o TMO precisa dessas linhas. As cópias ligadas às fontes `dexp - …` são geradas a partir do workbook publicado
+(`ferramentas/ligar_hispana_tableau.py`), então herdam o filtro quando forem geradas de novo.

@@ -200,6 +200,10 @@ O Daily Hispana (fluxo "Daily Experiencia OIS") usa o mesmo processo: gold em `s
 `dexp_gold_hispana_*`, 8 fontes a mais e painel gerado por `ferramentas/ligar_hispana_tableau.py`. Validação em
 `docs/validacao_hispana.md`; para comparar de novo, `sh ferramentas/comparar_hispana.sh`.
 
+O CSAT (fluxo "GovEXP - Metricas de Excelencia - CSAT") também: gold em `src/gold/csat.py`, tabela `dexp_gold_csat_enquetes`
+e painel gerado pela mesma ferramenta. Validação em `docs/validacao_csat.md`. As fontes de QA do painel GovEXP continuam
+na produção.
+
 ## Validação contra o Tableau
 
 Baixe os extracts (.tdsx) do Tableau Cloud para `validacao\extracts\` (fora do Git) e rode, no Git Bash:

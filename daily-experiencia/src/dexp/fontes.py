@@ -71,6 +71,14 @@ FONTES_EXCEL = [
     FonteExcel("ticket_medio_hispana", "google_sheets", "ticket_medio_hispana", "Ticket Medio"),
     FonteExcel("ticket_medio_por_pais", "google_sheets", "ticket_medio_por_pais", "Ticket Medio"),
     FonteExcel("base_exento", "google_sheets", "base_exento", "Página1"),
+    # CSAT (MKT_Reativos, BASE MTK e MKT Analitico Hispana vêm das fontes acima)
+    FonteExcel("enquete_mkt_reativos", "drive", "enquete_mkt_reativos", "Base"),
+    FonteExcel("enquete_base_mtk", "drive", "enquete_base_mtk", "Base"),
+    FonteExcel("enquete_malasia", "drive", "enquete_malasia", "Base"),
+    FonteExcel("enquete_ces", "drive", "enquete_ces", "CES"),
+    FonteExcel("analistas_enquetes", "drive", "analistas_enquetes", "Planilha1"),
+    FonteExcel("base_malasia", "drive", "base_malasia", "BASE MALASIA"),
+    FonteExcel("modelo_gauge", "drive", "modelo_gauge", "Página1"),
 ]
 
 # Só o Brasil está no escopo; os brutos de Hispana e NCC já ficam guardados no volume para quando entrarem.

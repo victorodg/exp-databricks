@@ -1,0 +1,1456 @@
+{
+ "Exp_Hisp_Indicadores_Contratuais": {
+  "TPR - Tempo de Primeira Resposta - Atendimento Gerentes": "97,04%",
+  "TMR - SLA de Resolução -E-mail (N1)": "3,76%",
+  "Notificação de Incidente": "100%",
+  "Retenção em N1": "78,79%",
+  "CSAT": "86,62%",
+  "Quality Assurance": "84%",
+  "Pedidos convertidos": "4.744",
+  "Valor de pedido convertido": "R$ 2.797.575,83"
+ },
+ "Exp_Hisp_Indicadores_Monitoracao": {
+  "TPA - Tempo de Primeiro Atendimento - Atendimento Resenhas": "45,51%",
+  "TMR - SLA de Resolução N2 -E-mail (origem whatsapp)": "9,2 dias",
+  "TMR - SLA de Resolução N3 -E-mail (origem whatsapp)": "112,2 dias",
+  "TMR - SLA de Resolução N2 -E-mail (origem e-mail)": "8,4 dias",
+  "TMR - SLA de Resolução N3 -E-mail (origem e-mail)": "190 dias"
+ },
+ "Exp_Hisp_OIs_Pag_1_Cards": {
+  "Valor de pedido convertido": "R$ 2.797.575,82",
+  "Pedidos convertidos": "4.744",
+  "Volume de Casos Recebidos WhatsApp": "4.270",
+  "Volume de E-mails Recebidos": "756",
+  "Health Check": "1.372",
+  "Acionamentos Recebidos nos Grupos": "757",
+  "Resenhas 1 a 3": "114",
+  "Resenhas 4 e 5": "137",
+  "E-mails Loja": "38",
+  "Soporte Experiencia": "159",
+  "Atendimentos Líderes Equador": "54",
+  "Comentários": "Em setembro, a operação apresentou um importante ganho de eficiência ao registrar crescimento nos resultados comerciais simultaneamente a uma redução no volume de suporte. Agrupando os principais canais de entrada da tabela, o volume de atendimentos caiu de 6.625 em agosto para 5.821 em setembro, o que representa uma diminuição de 12,1% (804 interações a menos). Em contrapartida, os Pedidos Convertidos cresceram de 4.646 para 4.744, impulsionando o Valor de Pedido de R$ 2.659.262,65 para R$ 2.797.575,82 no período.   \r\n\r\nA retração no volume de atendimentos foi fortemente puxada pelo Volume de E-mails Recebidos, que despencou de 1.691 para 756 casos (-55,3%). O Volume de Casos Recebidos via WhatsApp, que concentra a maior fatia da operação, também apresentou leve queda, passando de 4.363 para 4.270 atendimentos (-2,1%). Em sentido oposto, os Acionamentos Recebidos nos Grupos aumentaram expressivamente de 544 para 757 (+39,1%), e o canal E-mails Loja teve leve alta, passando de 27 para 38 interações.   \r\n\r\nSobre as frentes proativas de acompanhamento, o volume de disparos de Health Check manteve-se estável em relação a agosto, com leve aumento de 1.336 para 1.372. Contudo, observou-se um salto significativo no engajamento e no acionamento gerado por essas comunicações em setembro: os registros de Suporte Experiência dobraram, passando de 79 para 159 interações, e os Atendimentos Líderes Equador cresceram 145,4%, saltando de 22 para 54 suportes realizados.  "
+ },
+ "Exp_Hisp_OIs_Pag_1_Vol_WA_Email_Retencao": {
+  "Volumetria Total": "5783",
+  "WhatsApp": "4270",
+  "E-mail": "756",
+  "Requisicoes": "757",
+  "Retenção N1": "78,79%"
+ },
+ "Exp_Hisp_OIs_Pag_2_Cards": {
+  "SLA WhatsApp": "97,04%",
+  "TMA E-mail": "04:53:31",
+  "Retenção WhatsApp": "75,67%",
+  "Retenção E-mail": "83,43%",
+  "Volumetria Total": "5783"
+ },
+ "Exp_Hisp_OIs_Pag_2_Desempenho_Pais": [
+  {
+   "País": "Colômbia",
+   "SLA": "99,31%",
+   "Comparativo / Observação": "+1,15% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "México",
+   "SLA": "97,56%",
+   "Comparativo / Observação": "-0,70% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Equador",
+   "SLA": "97,04%",
+   "Comparativo / Observação": "-0,99% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Peru",
+   "SLA": "95,54%",
+   "Comparativo / Observação": "+2,13% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Argentina",
+   "SLA": "96,65%",
+   "Comparativo / Observação": "+3,64% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Chile",
+   "SLA": "95,62%",
+   "Comparativo / Observação": "+7,5% p.p. em relação ao mês anterior"
+  }
+ ],
+ "Exp_Hisp_OIs_Pag_2_Tabela_Solicitacoes_Dia": [
+  {
+   "Data": "01/09",
+   "N1": "170",
+   "N2": "43",
+   "Total Diário": "213"
+  },
+  {
+   "Data": "02/09",
+   "N1": "196",
+   "N2": "70",
+   "Total Diário": "266"
+  },
+  {
+   "Data": "03/09",
+   "N1": "185",
+   "N2": "42",
+   "Total Diário": "227"
+  },
+  {
+   "Data": "04/09",
+   "N1": "149",
+   "N2": "25",
+   "Total Diário": "174"
+  },
+  {
+   "Data": "05/09",
+   "N1": "12",
+   "N2": "2",
+   "Total Diário": "14"
+  },
+  {
+   "Data": "07/09",
+   "N1": "130",
+   "N2": "31",
+   "Total Diário": "161"
+  },
+  {
+   "Data": "08/09",
+   "N1": "169",
+   "N2": "58",
+   "Total Diário": "227"
+  },
+  {
+   "Data": "09/09",
+   "N1": "183",
+   "N2": "66",
+   "Total Diário": "249"
+  },
+  {
+   "Data": "10/09",
+   "N1": "205",
+   "N2": "60",
+   "Total Diário": "265"
+  },
+  {
+   "Data": "11/09",
+   "N1": "142",
+   "N2": "43",
+   "Total Diário": "185"
+  },
+  {
+   "Data": "12/09",
+   "N1": "26",
+   "N2": "11",
+   "Total Diário": "37"
+  },
+  {
+   "Data": "13/09",
+   "N1": "1",
+   "N2": "0",
+   "Total Diário": "1"
+  },
+  {
+   "Data": "14/09",
+   "N1": "231",
+   "N2": "61",
+   "Total Diário": "292"
+  },
+  {
+   "Data": "15/09",
+   "N1": "171",
+   "N2": "46",
+   "Total Diário": "217"
+  },
+  {
+   "Data": "16/09",
+   "N1": "134",
+   "N2": "30",
+   "Total Diário": "164"
+  },
+  {
+   "Data": "17/09",
+   "N1": "153",
+   "N2": "43",
+   "Total Diário": "196"
+  },
+  {
+   "Data": "18/09",
+   "N1": "93",
+   "N2": "13",
+   "Total Diário": "106"
+  },
+  {
+   "Data": "19/09",
+   "N1": "24",
+   "N2": "1",
+   "Total Diário": "25"
+  },
+  {
+   "Data": "21/09",
+   "N1": "126",
+   "N2": "56",
+   "Total Diário": "182"
+  },
+  {
+   "Data": "22/09",
+   "N1": "273",
+   "N2": "39",
+   "Total Diário": "312"
+  },
+  {
+   "Data": "23/09",
+   "N1": "240",
+   "N2": "51",
+   "Total Diário": "291"
+  },
+  {
+   "Data": "24/09",
+   "N1": "175",
+   "N2": "46",
+   "Total Diário": "221"
+  },
+  {
+   "Data": "25/09",
+   "N1": "172",
+   "N2": "39",
+   "Total Diário": "211"
+  },
+  {
+   "Data": "26/09",
+   "N1": "34",
+   "N2": "5",
+   "Total Diário": "39"
+  },
+  {
+   "Data": "28/09",
+   "N1": "157",
+   "N2": "43",
+   "Total Diário": "200"
+  },
+  {
+   "Data": "29/09",
+   "N1": "190",
+   "N2": "66",
+   "Total Diário": "256"
+  },
+  {
+   "Data": "30/09",
+   "N1": "142",
+   "N2": "55",
+   "Total Diário": "197"
+  }
+ ],
+ "Exp_Hisp_OIs_Pag_2_Top3_Motivos_Contato": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "2557",
+   "Motivo do Contato": "Error al cargar tu informacion",
+   "Volume Motivo": "612",
+   "Percentual (%)": "23,93%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "2557",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume Motivo": "367",
+   "Percentual (%)": "14,35%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "2557",
+   "Motivo do Contato": "Promoción no aplica descuento",
+   "Volume Motivo": "183",
+   "Percentual (%)": "7,16%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "1308",
+   "Motivo do Contato": "Registro - Aprobado",
+   "Volume Motivo": "227",
+   "Percentual (%)": "17,35%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "1308",
+   "Motivo do Contato": "Registro - Rechazado",
+   "Volume Motivo": "188",
+   "Percentual (%)": "14,37%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "1308",
+   "Motivo do Contato": "Registro Nuevo - Borrador",
+   "Volume Motivo": "102",
+   "Percentual (%)": "7,80%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "507",
+   "Motivo do Contato": "Iniciar sesion",
+   "Volume Motivo": "307",
+   "Percentual (%)": "60,55%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "507",
+   "Motivo do Contato": "Reportes",
+   "Volume Motivo": "50",
+   "Percentual (%)": "9,86%"
+  },
+  {
+   "Plataforma": "WEB MI NEGOCIO",
+   "Volume Total Plataforma": "507",
+   "Motivo do Contato": "Escuela Natura y Avon",
+   "Volume Motivo": "23",
+   "Percentual (%)": "4,54%"
+  }
+ ],
+ "Exp_Hisp_OIs_Pag_3_Total_Pais": [
+  {
+   "País": "Argentina",
+   "Volumetria Total": "1365",
+   "WhatsApp (Vol)": "1125",
+   "E-mail (Vol)*": "240",
+   "SLA WhatsApp": "96,65%",
+   "N1 Dentro do Prazo": "76,08%"
+  },
+  {
+   "País": "Equador",
+   "Volumetria Total": "422",
+   "WhatsApp (Vol)": "405",
+   "E-mail (Vol)*": "17",
+   "SLA WhatsApp": "97,04%",
+   "N1 Dentro do Prazo": "79,77%"
+  },
+  {
+   "País": "Chile",
+   "Volumetria Total": "764",
+   "WhatsApp (Vol)": "360",
+   "E-mail (Vol)*": "404",
+   "SLA WhatsApp": "95,62%",
+   "N1 Dentro do Prazo": "76,44%"
+  },
+  {
+   "País": "México",
+   "Volumetria Total": "1.299",
+   "WhatsApp (Vol)": "1266",
+   "E-mail (Vol)*": "33",
+   "SLA WhatsApp": "97,56%",
+   "N1 Dentro do Prazo": "77,54%"
+  },
+  {
+   "País": "Colômbia",
+   "Volumetria Total": "556",
+   "WhatsApp (Vol)": "525",
+   "E-mail (Vol)*": "31",
+   "SLA WhatsApp": "99,31%",
+   "N1 Dentro do Prazo": "78,80%"
+  },
+  {
+   "País": "Peru",
+   "Volumetria Total": "620",
+   "WhatsApp (Vol)": "589",
+   "E-mail (Vol)*": "31",
+   "SLA WhatsApp": "95,54%",
+   "N1 Dentro do Prazo": "86,74%"
+  }
+ ],
+ "Exp_Hisp_OIs_Pag_3_TMA": [
+  {
+   "País": "Argentina",
+   "TMA E-mail": "07:21:35"
+  },
+  {
+   "País": "Equador",
+   "TMA E-mail": "23:29:18"
+  },
+  {
+   "País": "Chile",
+   "TMA E-mail": "01:36:44"
+  },
+  {
+   "País": "México",
+   "TMA E-mail": "09:21:43"
+  },
+  {
+   "País": "Colômbia",
+   "TMA E-mail": "02:32:56"
+  },
+  {
+   "País": "Peru",
+   "TMA E-mail": "13:17:21"
+  }
+ ],
+ "Exp_Hisp_OIs_Pag_3_Causa_Raiz": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Pedido Gera Error invalid Attribute",
+   "Volume do Motivo": "79",
+   "Percentual (%)": "26,87%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Inconsistencia en el sistema",
+   "Volume do Motivo": "41",
+   "Percentual (%)": "13,95%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Pedido Gera Error Invalid Adress",
+   "Volume do Motivo": "20",
+   "Percentual (%)": "6,80%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Error de integracion con Gera",
+   "Volume do Motivo": "73",
+   "Percentual (%)": "24,83%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Divergência GPP",
+   "Volume do Motivo": "28",
+   "Percentual (%)": "9,52%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "294",
+   "Motivo Causa Raiz (N2)": "Registro en processo",
+   "Volume do Motivo": "24",
+   "Percentual (%)": "8,16%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total Plataforma": "154",
+   "Motivo Causa Raiz (N2)": "Producto no encontrado",
+   "Volume do Motivo": "47",
+   "Percentual (%)": "30,52%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total Plataforma": "154",
+   "Motivo Causa Raiz (N2)": "Promoción no aplica descuento",
+   "Volume do Motivo": "40",
+   "Percentual (%)": "25,97%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total Plataforma": "154",
+   "Motivo Causa Raiz (N2)": "Regalos no cargan",
+   "Volume do Motivo": "19",
+   "Percentual (%)": "12,34%"
+  }
+ ],
+ "Exp_Hisp_CSAT_3Meses": {
+  "C-SAT (%)": "86,62%",
+  "Enquetes Enviadas": "2963",
+  "Enquetes Respondidas": "1420",
+  "Response Rate (%)": "47,92%"
+ },
+ "Exp_Hisp_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "86,62%"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "6,48%"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "6,90%"
+  }
+ ],
+ "Exp_Hisp_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "1092"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "138"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "92"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "29"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "69"
+  }
+ ],
+ "Exp_Hisp_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Iniciar session",
+   "Volume de Casos": "16"
+  },
+  {
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "9"
+  },
+  {
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "8"
+  }
+ ],
+ "Exp_Hisp_Pag_4_Mercado_Andino_Vol_Retencao": {
+  "Volumetria Total": "2086",
+  "Colômbia (Vol)": "648",
+  "Equador (Vol)": "531",
+  "Peru (Vol)": "907",
+  "Retenção N1": "82,41%"
+ },
+ "Exp_Hisp_Pag_4_Mercado_Andino_Cards": {
+  "Valor de pedido convertido (Geral)": "917.579,04",
+  "Quantidade de pedidos convertidos": "1763",
+  "Volume de Casos Recebidos WhatsApp": "1519",
+  "Volume de E-mails Recebidos": "79",
+  "Health Check": "385",
+  "Acionamentos Recebidos nos Grupos": "488",
+  "Pedidos Convertidos - Colômbia 🇨🇴": "R$ 314.423,71",
+  "Pedidos Convertidos - Equador 🇪🇨": "R$ 167.641,13",
+  "Pedidos Convertidos - Peru 🇵🇪": "R$ 435.514,20",
+  "SLA Geral do Mercado Andino (Texto)": "96,39%",
+  "Soporte Experiencia": "159",
+  "Atendimentos Líderes Equador": "54",
+  "Comentarios": "Em setembro, o Mercado Andino registrou uma expressiva redução de aproximadamente 33,9% no volume de atendimento de seus canais principais em relação a agosto, caindo de 3.154 para 2.086 interações no total, o que representa uma diminuição absoluta de 1.068 casos. Essa retração na demanda de suporte ocorreu em paralelo a um aumento na quantidade de pedidos convertidos, que subiram de 1.653 para 1.763. No entanto, o valor de pedido convertido (geral) apresentou uma leve retração, caindo de R$ 946.144,14 em agosto para R$ 917.579,04 no mês de setembro.   \r\n\r\nOs resultados financeiros apresentaram comportamentos bastante distintos entre os países: a Colômbia e o Peru impulsionaram os valores positivamente, crescendo a conversão financeira de R$ 238.392,94 para R$ 314.423,71 e de R$ 339.421,34 para R$ 435.514,20, respectivamente. O impacto de queda no resultado consolidado do mercado andino foi ocasionado unicamente pelo Equador, que sofreu uma severa redução, caindo de R$ 370.329,86 para R$ 167.641,13.   \r\n\r\nAnalisando o comportamento dos canais, a queda consolidada no volume de atendimento foi fortemente influenciada pelo Volume de E-mails Recebidos, que despencou de 480 para 79 casos (-83,5%). O WhatsApp, que concentra a maior fatia da operação na região, também apresentou redução expressiva, recuando de 2.270 para 1.519 atendimentos (-33,1%). Na contramão, os Acionamentos Recebidos nos Grupos foram os únicos a registrar alta, passando de 404 para 488 interações (+20,8%).   \r\n\r\nNos indicadores operacionais e de proatividade, o SLA Geral do Mercado Andino manteve-se estável e em um excelente patamar, passando de 96,35% para 96,39%. Já a frente de acompanhamento gerou forte engajamento: apesar de uma leve redução nos disparos de Health Check (de 426 para 385), a efetividade dos acionamentos saltou, com o Suporte Experiência dobrando de 79 para 159 interações, e os Atendimentos Líderes Equador crescendo de 22 para 54 suportes realizados no período. "
+ },
+ "Exp_Hisp_Pag_5_Mercado_Andino_Cards": {
+  "SLA WhatsApp": "97,25%",
+  "TMA E-mail": "11:27:29",
+  "Retenção WhatsApp": "79,85%",
+  "Retenção E-mail": "73,91%",
+  "Volumetria Total": "2086"
+ },
+ "Exp_Hisp_Pag_5_Mercado_Andino_Desempenho_Pais": [
+  {
+   "País": "Colômbia",
+   "SLA": "99,31%",
+   "Comparativo / Observação": "+1,15% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Equador",
+   "SLA": "97,04%",
+   "Comparativo / Observação": "-0,99% p.p. em relação ao mês anterior"
+  },
+  {
+   "País": "Peru",
+   "SLA": "95,54%",
+   "Comparativo / Observação": "+2,13% p.p. em relação ao mês anterior"
+  }
+ ],
+ "Exp_Hisp_Pag_5_Mercado_Andino_Top3_Motivo_Contato": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1124",
+   "Motivo do Contato": "Error al cargar tu información",
+   "Volume do Motivo": "333",
+   "Percentual (%)": "29,63%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1124",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "203",
+   "Percentual (%)": "18,06%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total Plataforma": "1124",
+   "Motivo do Contato": "Promoción no aplica descuento",
+   "Volume do Motivo": "77",
+   "Percentual (%)": "6,85%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "375",
+   "Motivo do Contato": "Registro - Rechazado",
+   "Volume do Motivo": "61",
+   "Percentual (%)": "16,27%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "375",
+   "Motivo do Contato": "Registro - Aprobado",
+   "Volume do Motivo": "52",
+   "Percentual (%)": "13,87%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total Plataforma": "375",
+   "Motivo do Contato": "Ups Algo Salio Mal - Telefono",
+   "Volume do Motivo": "27",
+   "Percentual (%)": "7,20%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "154",
+   "Motivo do Contato": "Iniciar Sesion",
+   "Volume do Motivo": "112",
+   "Percentual (%)": "72,73%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "154",
+   "Motivo do Contato": "Inconsistencia en el sistema",
+   "Volume do Motivo": "14",
+   "Percentual (%)": "9,09%"
+  },
+  {
+   "Plataforma": "APP MI NEGOCIO",
+   "Volume Total Plataforma": "154",
+   "Motivo do Contato": "Reportes",
+   "Volume do Motivo": "9",
+   "Percentual (%)": "5,84%"
+  }
+ ],
+ "Exp_Hisp_Pag_5_Mercado_Andino_Solicitacoes_Dia": [
+  {
+   "Data": "01/09",
+   "N1": "64",
+   "N2": "12",
+   "Total Diário": "76"
+  },
+  {
+   "Data": "02/09",
+   "N1": "63",
+   "N2": "13",
+   "Total Diário": "76"
+  },
+  {
+   "Data": "03/09",
+   "N1": "44",
+   "N2": "12",
+   "Total Diário": "56"
+  },
+  {
+   "Data": "04/09",
+   "N1": "39",
+   "N2": "6",
+   "Total Diário": "45"
+  },
+  {
+   "Data": "05/09",
+   "N1": "7",
+   "N2": "1",
+   "Total Diário": "8"
+  },
+  {
+   "Data": "07/09",
+   "N1": "28",
+   "N2": "12",
+   "Total Diário": "40"
+  },
+  {
+   "Data": "08/09",
+   "N1": "57",
+   "N2": "27",
+   "Total Diário": "84"
+  },
+  {
+   "Data": "09/09",
+   "N1": "72",
+   "N2": "16",
+   "Total Diário": "88"
+  },
+  {
+   "Data": "10/09",
+   "N1": "100",
+   "N2": "24",
+   "Total Diário": "124"
+  },
+  {
+   "Data": "11/09",
+   "N1": "66",
+   "N2": "20",
+   "Total Diário": "86"
+  },
+  {
+   "Data": "12/09",
+   "N1": "15",
+   "N2": "9",
+   "Total Diário": "24"
+  },
+  {
+   "Data": "14/09",
+   "N1": "87",
+   "N2": "17",
+   "Total Diário": "104"
+  },
+  {
+   "Data": "15/09",
+   "N1": "66",
+   "N2": "15",
+   "Total Diário": "81"
+  },
+  {
+   "Data": "16/09",
+   "N1": "66",
+   "N2": "8",
+   "Total Diário": "74"
+  },
+  {
+   "Data": "17/09",
+   "N1": "80",
+   "N2": "16",
+   "Total Diário": "96"
+  },
+  {
+   "Data": "18/09",
+   "N1": "45",
+   "N2": "6",
+   "Total Diário": "51"
+  },
+  {
+   "Data": "19/09",
+   "N1": "13",
+   "N2": "0",
+   "Total Diário": "13"
+  },
+  {
+   "Data": "21/09",
+   "N1": "51",
+   "N2": "23",
+   "Total Diário": "74"
+  },
+  {
+   "Data": "22/09",
+   "N1": "95",
+   "N2": "12",
+   "Total Diário": "107"
+  },
+  {
+   "Data": "23/09",
+   "N1": "84",
+   "N2": "10",
+   "Total Diário": "94"
+  },
+  {
+   "Data": "24/09",
+   "N1": "68",
+   "N2": "15",
+   "Total Diário": "83"
+  },
+  {
+   "Data": "25/09",
+   "N1": "85",
+   "N2": "8",
+   "Total Diário": "93"
+  },
+  {
+   "Data": "26/09",
+   "N1": "15",
+   "N2": "2",
+   "Total Diário": "17"
+  },
+  {
+   "Data": "28/09",
+   "N1": "44",
+   "N2": "8",
+   "Total Diário": "52"
+  },
+  {
+   "Data": "29/09",
+   "N1": "55",
+   "N2": "11",
+   "Total Diário": "66"
+  },
+  {
+   "Data": "30/09",
+   "N1": "53",
+   "N2": "9",
+   "Total Diário": "62"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_Pais": [
+  {
+   "País": "Equador",
+   "Volumetria Total": "422",
+   "WhatsApp (Vol)": "405",
+   "E-mail (Vol)*": "17",
+   "SLA WhatsApp": "97,04%",
+   "N1 Dentro do Prazo": "79,77%"
+  },
+  {
+   "País": "Colômbia",
+   "Volumetria Total": "556",
+   "WhatsApp (Vol)": "525",
+   "E-mail (Vol)*": "31",
+   "SLA WhatsApp": "99,31%",
+   "N1 Dentro do Prazo": "78,80%"
+  },
+  {
+   "País": "Peru",
+   "Volumetria Total": "620",
+   "WhatsApp (Vol)": "589",
+   "E-mail (Vol)*": "31",
+   "SLA WhatsApp": "95,54%",
+   "N1 Dentro do Prazo": "86,74%"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_TMA": [
+  {
+   "País": "Equador",
+   "TMA E-mail": "23:29:18"
+  },
+  {
+   "País": "Colômbia",
+   "TMA E-mail": "02:32:56"
+  },
+  {
+   "País": "Peru",
+   "TMA E-mail": "13:17:21"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_Causa_Raiz_N1": [
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "943",
+   "Vol Colômbia": "311",
+   "Vol Equador": "184",
+   "Vol Peru": "448",
+   "Motivo Causa Raiz (N1)": "Error al cargar tu información",
+   "Volume Motivo": "332",
+   "Percentual (%)": "35,21%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "943",
+   "Vol Colômbia": "311",
+   "Vol Equador": "184",
+   "Vol Peru": "448",
+   "Motivo Causa Raiz (N1)": "Inconsistencia en el sistema",
+   "Volume Motivo": "178",
+   "Percentual (%)": "18,88%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "943",
+   "Vol Colômbia": "311",
+   "Vol Equador": "184",
+   "Vol Peru": "448",
+   "Motivo Causa Raiz (N1)": "Promoción no aplica descuento",
+   "Volume Motivo": "75",
+   "Percentual (%)": "7,95%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "233",
+   "Vol Colômbia": "65",
+   "Vol Equador": "59",
+   "Vol Peru": "109",
+   "Motivo Causa Raiz (N1)": "Registro - Rechazado",
+   "Volume Motivo": "58",
+   "Percentual (%)": "24,89%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "233",
+   "Vol Colômbia": "65",
+   "Vol Equador": "59",
+   "Vol Peru": "109",
+   "Motivo Causa Raiz (N1)": "Registro - Aprobado",
+   "Volume Motivo": "47",
+   "Percentual (%)": "20,17%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "233",
+   "Vol Colômbia": "65",
+   "Vol Equador": "59",
+   "Vol Peru": "109",
+   "Motivo Causa Raiz (N1)": "Registro Rechazado por deuda",
+   "Volume Motivo": "18",
+   "Percentual (%)": "7,73%"
+  },
+  {
+   "Plataforma": "GCP",
+   "Volume Total": "97",
+   "Vol Colômbia": "43",
+   "Vol Equador": "15",
+   "Vol Peru": "39",
+   "Motivo Causa Raiz (N1)": "Indicadores",
+   "Volume Motivo": "59",
+   "Percentual (%)": "60,82%"
+  },
+  {
+   "Plataforma": "GCP",
+   "Volume Total": "97",
+   "Vol Colômbia": "43",
+   "Vol Equador": "15",
+   "Vol Peru": "39",
+   "Motivo Causa Raiz (N1)": "Consultora fuera de su sector",
+   "Volume Motivo": "13",
+   "Percentual (%)": "13,40%"
+  },
+  {
+   "Plataforma": "GCP",
+   "Volume Total": "97",
+   "Vol Colômbia": "43",
+   "Vol Equador": "15",
+   "Vol Peru": "39",
+   "Motivo Causa Raiz (N1)": "Reporte Mis Lideres",
+   "Volume Motivo": "12",
+   "Percentual (%)": "12,37%"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_Causa_Raiz_N2": [
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "103",
+   "Vol Colômbia": "62",
+   "Vol Equador": "25",
+   "Vol Peru": "16",
+   "Motivo Causa Raiz (N2)": "Ups Algo Salid Mal - Telefono",
+   "Volume Motivo": "20",
+   "Percentual (%)": "19,42%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "103",
+   "Vol Colômbia": "62",
+   "Vol Equador": "25",
+   "Vol Peru": "16",
+   "Motivo Causa Raiz (N2)": "Error de intergracion con Gera",
+   "Volume Motivo": "14",
+   "Percentual (%)": "13,59%"
+  },
+  {
+   "Plataforma": "GPP",
+   "Volume Total": "103",
+   "Vol Colômbia": "62",
+   "Vol Equador": "25",
+   "Vol Peru": "16",
+   "Motivo Causa Raiz (N2)": "Error al analizar el credito",
+   "Volume Motivo": "13",
+   "Percentual (%)": "12,62%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "59",
+   "Vol Colômbia": "21",
+   "Vol Equador": "11",
+   "Vol Peru": "27",
+   "Motivo Causa Raiz (N2)": "Inconsistencia en el sistema",
+   "Volume Motivo": "17",
+   "Percentual (%)": "28,81%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "59",
+   "Vol Colômbia": "21",
+   "Vol Equador": "11",
+   "Vol Peru": "27",
+   "Motivo Causa Raiz (N2)": "Kit de inicio",
+   "Volume Motivo": "9",
+   "Percentual (%)": "15,25%"
+  },
+  {
+   "Plataforma": "GSP",
+   "Volume Total": "59",
+   "Vol Colômbia": "21",
+   "Vol Equador": "11",
+   "Vol Peru": "27",
+   "Motivo Causa Raiz (N2)": "Linea de credito insuficiente",
+   "Volume Motivo": "6",
+   "Percentual (%)": "10,17%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "42",
+   "Vol Colômbia": "6",
+   "Vol Equador": "35",
+   "Vol Peru": "1",
+   "Motivo Causa Raiz (N2)": "Producto no encontrado",
+   "Volume Motivo": "15",
+   "Percentual (%)": "35,71%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "42",
+   "Vol Colômbia": "6",
+   "Vol Equador": "35",
+   "Vol Peru": "1",
+   "Motivo Causa Raiz (N2)": "Regalos no cargan",
+   "Volume Motivo": "6",
+   "Percentual (%)": "14,29%"
+  },
+  {
+   "Plataforma": "PLCOM",
+   "Volume Total": "42",
+   "Vol Colômbia": "6",
+   "Vol Equador": "35",
+   "Vol Peru": "1",
+   "Motivo Causa Raiz (N2)": "Promoción no aplica descuento",
+   "Volume Motivo": "6",
+   "Percentual (%)": "14,29%"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_3_Meses": {
+  "C-SAT (%)": "88,31%",
+  "Enquetes Enviadas": "936",
+  "Enquetes Respondidas": "402",
+  "Response Rate (%)": "41,74%"
+ },
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Classificacao": [
+  {
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "355"
+  },
+  {
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "26"
+  },
+  {
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "21"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Nota": [
+  {
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "317"
+  },
+  {
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "38"
+  },
+  {
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "26"
+  },
+  {
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "5"
+  },
+  {
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "16"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Ofensores_Detr": [
+  {
+   "Ofensor Detrator": "Iniciar Sesion",
+   "Volume de Casos": "4"
+  },
+  {
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "3"
+  },
+  {
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "3"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Paises_3_Meses": [
+  {
+   "País": "Colômbia",
+   "C-SAT (%)": "86,59%",
+   "Response Rate (%)": "42,71%"
+  },
+  {
+   "País": "Equador",
+   "C-SAT (%)": "84,11%",
+   "Response Rate (%)": "41,63%"
+  },
+  {
+   "País": "Peru",
+   "C-SAT (%)": "93,89%",
+   "Response Rate (%)": "40,68%"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Paises_Classifi": [
+  {
+   "País": "Colômbia",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "86,59%"
+  },
+  {
+   "País": "Colômbia",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "9,76%"
+  },
+  {
+   "País": "Colômbia",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "3,66%"
+  },
+  {
+   "País": "Equador",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "84,11%"
+  },
+  {
+   "País": "Equador",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "5,61%"
+  },
+  {
+   "País": "Equador",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "10,28%"
+  },
+  {
+   "País": "Peru",
+   "Classificação C-SAT": "Promotor",
+   "Percentual (%)": "93,89%"
+  },
+  {
+   "País": "Peru",
+   "Classificação C-SAT": "Neutro",
+   "Percentual (%)": "3,05%"
+  },
+  {
+   "País": "Peru",
+   "Classificação C-SAT": "Detrator",
+   "Percentual (%)": "3,05%"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Paises_Notas": [
+  {
+   "País": "Colômbia",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "127"
+  },
+  {
+   "País": "Colômbia",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "15"
+  },
+  {
+   "País": "Colômbia",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "16"
+  },
+  {
+   "País": "Colômbia",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "1"
+  },
+  {
+   "País": "Colômbia",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "5"
+  },
+  {
+   "País": "Equador",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "81"
+  },
+  {
+   "País": "Equador",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "9"
+  },
+  {
+   "País": "Equador",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "6"
+  },
+  {
+   "País": "Equador",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "4"
+  },
+  {
+   "País": "Equador",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "7"
+  },
+  {
+   "País": "Peru",
+   "Nota Avaliada": "Totalmente Satisfeito",
+   "Volume de Respostas": "109"
+  },
+  {
+   "País": "Peru",
+   "Nota Avaliada": "Satisfeito",
+   "Volume de Respostas": "14"
+  },
+  {
+   "País": "Peru",
+   "Nota Avaliada": "Neutro",
+   "Volume de Respostas": "4"
+  },
+  {
+   "País": "Peru",
+   "Nota Avaliada": "Insatisfeito",
+   "Volume de Respostas": "0"
+  },
+  {
+   "País": "Peru",
+   "Nota Avaliada": "Totalmente Insatisfeito",
+   "Volume de Respostas": "4"
+  }
+ ],
+ "Exp_Hisp_Pag_6_Mercado_Andino_CSAT_Paises_Ofensor": [
+  {
+   "País": "Colômbia",
+   "Ofensor Detrator": "Inciar sesion",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 06 respostas detratoras analisadas, 04 casos apresentaram orientações adequadas e alinhadas à solicitação e 02 casos revelaram oportunidades de melhoria em resposta não alinhada a solicitação."
+  },
+  {
+   "País": "Colômbia",
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 06 respostas detratoras analisadas, 04 casos apresentaram orientações adequadas e alinhadas à solicitação e 02 casos revelaram oportunidades de melhoria em resposta não alinhada a solicitação."
+  },
+  {
+   "País": "Colômbia",
+   "Ofensor Detrator": "Error al cargar tu información",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 06 respostas detratoras analisadas, 04 casos apresentaram orientações adequadas e alinhadas à solicitação e 02 casos revelaram oportunidades de melhoria em resposta não alinhada a solicitação."
+  },
+  {
+   "País": "Equador",
+   "Ofensor Detrator": "Ups algo salio mal - Telefono",
+   "Volume de Casos": "2",
+   "Texto do Comentário": "Das 11 respostas detratoras analisadas, 08 apresentaram orientações adequadas e alinhadas à solicitação e 02 casos a avaliação esteve relacionada à abertura de chamado. 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  },
+  {
+   "País": "Equador",
+   "Ofensor Detrator": "Promoción no aplica descuento",
+   "Volume de Casos": "2",
+   "Texto do Comentário": "Das 11 respostas detratoras analisadas, 08 apresentaram orientações adequadas e alinhadas à solicitação e 02 casos a avaliação esteve relacionada à abertura de chamado. 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  },
+  {
+   "País": "Equador",
+   "Ofensor Detrator": "Registro - Aprobado",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 11 respostas detratoras analisadas, 08 apresentaram orientações adequadas e alinhadas à solicitação e 02 casos a avaliação esteve relacionada à abertura de chamado. 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  },
+  {
+   "País": "Peru",
+   "Ofensor Detrator": "Kit Especiales - Promocionales",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 03 respostas detratoras analisadas, 02 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  },
+  {
+   "País": "Peru",
+   "Ofensor Detrator": "Iniciar sesion",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 03 respostas detratoras analisadas, 02 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  },
+  {
+   "País": "Peru",
+   "Ofensor Detrator": "Inconsistencia en el sistema",
+   "Volume de Casos": "1",
+   "Texto do Comentário": "Das 03 respostas detratoras analisadas, 02 apresentaram orientações adequadas e alinhadas à solicitação e 01 caso revelou oportunidade de melhoria em resposta não alinhada à solicitação."
+  }
+ ],
+ "Exp_Hisp_Resenhas_Mi_Negocio_01": {
+  "Classificação Mensal": "4,73",
+  "Consolidado Geral (★)": "4,66"
+ },
+ "Exp_Hisp_Resenhas_Mi_Negocio_02": {
+  "Volumetria de Avaliação": "4054"
+ },
+ "Exp_Hisp_Resenhas_Mi_Negocio_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "54"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "55"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "143"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "422"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "3380"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Mi_Negocio_05": [
+  {
+   "Tipo de Comentário": "Critica",
+   "Volume": "64"
+  },
+  {
+   "Tipo de Comentário": "Elogio",
+   "Volume": "7"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Mi_Negocio_06": [
+  {
+   "Motivo da Reclamação": "Acesso",
+   "Volume": "39"
+  },
+  {
+   "Motivo da Reclamação": "Performance",
+   "Volume": "17"
+  },
+  {
+   "Motivo da Reclamação": "Otros",
+   "Volume": "8"
+  },
+  {
+   "Motivo da Reclamação": "Funcionalidade",
+   "Volume": "5"
+  },
+  {
+   "Motivo da Reclamação": "Elogio",
+   "Volume": "5"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Mi_Negocio_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: 186"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 84 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das 102 avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ],
+ "Exp_Hisp_Resenhas_Natura_Latam_01": {
+  "Classificação Mensal": "4,72",
+  "Consolidado Geral (★)": "4,63"
+ },
+ "Exp_Hisp_Resenhas_Natura_Latam_02": {
+  "Volumetria de Avaliação": "1273"
+ },
+ "Exp_Hisp_Resenhas_Natura_Latam_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "42"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "15"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "37"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "72"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "1107"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Natura_Latam_05": [
+  {
+   "Tipo de Comentário": "Critica",
+   "Volume": "36"
+  },
+  {
+   "Tipo de Comentário": "Elogia",
+   "Volume": "1"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Natura_Latam_06": [
+  {
+   "Motivo da Reclamação": "Compra",
+   "Volume": "19"
+  },
+  {
+   "Motivo da Reclamação": "Performance",
+   "Volume": "5"
+  },
+  {
+   "Motivo da Reclamação": "Funcionalidad",
+   "Volume": "5"
+  },
+  {
+   "Motivo da Reclamação": "Otros",
+   "Volume": "3"
+  },
+  {
+   "Motivo da Reclamação": "Critica",
+   "Volume": "2"
+  }
+ ],
+ "Exp_Hisp_Resenhas_Natura_Latam_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: 60"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 25 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas."
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Das 35 avaliações de 4 e 5 estrelas com comentários, 100% foram respondidas."
+  }
+ ],
+ "Exp_Hisp_Resenhas_App_Avon_01": {
+  "Classificação Mensal": "4,52",
+  "Consolidado Geral (★)": "4,34"
+ },
+ "Exp_Hisp_Resenhas_App_Avon_02": {
+  "Volumetria de Avaliação": "54"
+ },
+ "Exp_Hisp_Resenhas_App_Avon_03": [
+  {
+   "Nota (Estrelas)": "1",
+   "Volume de Resenhas": "5"
+  },
+  {
+   "Nota (Estrelas)": "2",
+   "Volume de Resenhas": "0"
+  },
+  {
+   "Nota (Estrelas)": "3",
+   "Volume de Resenhas": "1"
+  },
+  {
+   "Nota (Estrelas)": "4",
+   "Volume de Resenhas": "4"
+  },
+  {
+   "Nota (Estrelas)": "5",
+   "Volume de Resenhas": "44"
+  }
+ ],
+ "Exp_Hisp_Resenhas_App_Avon_05": [
+  {
+   "Tipo de Comentário": "Critica",
+   "Volume": "3"
+  }
+ ],
+ "Exp_Hisp_Resenhas_App_Avon_06": [
+  {
+   "Motivo da Reclamação": "Compra",
+   "Volume": "1"
+  }
+ ],
+ "Exp_Hisp_Resenhas_App_Avon_07": [
+  {
+   "Linha": "1",
+   "Texto Integral do Comentário": "Volume de resenhas respondidas: 05"
+  },
+  {
+   "Linha": "2",
+   "Texto Integral do Comentário": "Das 05 avaliações de 1 a 3 estrelas com comentários, 100% foram respondidas"
+  },
+  {
+   "Linha": "3",
+   "Texto Integral do Comentário": "Não houveram avaliações de 4 e 5 estrelas com comentários neste mês."
+  }
+ ]
+}
