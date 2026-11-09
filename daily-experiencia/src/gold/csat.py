@@ -180,3 +180,24 @@ nome = f"{CATALOGO}.{SCHEMA}.dexp_gold_csat_enquetes"
 base.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(nome)
 spark.sql(f"COMMENT ON TABLE {nome} IS 'Gold GovEXP: enquetes de satisfação por analista, com uma linha por fatia do medidor (extract Enquetes C-SAT)'")
 print(f"dexp_gold_csat_enquetes {spark.table(nome).count():>9,} linhas")
+
+# COMMAND ----------
+
+# MAGIC %md ## Saídas do painel em Apps Script (`logic-local/csat`)
+# MAGIC
+# MAGIC Uma linha por enquete e os indicadores por operação e mês, contando protocolos distintos. As regras estão em
+# MAGIC `src/dexp/csat_saidas.py` e em `csat/README.md`.
+
+# COMMAND ----------
+
+from dexp.csat_saidas import SQL_DETALHE, SQL_MENSAL
+
+SAIDAS = {
+    "dexp_gold_csat_detalhe": (SQL_DETALHE, "Gold CSAT: uma linha por enquete (sem as fatias do medidor), para o painel em Apps Script"),
+    "dexp_gold_csat_mensal": (SQL_MENSAL, "Gold CSAT: indicadores por operação e mês, por protocolo distinto"),
+}
+for tabela, (consulta, comentario) in SAIDAS.items():
+    destino = f"{CATALOGO}.{SCHEMA}.{tabela}"
+    spark.sql(consulta.format(enquetes=nome)).write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(destino)
+    spark.sql(f"COMMENT ON TABLE {destino} IS '{comentario}'")
+    print(f"{tabela} {spark.table(destino).count():>9,} linhas")

@@ -1,0 +1,774 @@
+<script>
+(function () {
+  'use strict';
+
+  var C = window.CONFIG;
+  var CES = C.tipo === 'ces';
+  var LOCAL = C.idioma === 'es' ? 'es' : 'pt-BR';
+  var NAO_RESPONDIDO = 'Não respondido';
+
+  var TEXTOS = {
+    pt: {
+      csat: 'C-SAT', simple: 'C-SAT Simple', rr: 'Response Rate', enviadas: 'Enviadas', respondidas: 'Respondidas',
+      semResposta: 'Sem resposta', promotores: 'Promotores', neutros: 'Neutros', detratores: 'Detratores',
+      naMeta: 'Na meta', abaixoMeta: 'Abaixo da meta', meta: 'Meta', vsAnterior: 'vs. mês anterior', pp: 'p.p.',
+      mes: 'Mês', todos: 'Todos', selecionados: 'selecionados', limpar: 'Limpar', buscar: 'Buscar…', vazio: '(vazio)',
+      semInfo: '(sem informação)', carregarTudo: 'Carregar meses anteriores…', semDados: 'Nenhuma enquete com esses filtros neste mês.',
+      evolucao: 'Evolução em 12 meses', evolucaoSub: 'C-SAT e C-SAT Simple por mês, com os filtros aplicados',
+      volume: 'Respostas por mês', volumeSub: 'Protocolos respondidos, por classificação',
+      notas: 'Distribuição das notas', notasSub: 'Protocolos respondidos no mês',
+      funil: 'Do envio à promoção', funilSub: 'Protocolos do mês',
+      ofensoresSub: 'Clique numa linha para filtrar a página. Ordenado por detratores.',
+      analistas: 'Analistas', analistasSub: 'Clique numa linha para filtrar a página.',
+      detalhe: 'Enquetes do mês', classificacao: 'Classificação', mostrarTodos: 'Mostrar todos', mostrarMenos: 'Mostrar menos',
+      pagina: 'Página', de: 'de', anterior: 'Anterior', proxima: 'Próxima', verTabela: 'Ver os valores em tabela',
+      atualizado: 'Dados exportados em', enquetes: 'enquetes', pctDetratores: '% detratores', explicaCsat:
+        'Promotores (notas 4 e 5) ÷ protocolos respondidos.',
+      explicaSimple: 'Promotores e neutros (notas 3, 4 e 5) ÷ protocolos respondidos.',
+      explicaRR: 'Protocolos respondidos ÷ enviados.', de2: 'de', responsavel: 'Responsável',
+      cesMedio: 'CES médio', facil: 'Fácil (4–5)', neutroCes: 'Neutro (3)', dificil: 'Difícil (1–2)', faceis: 'Fáceis',
+      dificeis: 'Difíceis', pctDificeis: '% difíceis', pctFaceis: '% fáceis', explicaCes: 'Soma das notas ÷ total de respostas (1 = muito difícil, 5 = muito fácil).',
+      evolucaoCes: 'CES médio por mês, com os filtros aplicados', erro: 'Não foi possível carregar os dados: '
+    },
+    es: {
+      csat: 'C-SAT', simple: 'C-SAT Simple', rr: 'Response Rate', enviadas: 'Enviadas', respondidas: 'Respondidas',
+      semResposta: 'Sin respuesta', promotores: 'Promotores', neutros: 'Neutros', detratores: 'Detractores',
+      naMeta: 'En la meta', abaixoMeta: 'Bajo la meta', meta: 'Meta', vsAnterior: 'vs. mes anterior', pp: 'p.p.',
+      mes: 'Mes', todos: 'Todos', selecionados: 'seleccionados', limpar: 'Limpiar', buscar: 'Buscar…', vazio: '(vacío)',
+      semInfo: '(sin información)', carregarTudo: 'Cargar meses anteriores…', semDados: 'Ninguna encuesta con esos filtros en este mes.',
+      evolucao: 'Evolución en 12 meses', evolucaoSub: 'C-SAT y C-SAT Simple por mes, con los filtros aplicados',
+      volume: 'Respuestas por mes', volumeSub: 'Protocolos respondidos, por clasificación',
+      notas: 'Distribución de las notas', notasSub: 'Protocolos respondidos en el mes',
+      funil: 'Del envío a la promoción', funilSub: 'Protocolos del mes',
+      ofensoresSub: 'Haga clic en una fila para filtrar la página. Ordenado por detractores.',
+      analistas: 'Analistas', analistasSub: 'Haga clic en una fila para filtrar la página.',
+      detalhe: 'Encuestas del mes', classificacao: 'Clasificación', mostrarTodos: 'Mostrar todos', mostrarMenos: 'Mostrar menos',
+      pagina: 'Página', de: 'de', anterior: 'Anterior', proxima: 'Siguiente', verTabela: 'Ver los valores en tabla',
+      atualizado: 'Datos exportados el', enquetes: 'encuestas', pctDetratores: '% detractores',
+      explicaCsat: 'Promotores (notas 4 y 5) ÷ protocolos respondidos.',
+      explicaSimple: 'Promotores y neutros (notas 3, 4 y 5) ÷ protocolos respondidos.',
+      explicaRR: 'Protocolos respondidos ÷ enviados.', de2: 'de', responsavel: 'Responsable',
+      erro: 'No fue posible cargar los datos: '
+    }
+  };
+  var T = TEXTOS[C.idioma] || TEXTOS.pt;
+  var MESES = C.idioma === 'es'
+    ? ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+    : ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+
+  // Classificação: polos do divergente (detrator × promotor) com o cinza no meio
+  var CLASSES = [
+    { valor: 'PROMOTOR', nome: CES ? T.facil : T.promotores, cor: 'var(--promotor)', clara: false },
+    { valor: 'NEUTRO', nome: CES ? T.neutroCes : T.neutros, cor: 'var(--neutro)', clara: false },
+    { valor: 'DETRATOR', nome: CES ? T.dificil : T.detratores, cor: 'var(--detrator)', clara: false }
+  ];
+  var COR_CLASSE = {}; CLASSES.forEach(function (c) { COR_CLASSE[c.valor] = c.cor; });
+
+  var estado = {
+    linhas: [], meses: [], mes: null, filtros: {}, tudo: false, atualizacao: {},
+    ofensoresTodos: false, analistasTodos: false, ordemAnalistas: { campo: 'respondidas', desc: true },
+    busca: '', classe: '', paginaDetalhe: 0
+  };
+
+  // ------------------------------------------------------------ utilidades
+
+  function el(tag, attrs, filhos) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === 'texto') n.textContent = attrs[k];
+      else if (k === 'classe') n.className = attrs[k];
+      else if (k.slice(0, 2) === 'on') n.addEventListener(k.slice(2), attrs[k]);
+      else if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]);
+    });
+    (filhos || []).forEach(function (f) { if (f) n.appendChild(typeof f === 'string' ? document.createTextNode(f) : f); });
+    return n;
+  }
+  function svg(tag, attrs, texto) {
+    var n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (texto !== undefined) n.textContent = texto;
+    return n;
+  }
+  function pct(v, casas) {
+    if (v === null || v === undefined || isNaN(v)) return '–';
+    casas = casas === undefined ? 1 : casas;
+    return (v * 100).toLocaleString(LOCAL, { minimumFractionDigits: casas, maximumFractionDigits: casas }) + '%';
+  }
+  function num(v, casas) {
+    if (v === null || v === undefined || isNaN(v)) return '–';
+    return v.toLocaleString(LOCAL, { minimumFractionDigits: casas || 0, maximumFractionDigits: casas || 0 });
+  }
+  function compacto(v) {
+    if (Math.abs(v) >= 10000) return num(v / 1000, 0) + 'K';
+    return num(v, 0);
+  }
+  function nomeMes(m, curto) {
+    if (!m) return '';
+    var nome = MESES[Number(m.slice(5, 7)) - 1];
+    return curto ? nome : nome + '/' + m.slice(0, 4);
+  }
+  function mesAnterior(m) {
+    var a = Number(m.slice(0, 4)), n = Number(m.slice(5, 7)) - 1;
+    if (n < 1) { n = 12; a -= 1; }
+    return a + '-' + (n < 10 ? '0' : '') + n;
+  }
+  function ultimosMeses(m, n) {
+    var lista = [m];
+    while (lista.length < n) lista.unshift(mesAnterior(lista[0]));
+    return lista;
+  }
+  function rotuloCampo(campo) {
+    var achado = C.filtros.concat([C.ofensor]).filter(function (f) { return f[0] === campo; })[0];
+    return achado ? achado[1] : campo;
+  }
+  function valorVisivel(v) { return v === '' || v === null || v === undefined ? T.semInfo : v; }
+
+  // ------------------------------------------------------------ indicadores (sempre por protocolo distinto)
+
+  function metricas(linhas) {
+    var env = {}, resp = {}, p = {}, n = {}, d = {}, pn = {};
+    var cesSoma = 0, cesN = 0;
+    for (var i = 0; i < linhas.length; i++) {
+      var r = linhas[i], k = r.protocolo;
+      env[k] = 1;
+      if (r.c_sat !== NAO_RESPONDIDO) resp[k] = 1;
+      if (r.c_sat === 'PROMOTOR') { p[k] = 1; pn[k] = 1; }
+      else if (r.c_sat === 'NEUTRO') { n[k] = 1; pn[k] = 1; }
+      else if (r.c_sat === 'DETRATOR') d[k] = 1;
+      if (CES && r.nota_ces) { cesSoma += Number(r.nota_ces); cesN += 1; }
+    }
+    var tam = function (o) { return Object.keys(o).length; };
+    var m = { enviadas: tam(env), respondidas: tam(resp), promotores: tam(p), neutros: tam(n), detratores: tam(d), pn: tam(pn) };
+    m.csat = m.respondidas ? m.promotores / m.respondidas : null;
+    m.simple = m.respondidas ? m.pn / m.respondidas : null;
+    m.rr = m.enviadas ? m.respondidas / m.enviadas : null;
+    m.pctDetratores = m.respondidas ? m.detratores / m.respondidas : null;
+    m.cesMedia = cesN ? cesSoma / cesN : null;
+    return m;
+  }
+
+  function passa(r, ignorar) {
+    for (var campo in estado.filtros) {
+      if (campo === ignorar) continue;
+      var s = estado.filtros[campo];
+      if (s && s.size && !s.has(r[campo] || '')) return false;
+    }
+    return true;
+  }
+
+  function agrupar(linhas, campo) {
+    var grupos = {};
+    linhas.forEach(function (r) { var k = r[campo] || ''; (grupos[k] = grupos[k] || []).push(r); });
+    return grupos;
+  }
+
+  // ------------------------------------------------------------ dados
+
+  function chamar(funcao, args, ok) {
+    if (window.google && google.script && google.script.run) {
+      var run = google.script.run.withSuccessHandler(ok).withFailureHandler(function (e) {
+        document.getElementById('conteudo').replaceChildren(el('p', { classe: 'aviso', texto: T.erro + (e && e.message || e) }));
+      });
+      run[funcao].apply(run, args);
+    } else if (window.DADOS_TESTE) {
+      setTimeout(function () { ok(window.DADOS_TESTE); }, 0);  // teste local, fora do Apps Script
+    }
+  }
+
+  function decodificar(r) {
+    var cols = r.colunas, dic = r.dicionarios;
+    return r.linhas.map(function (l) {
+      var o = {};
+      for (var i = 0; i < cols.length; i++) o[cols[i]] = dic[cols[i]] ? dic[cols[i]][l[i]] : l[i];
+      return o;
+    });
+  }
+
+  function carregar(desde) {
+    document.getElementById('conteudo').classList.add('carregando');
+    chamar('dados', [C.chave, desde || ''], function (r) {
+      estado.linhas = decodificar(r);
+      estado.atualizacao = r.atualizacao || {};
+      estado.tudo = desde === 'tudo';
+      var meses = {};
+      estado.linhas.forEach(function (l) { meses[l.mes] = 1; });
+      estado.meses = Object.keys(meses).sort();
+      if (!estado.mes || estado.meses.indexOf(estado.mes) < 0) estado.mes = r.ultimoMes || estado.meses[estado.meses.length - 1];
+      document.getElementById('conteudo').classList.remove('carregando');
+      montarCabecalho();
+      montarFiltros();
+      desenhar();
+    });
+  }
+
+  // ------------------------------------------------------------ cabeçalho e filtros
+
+  function montarCabecalho() {
+    document.getElementById('titulo').textContent = C.titulo;
+    var nav = document.getElementById('navegacao');
+    nav.replaceChildren.apply(nav, C.paginas.map(function (p) {
+      return el('a', { href: p.url, target: '_top', 'aria-current': p.chave === C.chave ? 'page' : null, texto: p.titulo });
+    }));
+    var exp = estado.atualizacao.exportado_em;
+    document.getElementById('atualizacao').textContent = exp
+      ? T.atualizado + ' ' + exp.slice(8, 10) + '/' + exp.slice(5, 7) + '/' + exp.slice(0, 4) + ' ' + exp.slice(11, 16) : '';
+  }
+
+  function montarFiltros() {
+    var caixa = document.getElementById('filtros');
+    var seletor = el('select', { 'aria-label': T.mes, onchange: function (e) {
+      if (e.target.value === '__tudo') { carregar('tudo'); return; }
+      estado.mes = e.target.value; estado.paginaDetalhe = 0; desenhar();
+    } });
+    estado.meses.slice().reverse().forEach(function (m) {
+      var o = el('option', { value: m, texto: nomeMes(m) });
+      if (m === estado.mes) o.selected = true;
+      seletor.appendChild(o);
+    });
+    if (!estado.tudo) seletor.appendChild(el('option', { value: '__tudo', texto: T.carregarTudo }));
+    var filhos = [el('label', { classe: 'mes' }, [T.mes, seletor])];
+    C.filtros.forEach(function (f) { filhos.push(multiSelecao(f[0], f[1])); });
+    caixa.replaceChildren.apply(caixa, filhos);
+  }
+
+  function multiSelecao(campo, rotulo) {
+    var valores = {};
+    estado.linhas.forEach(function (r) { valores[r[campo] || ''] = 1; });
+    var lista = Object.keys(valores).sort(function (a, b) { return a.localeCompare(b, LOCAL); });
+    var sel = estado.filtros[campo] || new Set();
+    var resumo = sel.size === 0 ? T.todos : sel.size === 1 ? valorVisivel(Array.from(sel)[0]) : sel.size + ' ' + T.selecionados;
+    var det = el('details', { classe: 'multi', 'data-ativo': sel.size ? 'sim' : 'nao' });
+    det.appendChild(el('summary', null, [el('span', { texto: rotulo + ': ' }), el('strong', { texto: resumo })]));
+    var painel = el('div', { classe: 'painel-opcoes' });
+    var opcoes = el('div');
+    var busca = el('input', { type: 'search', placeholder: T.buscar, 'aria-label': T.buscar + ' ' + rotulo, oninput: function () {
+      var q = busca.value.toLowerCase();
+      Array.prototype.forEach.call(opcoes.children, function (lab) { lab.hidden = lab.textContent.toLowerCase().indexOf(q) < 0; });
+    } });
+    lista.forEach(function (v) {
+      var caixa = el('input', { type: 'checkbox', 'aria-label': valorVisivel(v), onchange: function () {
+        var s = estado.filtros[campo] || new Set();
+        if (caixa.checked) s.add(v); else s.delete(v);
+        estado.filtros[campo] = s; estado.paginaDetalhe = 0;
+        desenhar(); atualizarResumo(det, campo, rotulo);
+      } });
+      caixa.checked = sel.has(v);
+      opcoes.appendChild(el('label', null, [caixa, el('span', { texto: valorVisivel(v) })]));
+    });
+    painel.appendChild(busca);
+    painel.appendChild(opcoes);
+    painel.appendChild(el('div', { classe: 'acoes' }, [
+      el('button', { type: 'button', classe: 'botao-texto', texto: T.limpar, onclick: function () {
+        delete estado.filtros[campo]; montarFiltros(); desenhar();
+      } })
+    ]));
+    det.appendChild(painel);
+    return det;
+  }
+
+  function atualizarResumo(det, campo, rotulo) {
+    var s = estado.filtros[campo] || new Set();
+    det.setAttribute('data-ativo', s.size ? 'sim' : 'nao');
+    det.querySelector('summary strong').textContent =
+      s.size === 0 ? T.todos : s.size === 1 ? valorVisivel(Array.from(s)[0]) : s.size + ' ' + T.selecionados;
+  }
+
+  function alternarFiltro(campo, valor) {
+    var s = estado.filtros[campo] || new Set();
+    if (s.has(valor) && s.size === 1) s = new Set(); else s = new Set([valor]);
+    estado.filtros[campo] = s; estado.paginaDetalhe = 0;
+    montarFiltros(); desenhar();
+  }
+
+  function desenharChips() {
+    var caixa = document.getElementById('chips');
+    var chips = [];
+    Object.keys(estado.filtros).forEach(function (campo) {
+      var s = estado.filtros[campo];
+      if (!s || !s.size) return;
+      chips.push(el('span', { classe: 'chip' }, [
+        el('span', { texto: rotuloCampo(campo) + ': ' + Array.from(s).map(valorVisivel).join(', ') }),
+        el('button', { type: 'button', 'aria-label': T.limpar + ' ' + rotuloCampo(campo), texto: '×', onclick: function () {
+          delete estado.filtros[campo]; montarFiltros(); desenhar();
+        } })
+      ]));
+    });
+    caixa.replaceChildren.apply(caixa, chips);
+  }
+
+  // ------------------------------------------------------------ dica (tooltip)
+
+  var dica = document.getElementById('dica');
+  function mostrarDica(evento, titulo, itens) {
+    dica.replaceChildren(el('div', { classe: 'titulo', texto: titulo }));
+    itens.forEach(function (it) {
+      var chave = it.cor ? el('span', { classe: it.barra ? 'chave-barra' : 'chave-linha' }) : null;
+      if (chave) chave.style.background = it.cor;
+      dica.appendChild(el('div', { classe: 'item' }, [chave, el('strong', { texto: it.valor }), el('span', { classe: 'nome', texto: it.nome })]));
+    });
+    dica.style.display = 'block';
+    var x = evento.clientX + 14, y = evento.clientY + 14;
+    var w = dica.offsetWidth, h = dica.offsetHeight;
+    if (x + w > window.innerWidth - 8) x = evento.clientX - w - 14;
+    if (y + h > window.innerHeight - 8) y = evento.clientY - h - 14;
+    dica.style.left = x + 'px'; dica.style.top = y + 'px';
+  }
+  function esconderDica() { dica.style.display = 'none'; }
+
+  // ------------------------------------------------------------ peças da página
+
+  function cartao(titulo, sub, filhos, classe) {
+    var c = el('section', { classe: 'cartao' + (classe ? ' ' + classe : '') });
+    if (titulo) c.appendChild(el('h2', { texto: titulo }));
+    if (sub) c.appendChild(el('p', { classe: 'sub', texto: sub }));
+    (filhos || []).forEach(function (f) { if (f) c.appendChild(f); });
+    return c;
+  }
+
+  function delta(atual, anterior, tipo) {
+    if (atual === null || anterior === null || anterior === undefined) return null;
+    var d = atual - anterior;
+    var texto, classe = '';
+    if (tipo === 'pp') {
+      texto = (d > 0 ? '+' : d < 0 ? '−' : '±') + num(Math.abs(d) * 100, 1) + ' ' + T.pp;
+      classe = d > 0.0005 ? 'delta-bom' : d < -0.0005 ? 'delta-ruim' : '';
+    } else if (tipo === 'nota') {
+      texto = (d > 0 ? '+' : d < 0 ? '−' : '±') + num(Math.abs(d), 2);
+      classe = d > 0.005 ? 'delta-bom' : d < -0.005 ? 'delta-ruim' : '';
+    } else {
+      texto = (d > 0 ? '+' : d < 0 ? '−' : '±') + num(Math.abs(d), 0);
+    }
+    return el('span', null, [el('span', { classe: classe, texto: texto }), ' ' + T.vsAnterior]);
+  }
+
+  function statusMeta(v) {
+    if (v === null) return null;
+    var ok = v >= C.meta;
+    return el('span', { classe: 'status ' + (ok ? 'bom' : 'critico') }, [
+      el('span', { classe: 'icone', 'aria-hidden': 'true', texto: ok ? '✓' : '!' }),
+      (ok ? T.naMeta : T.abaixoMeta) + ' (' + pct(C.meta, 0) + ')'
+    ]);
+  }
+
+  function indicador(rotulo, valor, linhas, explica, heroi) {
+    return cartao(null, null, [
+      el('div', { classe: 'indicador' + (heroi ? ' heroi' : '') }, [
+        el('div', { classe: 'rotulo', texto: rotulo }),
+        el('div', { classe: 'valor', texto: valor }),
+        el('div', { classe: 'linha' }, linhas.filter(Boolean)),
+        explica ? el('div', { classe: 'explica', texto: explica }) : null
+      ])
+    ]);
+  }
+
+  function legenda(itens) {
+    return el('div', { classe: 'legenda' }, itens.map(function (it) {
+      var chave = el('span', { classe: it.barra ? 'chave-barra' : 'chave-linha' });
+      chave.style.background = it.cor;
+      return el('span', null, [chave, it.nome]);
+    }));
+  }
+
+  function ticksBonitos(min, max, alvo) {
+    var passo = (max - min) / alvo;
+    var mag = Math.pow(10, Math.floor(Math.log10(passo)));
+    var norm = passo / mag;
+    passo = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag;
+    var t = [], v = Math.ceil(min / passo) * passo;
+    for (; v <= max + passo / 1000; v += passo) t.push(Number(v.toFixed(10)));
+    return t;
+  }
+
+  /** Linhas com mira: pontos = [{mes, valores: [..], extra}], series = [{nome, cor, fmt}] */
+  function graficoLinha(pontos, series, opc) {
+    var caixa = el('div', { classe: 'grafico' });
+    var W = Math.max(320, opc.largura || 640), H = 230, m = { e: 44, d: 64, t: 12, b: 26 };
+    var iw = W - m.e - m.d, ih = H - m.t - m.b;
+    var x = function (i) { return m.e + (pontos.length === 1 ? iw / 2 : i * iw / (pontos.length - 1)); };
+    var y = function (v) { return m.t + ih - (v - opc.min) / (opc.max - opc.min) * ih; };
+    var s = svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': opc.rotuloAcessivel });
+    ticksBonitos(opc.min, opc.max, 4).forEach(function (t) {
+      s.appendChild(svg('line', { x1: m.e, x2: W - m.d, y1: y(t), y2: y(t), 'class': 'grade-linha' }));
+      s.appendChild(svg('text', { x: m.e - 6, y: y(t) + 4, 'text-anchor': 'end' }, opc.fmtEixo(t)));
+    });
+    if (opc.meta !== undefined && opc.meta >= opc.min && opc.meta <= opc.max) {
+      s.appendChild(svg('line', { x1: m.e, x2: W - m.d, y1: y(opc.meta), y2: y(opc.meta), 'class': 'meta' }));
+      s.appendChild(svg('text', { x: W - m.d + 6, y: y(opc.meta) + 4 }, T.meta + ' ' + opc.fmtEixo(opc.meta)));
+    }
+    var passoRotulo = pontos.length > 8 && iw / pontos.length < 44 ? 2 : 1;
+    pontos.forEach(function (p, i) {
+      if ((pontos.length - 1 - i) % passoRotulo === 0)
+        s.appendChild(svg('text', { x: x(i), y: H - 6, 'text-anchor': 'middle' }, nomeMes(p.mes, true) + (p.mes.slice(5) === '01' || i === 0 ? ' ' + p.mes.slice(2, 4) : '')));
+    });
+    series.forEach(function (se, k) {
+      var d = '', aberto = false;
+      pontos.forEach(function (p, i) {
+        var v = p.valores[k];
+        if (v === null || v === undefined) { aberto = false; return; }
+        d += (aberto ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1);
+        aberto = true;
+      });
+      s.appendChild(svg('path', { d: d, fill: 'none', stroke: se.cor, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+      // Mês isolado (sem vizinhos com dado) não forma linha: vira um ponto
+      pontos.forEach(function (p, i) {
+        var v = p.valores[k], tem = function (j) { return pontos[j] && pontos[j].valores[k] !== null && pontos[j].valores[k] !== undefined; };
+        if (v !== null && v !== undefined && !tem(i - 1) && !tem(i + 1) && i !== pontos.length - 1)
+          s.appendChild(svg('circle', { cx: x(i), cy: y(v), r: 4, fill: se.cor, stroke: 'var(--superficie)', 'stroke-width': 2 }));
+      });
+    });
+    // Mês selecionado: ponto com anel da superfície e rótulo só da série principal
+    var ult = pontos.length - 1;
+    series.forEach(function (se, k) {
+      var v = pontos[ult].valores[k];
+      if (v === null || v === undefined) return;
+      s.appendChild(svg('circle', { cx: x(ult), cy: y(v), r: 4, fill: se.cor, stroke: 'var(--superficie)', 'stroke-width': 2 }));
+      if (k === 0) s.appendChild(svg('text', { x: x(ult) + 8, y: y(v) + 4, 'class': 'rotulo-forte' }, se.fmt(v)));
+    });
+    var mira = svg('line', { y1: m.t, y2: m.t + ih, 'class': 'mira', visibility: 'hidden' });
+    s.appendChild(mira);
+    var area = svg('rect', { x: m.e - 10, y: m.t, width: iw + 20, height: ih, fill: 'transparent' });
+    area.addEventListener('pointermove', function (ev) {
+      var r = s.getBoundingClientRect();
+      var px = (ev.clientX - r.left) * W / r.width;
+      var i = Math.max(0, Math.min(pontos.length - 1, Math.round((px - m.e) / (iw / Math.max(1, pontos.length - 1)))));
+      mira.setAttribute('x1', x(i)); mira.setAttribute('x2', x(i)); mira.setAttribute('visibility', 'visible');
+      var itens = series.map(function (se, k) { return { cor: se.cor, valor: se.fmt(pontos[i].valores[k]), nome: se.nome }; });
+      if (pontos[i].extra) itens.push({ valor: pontos[i].extra, nome: '' });
+      mostrarDica(ev, nomeMes(pontos[i].mes), itens);
+    });
+    area.addEventListener('pointerleave', function () { mira.setAttribute('visibility', 'hidden'); esconderDica(); });
+    s.appendChild(area);
+    caixa.appendChild(s);
+    return caixa;
+  }
+
+  /** Colunas empilhadas por classificação, uma por mês. */
+  function graficoColunas(pontos, opc) {
+    var caixa = el('div', { classe: 'grafico' });
+    var W = Math.max(320, opc.largura || 640), H = 230, m = { e: 44, d: 12, t: 18, b: 26 };
+    var iw = W - m.e - m.d, ih = H - m.t - m.b;
+    var max = Math.max.apply(null, pontos.map(function (p) { return p.total; }).concat([1]));
+    var ticks = ticksBonitos(0, max, 4);
+    var topo = ticks[ticks.length - 1] < max ? ticks[ticks.length - 1] + (ticks[1] - ticks[0]) : ticks[ticks.length - 1];
+    if (ticks[ticks.length - 1] < topo) ticks.push(topo);
+    var y = function (v) { return m.t + ih - v / topo * ih; };
+    var banda = iw / pontos.length, larg = Math.min(24, banda * 0.6);
+    var s = svg('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': opc.rotuloAcessivel });
+    ticks.forEach(function (t) {
+      s.appendChild(svg('line', { x1: m.e, x2: W - m.d, y1: y(t), y2: y(t), 'class': t === 0 ? 'base' : 'grade-linha' }));
+      s.appendChild(svg('text', { x: m.e - 6, y: y(t) + 4, 'text-anchor': 'end' }, compacto(t)));
+    });
+    var passoRotulo = banda < 40 ? 2 : 1;
+    pontos.forEach(function (p, i) {
+      var cx = m.e + banda * i + banda / 2;
+      if ((pontos.length - 1 - i) % passoRotulo === 0)
+        s.appendChild(svg('text', { x: cx, y: H - 6, 'text-anchor': 'middle' }, nomeMes(p.mes, true) + (p.mes.slice(5) === '01' || i === 0 ? ' ' + p.mes.slice(2, 4) : '')));
+      var base = 0;
+      var partes = CLASSES.map(function (c) { return { c: c, v: p.partes[c.valor] || 0 }; }).filter(function (q) { return q.v > 0; });
+      partes.forEach(function (q, j) {
+        var y0 = y(base), y1 = y(base + q.v);
+        var alto = y0 - y1 - (j > 0 ? 2 : 0);     // 2px de superfície entre os segmentos
+        if (alto <= 0) { base += q.v; return; }
+        var topoSeg = y0 - (j > 0 ? 2 : 0) - alto, x0 = cx - larg / 2;
+        var r = j === partes.length - 1 ? Math.min(4, alto, larg / 2) : 0;
+        var d = 'M' + x0 + ' ' + (topoSeg + alto) + 'V' + (topoSeg + r) + (r ? 'Q' + x0 + ' ' + topoSeg + ' ' + (x0 + r) + ' ' + topoSeg : '') +
+          'H' + (x0 + larg - r) + (r ? 'Q' + (x0 + larg) + ' ' + topoSeg + ' ' + (x0 + larg) + ' ' + (topoSeg + r) : '') +
+          'V' + (topoSeg + alto) + 'Z';
+        s.appendChild(svg('path', { d: d, fill: q.c.cor }));
+        base += q.v;
+      });
+      if (i === pontos.length - 1 && p.total)
+        s.appendChild(svg('text', { x: cx, y: y(p.total) - 6, 'text-anchor': 'middle', 'class': 'rotulo-forte' }, num(p.total)));
+      var alvo = svg('rect', { x: m.e + banda * i, y: m.t, width: banda, height: ih, fill: 'transparent' });
+      alvo.addEventListener('pointermove', function (ev) {
+        var itens = CLASSES.map(function (c) { return { cor: c.cor, barra: true, valor: num(p.partes[c.valor] || 0), nome: c.nome }; });
+        itens.unshift({ valor: num(p.total), nome: T.respondidas });
+        mostrarDica(ev, nomeMes(p.mes), itens);
+      });
+      alvo.addEventListener('pointerleave', esconderDica);
+      s.appendChild(alvo);
+    });
+    caixa.appendChild(s);
+    return caixa;
+  }
+
+  function tabelaValores(cabecalho, linhas) {
+    var det = el('details', { classe: 'secao' });
+    det.appendChild(el('summary', { texto: T.verTabela }));
+    var t = el('table');
+    t.appendChild(el('thead', null, [el('tr', null, cabecalho.map(function (h, i) { return el('th', { classe: i ? 'n' : null, texto: h }); }))]));
+    t.appendChild(el('tbody', null, linhas.map(function (l) {
+      return el('tr', null, l.map(function (v, i) { return el('td', { classe: i ? 'n' : null, texto: v }); }));
+    })));
+    det.appendChild(el('div', { classe: 'tabela-rolagem' }, [t]));
+    return det;
+  }
+
+  function barraSegmentada(m) {
+    var total = m.promotores + m.neutros + m.detratores;
+    var caixa = el('div');
+    if (!total) return caixa;
+    var barra = el('div', { classe: 'segmentada', role: 'img',
+      'aria-label': CLASSES.map(function (c) { return c.nome + ' ' + pct(contagem(m, c.valor) / total); }).join(', ') });
+    var largura = opcLargura();
+    CLASSES.forEach(function (c) {
+      var v = contagem(m, c.valor);
+      if (!v) return;
+      var parte = v / total;
+      var texto = pct(parte, 0);
+      var b = el('div', { tabindex: '0' });
+      b.style.flex = String(parte);
+      b.style.background = c.cor;
+      if (parte * largura > texto.length * 7 + 16) b.textContent = texto;   // só escreve dentro se couber
+      var dicaParte = function (ev) { mostrarDica(ev, c.nome, [{ cor: c.cor, barra: true, valor: num(v) + ' · ' + pct(parte), nome: '' }]); };
+      b.addEventListener('pointermove', dicaParte);
+      b.addEventListener('pointerleave', esconderDica);
+      barra.appendChild(b);
+    });
+    caixa.appendChild(barra);
+    caixa.appendChild(legenda(CLASSES.map(function (c) { return { nome: c.nome, cor: c.cor, barra: true }; })));
+    return caixa;
+  }
+  function contagem(m, classe) { return classe === 'PROMOTOR' ? m.promotores : classe === 'NEUTRO' ? m.neutros : m.detratores; }
+
+  var larguraAtual = 640;
+  function opcLargura() { return larguraAtual; }
+
+  function barrasNotas(linhas) {
+    var porNota = {};
+    linhas.forEach(function (r) {
+      if (r.c_sat === NAO_RESPONDIDO) return;
+      var g = porNota[r.nota] = porNota[r.nota] || { classe: r.c_sat, prot: {} };
+      g.prot[r.protocolo] = 1;
+    });
+    var notas = Object.keys(porNota).sort().reverse();
+    var max = Math.max.apply(null, notas.map(function (n) { return Object.keys(porNota[n].prot).length; }).concat([1]));
+    var t = el('table');
+    t.appendChild(el('tbody', null, notas.map(function (n) {
+      var v = Object.keys(porNota[n].prot).length;
+      var trilho = el('div', { classe: 'trilho' });
+      var barra = el('div', { classe: 'preenchido' });
+      barra.style.width = (v / max * 100) + '%';
+      barra.style.background = COR_CLASSE[porNota[n].classe] || 'var(--neutro)';
+      barra.style.height = '14px';
+      trilho.appendChild(barra);
+      return el('tr', null, [el('td', { texto: n }), el('td', { style: 'width:55%' }, [trilho]), el('td', { classe: 'n', texto: num(v) })]);
+    })));
+    return t;
+  }
+
+  function funil(m) {
+    var etapas = [
+      [T.enviadas, m.enviadas, null],
+      [T.respondidas, m.respondidas, m.rr],
+      [CES ? T.faceis : T.promotores, m.promotores, m.csat]
+    ];
+    return el('div', null, etapas.map(function (e) {
+      var trilho = el('div', { classe: 'trilho' });
+      var barra = el('div', { classe: 'preenchido' });
+      barra.style.width = (m.enviadas ? e[1] / m.enviadas * 100 : 0) + '%';
+      trilho.appendChild(barra);
+      return el('div', { classe: 'funil-linha' }, [
+        el('span', { texto: e[0] }),
+        el('span', { classe: 'num' }, [num(e[1]), e[2] !== null ? el('small', { texto: pct(e[2]) + ' ' + T.de2 + ' ' + (e === etapas[1] ? T.enviadas : T.respondidas).toLowerCase() }) : null]),
+        trilho
+      ]);
+    }));
+  }
+
+  function tabelaGrupos(linhas, campo, opc) {
+    var grupos = agrupar(linhas, campo);
+    var lista = Object.keys(grupos).map(function (k) { var mm = metricas(grupos[k]); mm.chave = k; return mm; })
+      .filter(function (g) { return g.respondidas > 0; });
+    var ord = opc.ordem;
+    lista.sort(function (a, b) {
+      var va = a[ord.campo], vb = b[ord.campo];
+      if (ord.campo === 'chave') return (ord.desc ? -1 : 1) * String(va).localeCompare(String(vb), LOCAL);
+      va = va === null ? -1 : va; vb = vb === null ? -1 : vb;
+      return (ord.desc ? vb - va : va - vb) || b.respondidas - a.respondidas;
+    });
+    var limite = opc.todos ? lista.length : opc.limite;
+    var selecionado = estado.filtros[campo];
+    var colunas = [
+      ['chave', opc.rotulo, function (g) { return g.chave === '' ? T.semInfo : g.chave; }, false],
+      ['respondidas', T.respondidas, function (g) { return num(g.respondidas); }, true],
+      ['detratores', CES ? T.dificeis : T.detratores, function (g) { return num(g.detratores); }, true],
+      ['pctDetratores', CES ? T.pctDificeis : T.pctDetratores, null, true],
+      [CES ? 'cesMedia' : 'csat', CES ? T.cesMedio : T.csat, function (g) { return CES ? num(g.cesMedia, 2) : pct(g.csat); }, true]
+    ];
+    var t = el('table');
+    t.appendChild(el('thead', null, [el('tr', null, colunas.map(function (c) {
+      var th = el('th', { classe: (c[3] ? 'n ' : '') + (opc.aoOrdenar ? 'ordenavel' : ''), scope: 'col', texto: c[1],
+        'aria-sort': ord.campo === c[0] ? (ord.desc ? 'descending' : 'ascending') : null });
+      if (opc.aoOrdenar) th.addEventListener('click', function () { opc.aoOrdenar(c[0]); });
+      return th;
+    }))]));
+    t.appendChild(el('tbody', null, lista.slice(0, limite).map(function (g) {
+      var tr = el('tr', { classe: 'clicavel', tabindex: '0', 'aria-selected': selecionado && selecionado.has(g.chave) ? 'true' : null });
+      colunas.forEach(function (c) {
+        if (c[0] === 'pctDetratores') {
+          var med = el('span', { classe: 'medidor' }); var i = el('i'); i.style.width = ((g.pctDetratores || 0) * 100) + '%'; med.appendChild(i);
+          tr.appendChild(el('td', { classe: 'n' }, [med, pct(g.pctDetratores)]));
+        } else tr.appendChild(el('td', { classe: c[3] ? 'n' : null, texto: c[2](g) }));
+      });
+      var acao = function () { alternarFiltro(campo, g.chave); };
+      tr.addEventListener('click', acao);
+      tr.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); acao(); } });
+      return tr;
+    })));
+    var caixa = el('div', null, [el('div', { classe: 'tabela-rolagem' }, [t])]);
+    if (lista.length > opc.limite)
+      caixa.appendChild(el('div', { classe: 'paginacao' }, [el('button', { type: 'button', texto: opc.todos ? T.mostrarMenos : T.mostrarTodos + ' (' + lista.length + ')', onclick: opc.aoAlternar })]));
+    return caixa;
+  }
+
+  function tabelaDetalhe(linhas) {
+    var caixa = el('div');
+    var q = estado.busca.toLowerCase();
+    var filtradas = linhas.filter(function (r) {
+      if (estado.classe && r.c_sat !== estado.classe) return false;
+      if (!q) return true;
+      return C.detalhe.some(function (c) { return String(r[c[0]] || '').toLowerCase().indexOf(q) >= 0; });
+    }).sort(function (a, b) { return a.enviado_em < b.enviado_em ? 1 : a.enviado_em > b.enviado_em ? -1 : 0; });
+    var porPagina = 25, paginas = Math.max(1, Math.ceil(filtradas.length / porPagina));
+    estado.paginaDetalhe = Math.min(estado.paginaDetalhe, paginas - 1);
+
+    var busca = el('input', { type: 'search', classe: 'busca', placeholder: T.buscar, value: estado.busca, 'aria-label': T.buscar });
+    busca.addEventListener('input', function () {
+      estado.busca = busca.value; estado.paginaDetalhe = 0;
+      var nova = tabelaDetalhe(linhas); caixa.replaceWith(nova);
+      var campo = nova.querySelector('.busca'); campo.focus(); campo.setSelectionRange(campo.value.length, campo.value.length);
+    });
+    var classe = el('select', { 'aria-label': T.classificacao, onchange: function (e) {
+      estado.classe = e.target.value; estado.paginaDetalhe = 0; caixa.replaceWith(tabelaDetalhe(linhas));
+    } });
+    [['', T.classificacao + ': ' + T.todos]].concat(CLASSES.map(function (c) { return [c.valor, c.nome]; }))
+      .concat([[NAO_RESPONDIDO, T.semResposta]]).forEach(function (o) {
+        var op = el('option', { value: o[0], texto: o[1] }); if (o[0] === estado.classe) op.selected = true; classe.appendChild(op);
+      });
+    caixa.appendChild(el('div', { classe: 'barra-tabela' }, [
+      el('div', { classe: 'filtros' }, [busca, classe]),
+      el('span', { classe: 'atualizacao', texto: num(filtradas.length) + ' ' + T.enquetes })
+    ]));
+    var t = el('table');
+    t.appendChild(el('thead', null, [el('tr', null, C.detalhe.map(function (c) { return el('th', { scope: 'col', texto: c[1] }); }))]));
+    var corpo = filtradas.slice(estado.paginaDetalhe * porPagina, (estado.paginaDetalhe + 1) * porPagina).map(function (r) {
+      return el('tr', null, C.detalhe.map(function (c) { return el('td', { texto: r[c[0]] || '' }); }));
+    });
+    t.appendChild(el('tbody', null, corpo.length ? corpo : [el('tr', null, [el('td', { colspan: C.detalhe.length, classe: 'vazio', texto: T.semDados })])]));
+    caixa.appendChild(el('div', { classe: 'tabela-rolagem' }, [t]));
+    var ir = function (p) { estado.paginaDetalhe = p; caixa.replaceWith(tabelaDetalhe(linhas)); };
+    caixa.appendChild(el('div', { classe: 'paginacao' }, [
+      el('button', { type: 'button', texto: T.anterior, disabled: estado.paginaDetalhe === 0 ? 'disabled' : null, onclick: function () { ir(estado.paginaDetalhe - 1); } }),
+      el('span', { texto: T.pagina + ' ' + (estado.paginaDetalhe + 1) + ' ' + T.de + ' ' + paginas }),
+      el('button', { type: 'button', texto: T.proxima, disabled: estado.paginaDetalhe >= paginas - 1 ? 'disabled' : null, onclick: function () { ir(estado.paginaDetalhe + 1); } })
+    ]));
+    return caixa;
+  }
+
+  // ------------------------------------------------------------ página
+
+  function desenhar() {
+    desenharChips();
+    var conteudo = document.getElementById('conteudo');
+    larguraAtual = Math.max(320, conteudo.clientWidth || 960);
+    var filtradas = estado.linhas.filter(function (r) { return passa(r); });
+    var porMes = agrupar(filtradas, 'mes');
+    var doMes = porMes[estado.mes] || [];
+    var m = metricas(doMes);
+    var ant = porMes[mesAnterior(estado.mes)] ? metricas(porMes[mesAnterior(estado.mes)]) : null;
+    var meses = ultimosMeses(estado.mes, 12);
+    var serie = meses.map(function (mes) { return { mes: mes, m: porMes[mes] ? metricas(porMes[mes]) : null }; });
+    var partes = [];
+
+    // 1. Indicadores
+    if (CES) {
+      partes.push(el('div', { classe: 'grade grade-4' }, [
+        indicador(T.cesMedio, num(m.cesMedia, 2), [ant && delta(m.cesMedia, ant.cesMedia, 'nota')], T.explicaCes, true),
+        indicador(T.pctFaceis, pct(m.csat), [ant && delta(m.csat, ant.csat, 'pp')], null),
+        indicador(T.rr, pct(m.rr), [num(m.respondidas) + ' ' + T.de2 + ' ' + num(m.enviadas), ant && delta(m.rr, ant.rr, 'pp')], T.explicaRR),
+        indicador(T.respondidas, num(m.respondidas), [num(m.promotores) + ' ' + T.faceis.toLowerCase() + ' · ' + num(m.neutros) + ' ' + T.neutros.toLowerCase() + ' · ' + num(m.detratores) + ' ' + T.dificeis.toLowerCase()], null)
+      ]));
+    } else {
+      partes.push(el('div', { classe: 'grade grade-4' }, [
+        indicador(T.csat, pct(m.csat), [statusMeta(m.csat), ant && delta(m.csat, ant.csat, 'pp')], T.explicaCsat, true),
+        indicador(T.simple, pct(m.simple), [ant && delta(m.simple, ant.simple, 'pp')], T.explicaSimple),
+        indicador(T.rr, pct(m.rr), [num(m.respondidas) + ' ' + T.de2 + ' ' + num(m.enviadas), ant && delta(m.rr, ant.rr, 'pp')], T.explicaRR),
+        indicador(T.respondidas, num(m.respondidas), [num(m.promotores) + ' ' + T.promotores.toLowerCase() + ' · ' + num(m.neutros) + ' ' + T.neutros.toLowerCase() + ' · ' + num(m.detratores) + ' ' + T.detratores.toLowerCase()], null)
+      ]));
+    }
+
+    // 2. Evolução e funil
+    var largEvol = larguraAtual > 960 ? (larguraAtual - 12) * 2 / 3 - 32 : larguraAtual - 32;
+    var grafEvol, tabEvol;
+    if (CES) {
+      grafEvol = graficoLinha(serie.map(function (p) { return { mes: p.mes, valores: [p.m ? p.m.cesMedia : null], extra: p.m ? num(p.m.respondidas) + ' ' + T.respondidas.toLowerCase() : null }; }),
+        [{ nome: T.cesMedio, cor: 'var(--serie-1)', fmt: function (v) { return num(v, 2); } }],
+        { min: 1, max: 5, largura: largEvol, fmtEixo: function (v) { return num(v, 0); }, rotuloAcessivel: T.evolucaoCes });
+      tabEvol = tabelaValores([T.mes, T.cesMedio, T.respondidas], serie.map(function (p) { return [nomeMes(p.mes), p.m ? num(p.m.cesMedia, 2) : '–', p.m ? num(p.m.respondidas) : '–']; }));
+    } else {
+      var vals = [];
+      serie.forEach(function (p) { if (p.m) { if (p.m.csat !== null) vals.push(p.m.csat); if (p.m.simple !== null) vals.push(p.m.simple); } });
+      var minimo = Math.min.apply(null, vals.concat([C.meta]));
+      grafEvol = graficoLinha(serie.map(function (p) { return { mes: p.mes, valores: p.m ? [p.m.csat, p.m.simple] : [null, null], extra: p.m ? num(p.m.respondidas) + ' ' + T.respondidas.toLowerCase() : null }; }),
+        [{ nome: T.csat, cor: 'var(--serie-1)', fmt: pct }, { nome: T.simple, cor: 'var(--serie-2)', fmt: pct }],
+        { min: Math.max(0, Math.floor(minimo * 20 - 1) / 20), max: 1, meta: C.meta, largura: largEvol,
+          fmtEixo: function (v) { return pct(v, 0); }, rotuloAcessivel: T.evolucaoSub });
+      tabEvol = tabelaValores([T.mes, T.csat, T.simple, T.rr, T.respondidas], serie.map(function (p) {
+        return [nomeMes(p.mes), p.m ? pct(p.m.csat) : '–', p.m ? pct(p.m.simple) : '–', p.m ? pct(p.m.rr) : '–', p.m ? num(p.m.respondidas) : '–'];
+      }));
+    }
+    partes.push(el('div', { classe: 'grade grade-21 secao' }, [
+      cartao(T.evolucao, CES ? T.evolucaoCes : T.evolucaoSub, [
+        CES ? null : legenda([{ nome: T.csat, cor: 'var(--serie-1)' }, { nome: T.simple, cor: 'var(--serie-2)' }]), grafEvol, tabEvol]),
+      cartao(T.funil, T.funilSub + ' · ' + nomeMes(estado.mes), [funil(m)])
+    ]));
+
+    // 3. Volume e notas
+    var largMeia = larguraAtual > 960 ? (larguraAtual - 12) / 2 - 32 : larguraAtual - 32;
+    partes.push(el('div', { classe: 'grade grade-2 secao' }, [
+      cartao(T.volume, T.volumeSub, [
+        legenda(CLASSES.map(function (c) { return { nome: c.nome, cor: c.cor, barra: true }; })),
+        graficoColunas(serie.map(function (p) {
+          return { mes: p.mes, total: p.m ? p.m.respondidas : 0, partes: p.m ? { PROMOTOR: p.m.promotores, NEUTRO: p.m.neutros, DETRATOR: p.m.detratores } : {} };
+        }), { largura: largMeia, rotuloAcessivel: T.volumeSub })
+      ]),
+      cartao(T.notas, T.notasSub + ' · ' + nomeMes(estado.mes), [barraSegmentada(m), barrasNotas(doMes)])
+    ]));
+
+    // 4. Ofensores e analistas (ignoram o próprio filtro para mostrar a seleção no contexto)
+    var doMesSemOfensor = estado.linhas.filter(function (r) { return r.mes === estado.mes && passa(r, C.ofensor[0]); });
+    var doMesSemAnalista = estado.linhas.filter(function (r) { return r.mes === estado.mes && passa(r, 'responsavel'); });
+    partes.push(el('div', { classe: 'grade grade-2 secao' }, [
+      cartao(C.ofensor[1], T.ofensoresSub, [tabelaGrupos(doMesSemOfensor, C.ofensor[0], {
+        rotulo: C.ofensor[1], limite: 12, todos: estado.ofensoresTodos, ordem: { campo: 'detratores', desc: true },
+        aoAlternar: function () { estado.ofensoresTodos = !estado.ofensoresTodos; desenhar(); }
+      })]),
+      cartao(T.analistas, T.analistasSub, [tabelaGrupos(doMesSemAnalista, 'responsavel', {
+        rotulo: T.responsavel, limite: 15, todos: estado.analistasTodos, ordem: estado.ordemAnalistas,
+        aoAlternar: function () { estado.analistasTodos = !estado.analistasTodos; desenhar(); },
+        aoOrdenar: function (campo) {
+          var o = estado.ordemAnalistas;
+          estado.ordemAnalistas = { campo: campo, desc: o.campo === campo ? !o.desc : campo !== 'chave' };
+          desenhar();
+        }
+      })])
+    ]));
+
+    // 5. Detalhe
+    partes.push(el('div', { classe: 'secao' }, [cartao(T.detalhe + ' · ' + nomeMes(estado.mes), null, [tabelaDetalhe(doMes)])]));
+
+    if (!doMes.length) partes.splice(0, 0, el('p', { classe: 'aviso', texto: T.semDados }));
+    conteudo.replaceChildren.apply(conteudo, partes);
+  }
+
+  var espera;
+  window.addEventListener('resize', function () { clearTimeout(espera); espera = setTimeout(function () { if (estado.linhas.length) desenhar(); }, 200); });
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('details.multi[open]').forEach(function (d) { if (!d.contains(e.target)) d.removeAttribute('open'); });
+  });
+
+  document.getElementById('titulo').textContent = C.titulo;
+  carregar('');
+})();
+</script>

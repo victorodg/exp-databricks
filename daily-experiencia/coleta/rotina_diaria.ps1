@@ -1,4 +1,5 @@
-﻿# Rotina diária do Daily Experiência BR no Databricks: envia os arquivos de entrada ao volume e dispara o job.
+﻿# Rotina diária do Daily Experiência BR no Databricks: envia os arquivos de entrada ao volume, dispara o job e, quando
+# ele termina, exporta o CSAT para a pasta do Drive do painel em Apps Script (..\csat\coleta\exportar_sheets.py).
 # Grava o que aconteceu em coleta\.estado\logs\AAAA-MM-DD_HHmm.log (fora do Git).
 # Rodar à mão:   powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1
 # O agendamento no Windows é feito por coleta\agendar_rotina.ps1.
@@ -24,5 +25,17 @@ Set-Location $pasta
     $linha | Out-File -Encoding utf8 -Append $log
 }
 $codigo = $LASTEXITCODE
+
+# CSAT: depois do job, exporta a gold para a pasta do Drive de onde o Apps Script do painel importa (logic-local\csat)
+$csat = Join-Path (Split-Path -Parent $pasta) "csat\coleta\exportar_sheets.py"
+if ($codigo -eq 0 -and ($args -notcontains "--simular") -and (Test-Path $csat)) {
+    "--- Exportação do CSAT ($(Get-Date -Format 'HH:mm:ss'))" | Out-File -Encoding utf8 -Append $log
+    & "$pasta\.venv\Scripts\python.exe" -I $csat --aguardar-job 2>&1 | ForEach-Object {
+        $linha = "$_"
+        $linha
+        $linha | Out-File -Encoding utf8 -Append $log
+    }
+    if ($LASTEXITCODE -ne 0) { $codigo = $LASTEXITCODE }
+}
 "Rotina terminada em $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') com codigo de saida $codigo" | Out-File -Encoding utf8 -Append $log
 exit $codigo

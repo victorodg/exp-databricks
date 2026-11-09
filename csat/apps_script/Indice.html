@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <?!= incluir('Estilo') ?>
+</head>
+<body>
+  <main class="pagina">
+    <header class="topo">
+      <div>
+        <p class="sobretitulo">GovEXP · Métricas da Excelência</p>
+        <h1>Painel C-SAT</h1>
+      </div>
+    </header>
+    <ul class="indice">
+      <? paginas.forEach(function (p) { ?>
+        <li><a href="<?= p.url ?>"><?= p.titulo ?></a></li>
+      <? }); ?>
+    </ul>
+  </main>
+</body>
+</html>

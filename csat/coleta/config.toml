@@ -1,0 +1,31 @@
+# Exportação do CSAT para o painel em Apps Script.
+# O acesso ao Databricks (perfil da CLI, warehouse e schema) vem de daily-experiencia\coleta\fontes.toml.
+
+[exportacao]
+# Pasta do Drive compartilhado (Google Drive para desktop) de onde o Apps Script lê os CSV
+pasta = 'G:\Drives compartilhados\REPÓSITORIOS - DOCUMENTAÇÕES\Dashboards - Tableau\Central de EXP e Serviços\Fontes de Dados\auto\csat'
+
+# Um CSV por operação: csat_<arquivo>.csv, com as colunas listadas (na ordem) a partir de dexp_gold_csat_detalhe.
+# As colunas comuns entram em todas.
+[exportacao.colunas]
+comuns = ["protocolo", "mes", "dia", "enviado_em", "respondido_em", "c_sat", "nota", "responsavel", "time", "canal", "nome"]
+
+[exportacao.operacoes.brasil]
+fonte = "Experiencia Brasil"
+colunas = ["mercado", "setor_fim", "funcao_do_sistema", "status_de_classificacao", "status_de_finalizacao",
+           "primeiro_tempo_de_espera", "chamado", "funcao"]
+
+[exportacao.operacoes.ncc]
+fonte = "NCC"
+colunas = ["turno", "setor_entrada", "setor_fim", "funcao_do_sistema", "status_de_classificacao", "status_de_finalizacao",
+           "solucao_aplicada"]
+
+[exportacao.operacoes.hispana]
+fonte = "Hispana"
+colunas = ["pais", "canal_de_entrada", "setor_fim", "funcao_do_sistema", "status_de_classificacao", "status_de_finalizacao",
+           "primeiro_tempo_de_espera", "tempo_ate_ser_atendido", "tempo_do_atendimento", "tempo_medio_de_espera",
+           "tempo_de_operacao", "solucao_aplicada"]
+
+[exportacao.operacoes.ces]
+fonte = "CES"
+colunas = ["nota_ces", "setor_fim", "funcao_do_sistema", "status_de_classificacao", "status_de_finalizacao"]

@@ -68,14 +68,19 @@ O pipeline não depende de nada do Tableau Prep: lê só os arquivos do volume e
    e rodar as células em ordem: confere a exportação das Google Sheets, envia os arquivos, dispara o job
    `dexp_daily_experiencia` (bronze → silver → gold, uns 15 minutos), acompanha e mostra as tabelas atualizadas.
    O job precisa ter terminado antes das 9h30, quando o Tableau Cloud atualiza as fontes: dispare até umas 9h15.
+   A célula 5 exporta o CSAT para a pasta `Fontes de Dados\auto\csat`, de onde o painel em Apps Script importa às 10h
+   (ver `..\csat\README.md`).
 
-Quando a rotina for ficar automática, a tarefa agendada roda `coleta\rotina_diaria.ps1` (mesmo envio + job, com log
-em `coleta\.estado\logs\`). Pela linha de comando, a partir da pasta `daily-experiencia`:
+Quando a rotina for ficar automática, a tarefa agendada roda `coleta\rotina_diaria.ps1`: mesmo envio + job e, depois que
+o job termina, a exportação do CSAT, com log em `coleta\.estado\logs\`. Pela linha de comando, a partir da pasta
+`daily-experiencia`:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1            # envia e dispara o job
-powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1 --aguardar # idem, esperando o job terminar
+powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1            # envia, dispara o job e exporta o CSAT ao fim dele
+powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1 --aguardar # idem, mostrando o andamento do job
 ```
+
+Com `--simular`, nada é enviado e o CSAT não é exportado.
 
 O envio só manda arquivos novos ou alterados (compara o SHA-256 com o último envio, guardado em
 `coleta\.estado\manifesto.json`) e nunca apaga nada. Com erro em algum envio, o job não é disparado.
@@ -201,6 +206,7 @@ O Daily Hispana (fluxo "Daily Experiencia OIS") usa o mesmo processo: gold em `s
 `docs/validacao_hispana.md`; para comparar de novo, `sh ferramentas/comparar_hispana.sh`.
 
 O CSAT (fluxo "GovEXP - Metricas de Excelencia - CSAT") também: gold em `src/gold/csat.py`, tabela `dexp_gold_csat_enquetes`
+(e `dexp_gold_csat_detalhe` e `dexp_gold_csat_mensal` para o painel em Apps Script, em `../csat`),
 e painel gerado pela mesma ferramenta. Validação em `docs/validacao_csat.md`. As fontes de QA do painel GovEXP continuam
 na produção.
 

@@ -21,3 +21,23 @@ Linhas: 509.165 nos dois lados, com as mesmas colunas. São 101.833 enquetes, ca
 - **Enquete Malasia:** uma linha por protocolo, com o menor valor de cada coluna, e sem o protocolo de teste `1990-1509513108473`.
 - **Join com Analistas Enquetes:** interno, então enquete de analista fora da lista sai da base.
 - **`Slice #` e `Slice`:** números e textos do Modelo Gauge; na gold, `slice_numero` e `slice`.
+
+## Indicadores mês a mês (09/11/2026)
+
+`ferramentas/validar_csat_mensal.py` calcula os indicadores com as fórmulas do workbook GovEXP. A comparação é por
+operação e mês, entre o extract de 30/10 e a view `dexp_vw_csat_enquetes`. Os indicadores comparados são:
+- C-SAT e C-SAT Simple dos medidores;
+- enviadas e respondidas;
+- promotores, neutros e detratores, contados por linha e por protocolo;
+- total e média do CES.
+
+| Operação | Meses comparados (até set/2026) | Meses iguais em todos os indicadores |
+|---|---|---|
+| Experiencia Brasil | 40 | 40 |
+| Hispana | 25 | 25 |
+| NCC | 23 | 23 |
+| CES | 8 | 8 |
+
+O relatório também mostra o efeito das regras do painel novo em Apps Script (`dexp_gold_csat_mensal`), que conta tudo
+por protocolo distinto. Só o Brasil muda, em dez/2024, abr/2025 e set/2025, por protocolos com mais de uma enquete. Em
+abr/2025, o C-SAT vai de 90,37% para 86,31%. Detalhes e decisões em `../csat/README.md`.
