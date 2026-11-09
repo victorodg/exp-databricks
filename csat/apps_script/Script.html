@@ -170,9 +170,32 @@
         document.getElementById('conteudo').replaceChildren(el('p', { classe: 'aviso', texto: T.erro + (e && e.message || e) }));
       });
       run[funcao].apply(run, args);
+    } else if (funcao === 'pacote') {
+      setTimeout(function () { ok(window.PACOTE_TESTE || null); }, 0);  // teste local, fora do Apps Script
     } else if (window.DADOS_TESTE) {
-      setTimeout(function () { ok(window.DADOS_TESTE); }, 0);  // teste local, fora do Apps Script
+      setTimeout(function () { ok(window.DADOS_TESTE); }, 0);
     }
+  }
+
+  // Pacote pronto da importação: JSON compactado em gzip e base64 (ver pacote() em Codigo.gs)
+  function descompactar(base64) {
+    var bin = atob(base64), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var fluxo = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    return new Response(fluxo).text().then(JSON.parse);
+  }
+
+  // Tenta o pacote pronto (rápido); sem ele, ou se algo falhar, pede os dados lidos da aba (mais lento)
+  function buscarDados(desde, ok) {
+    var lento = function () { chamar('dados', [C.chave, desde || ''], ok); };
+    if (typeof DecompressionStream === 'undefined') { lento(); return; }
+    chamar('pacote', [C.chave, desde || ''], function (p) {
+      if (!p || !p.base64) { lento(); return; }
+      descompactar(p.base64).then(function (r) {
+        r.atualizacao = p.atualizacao;
+        ok(r);
+      }, lento);
+    });
   }
 
   function decodificar(r) {
@@ -186,14 +209,21 @@
 
   function carregar(desde) {
     document.getElementById('conteudo').classList.add('carregando');
-    chamar('dados', [C.chave, desde || ''], function (r) {
+    buscarDados(desde, function (r) {
       estado.linhas = decodificar(r);
       estado.atualizacao = r.atualizacao || {};
       estado.tudo = desde === 'tudo';
-      var meses = {};
-      estado.linhas.forEach(function (l) { meses[l.mes] = 1; });
+      var meses = {}, comResposta = {};
+      estado.linhas.forEach(function (l) {
+        meses[l.mes] = 1;
+        if (l.c_sat !== NAO_RESPONDIDO) comResposta[l.mes] = 1;
+      });
       estado.meses = Object.keys(meses).sort();
-      if (!estado.mes || estado.meses.indexOf(estado.mes) < 0) estado.mes = r.ultimoMes || estado.meses[estado.meses.length - 1];
+      if (!estado.mes || estado.meses.indexOf(estado.mes) < 0) {
+        // abre no último mês com alguma resposta (um mês que mal começou pode ainda não ter nenhuma)
+        var respondidos = estado.meses.filter(function (m) { return comResposta[m]; });
+        estado.mes = respondidos.length ? respondidos[respondidos.length - 1] : estado.meses[estado.meses.length - 1];
+      }
       document.getElementById('conteudo').classList.remove('carregando');
       montarCabecalho();
       montarFiltros();

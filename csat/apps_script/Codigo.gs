@@ -3,7 +3,8 @@
  *
  * Projeto vinculado à planilha do painel. Faz duas coisas:
  *  1. importarCsat(): lê os CSV que csat/coleta/exportar_sheets.py grava na pasta do Drive e regrava as abas
- *     dados_<operação>, mensal e _atualizacao. Roda todo dia pelo acionador criado por criarAcionador().
+ *     dados_<operação>, mensal e _atualizacao, além das abas ocultas _pacote_<operação> (os dados já prontos para a
+ *     página). Roda todo dia pelo acionador criado por criarAcionador(); forcarImportacao() importa na hora.
  *  2. doGet(): publica uma página por operação (?pagina=brasil|ncc|hispana|ces) e um índice sem parâmetro.
  *
  * Propriedade do script obrigatória (Configurações do projeto > Propriedades do script):
@@ -119,6 +120,7 @@ function importarCsat(forcar) {
       var csv = Utilities.parseCsv(arquivo_(pasta, 'csat_' + chave + '.csv').getBlob().getDataAsString('UTF-8'));
       gravarAba_(ss, 'dados_' + chave, csv);
       linhasPorAba.push(['dados_' + chave, csv.length - 1]);
+      gravarPacotes_(ss, chave, csv);
     });
     var mensal = Utilities.parseCsv(arquivo_(pasta, 'csat_mensal.csv').getBlob().getDataAsString('UTF-8'));
     gravarAba_(ss, 'mensal', mensal);
@@ -132,6 +134,11 @@ function importarCsat(forcar) {
   } finally {
     trava.releaseLock();
   }
+}
+
+/** Importa de novo mesmo sem exportação nova (por exemplo, depois de atualizar este código). Rode pelo editor. */
+function forcarImportacao() {
+  importarCsat(true);
 }
 
 /** Cria (uma vez) o acionador diário da importação. A exportação local roda antes, na rotina da manhã. */
@@ -186,12 +193,22 @@ function dados(chave, desde) {
   if (!PAGINAS[chave]) throw new Error('Página desconhecida: ' + chave);
   var aba = planilha_().getSheetByName('dados_' + chave);
   if (!aba || aba.getLastRow() < 2) return { colunas: [], dicionarios: {}, linhas: [], atualizacao: atualizacao_() };
-  var valores = aba.getRange(1, 1, aba.getLastRow(), aba.getLastColumn()).getDisplayValues();
-  var colunas = valores.shift();
+  var saida = montarDados_(aba.getRange(1, 1, aba.getLastRow(), aba.getLastColumn()).getDisplayValues(), desde);
+  saida.atualizacao = atualizacao_();
+  return saida;
+}
+
+/**
+ * Monta a resposta de dados() a partir das linhas da aba (com o cabeçalho). Não altera `tabela`.
+ */
+function montarDados_(tabela, desde) {
+  var colunas = tabela[0];
+  var valores = tabela.slice(1);
   var iMes = colunas.indexOf('mes');
   var ultimo = valores.reduce(function (m, l) { return l[iMes] > m ? l[iMes] : m; }, '');
   var corte = desde === 'tudo' ? '' : (desde || subtrairMeses_(ultimo, MESES_INICIAIS - 1));
-  if (corte) valores = valores.filter(function (l) { return l[iMes] >= corte; });
+  valores = valores.filter(function (l) { return !corte || l[iMes] >= corte; })
+    .map(function (l) { return l.slice(); });  // cópia: a codificação abaixo troca os valores pelos índices
 
   var dicionarios = {};
   colunas.forEach(function (c, i) {
@@ -204,8 +221,58 @@ function dados(chave, desde) {
     for (k = 0; k < valores.length; k++) valores[k][i] = vistos[valores[k][i]];
     dicionarios[c] = lista;
   });
-  return { colunas: colunas, dicionarios: dicionarios, linhas: valores, corte: corte, ultimoMes: ultimo,
-           atualizacao: atualizacao_() };
+  return { colunas: colunas, dicionarios: dicionarios, linhas: valores, corte: corte, ultimoMes: ultimo };
+}
+
+// ---------------------------------------------------------------- Pacotes prontos
+//
+// Ler a aba inteira a cada acesso deixava a página lenta (a Hispana tem ~52 mil linhas). Por isso, a importação já grava
+// a resposta de dados() pronta: em JSON, compactada (gzip) e em base64, em pedaços de até 45 mil caracteres na aba
+// oculta _pacote_<operação>. A coluna A tem os últimos MESES_INICIAIS meses e a coluna B, o histórico inteiro.
+// A página descompacta no navegador. Sem pacote (ou num navegador sem DecompressionStream), ela usa dados().
+
+var PEDACO_PACOTE = 45000;  // o limite de uma célula é 50 mil caracteres
+
+function compactar_(objeto) {
+  var blob = Utilities.newBlob(JSON.stringify(objeto), 'application/json');
+  return Utilities.base64Encode(Utilities.gzip(blob).getBytes());
+}
+
+function gravarPacotes_(ss, chave, tabela) {
+  var colunas = ['', 'tudo'].map(function (desde) {
+    var texto = compactar_(montarDados_(tabela, desde)), pedacos = [];
+    // o "p" na frente impede que a planilha leia um pedaço como número ou fórmula
+    for (var i = 0; i < texto.length; i += PEDACO_PACOTE) pedacos.push('p' + texto.slice(i, i + PEDACO_PACOTE));
+    return pedacos;
+  });
+  var linhas = Math.max(colunas[0].length, colunas[1].length);
+  var valores = [];
+  for (var i = 0; i < linhas; i++) valores.push([colunas[0][i] || '', colunas[1][i] || '']);
+  var nome = '_pacote_' + chave;
+  var aba = ss.getSheetByName(nome) || ss.insertSheet(nome);
+  aba.clear();
+  if (aba.getMaxRows() < linhas) aba.insertRowsAfter(aba.getMaxRows(), linhas - aba.getMaxRows());
+  aba.getRange(1, 1, linhas, 2).setNumberFormat('@').setValues(valores);
+  if (aba.getMaxRows() > linhas + 1) aba.deleteRows(linhas + 2, aba.getMaxRows() - linhas - 1);
+  aba.hideSheet();
+  return colunas[0].join('').length + colunas[1].join('').length;
+}
+
+/**
+ * Resposta de dados() já pronta e compactada: { base64, atualizacao }. Devolve null quando não há pacote para o
+ * corte pedido (só existem o padrão e 'tudo'); aí a página chama dados().
+ */
+function pacote(chave, desde) {
+  if (!PAGINAS[chave]) throw new Error('Página desconhecida: ' + chave);
+  if (desde && desde !== 'tudo') return null;
+  var aba = planilha_().getSheetByName('_pacote_' + chave);
+  if (!aba || aba.getLastRow() < 1) return null;
+  var coluna = desde === 'tudo' ? 2 : 1;
+  var pedacos = aba.getRange(1, coluna, aba.getLastRow(), 1).getValues()
+    .map(function (l) { return String(l[0]).slice(1); })
+    .filter(function (p) { return p; });
+  if (!pedacos.length) return null;
+  return { base64: pedacos.join(''), atualizacao: atualizacao_() };
 }
 
 function atualizacao_() {

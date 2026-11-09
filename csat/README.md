@@ -77,14 +77,26 @@ No `../daily-experiencia`:
    manifesto" para colar o `appsscript.json`.
 3. Em **Configurações do projeto > Propriedades do script**, crie `PASTA_CSAT_ID` com o ID da pasta
    `Fontes de Dados\auto\csat`. O ID é o trecho do link da pasta depois de `/folders/`.
-4. Rode `importarCsat` uma vez pelo editor e autorize. Para forçar uma nova importação, rode `importarCsat(true)` num
-   console.
+4. Rode `importarCsat` uma vez pelo editor e autorize. Para importar de novo sem exportação nova (por exemplo, depois de
+   atualizar o código), rode `forcarImportacao`.
 5. Rode `criarAcionador` uma vez.
 6. **Implantar > Nova implantação > App da Web**, executando como você e com acesso restrito à organização. O link sem
    parâmetro abre o índice. Cada página é `<link>?pagina=brasil`, `ncc`, `hispana` ou `ces`.
 
 A primeira carga de cada página traz os últimos 24 meses. No seletor de mês, "Carregar meses anteriores…" traz o resto
-do histórico.
+do histórico. A página abre no último mês que tem alguma resposta.
+
+Para a página abrir rápido, a importação também grava os dados de cada página já prontos, compactados (gzip, em base64),
+nas abas ocultas `_pacote_<operação>`: a coluna A com os últimos 24 meses e a B com tudo. A página descompacta no
+navegador. Se o pacote não existir, ou o navegador não tiver `DecompressionStream`, ela lê a aba `dados_<operação>`, que é
+o caminho lento.
+
+### Atualizar o código publicado
+
+1. Cole no editor os arquivos que mudaram.
+2. Se mudou a importação, rode `forcarImportacao`.
+3. Em **Implantar > Gerenciar implantações**, clique no lápis da implantação, escolha **Versão: Nova versão** e clique
+   em **Implantar**. O link continua o mesmo.
 
 ## Fontes e regras do fluxo
 
@@ -225,4 +237,14 @@ Outros pontos encontrados:
 - [x] Primeira exportação para a pasta do Drive (09/11/2026): 103 mil enquetes em 4 CSV mais o mensal.
 - [x] Exportação incluída na rotina diária, depois do job: `rotina_manual.ipynb` (célula 5) e `rotina_diaria.ps1` do
       daily-experiencia (09/11/2026).
-- [ ] Criar a planilha, colar o Apps Script, configurar `PASTA_CSAT_ID`, criar o acionador e publicar o app da Web.
+- [x] Planilha **Painel C-SAT** criada, Apps Script colado, `PASTA_CSAT_ID` configurado, primeira importação feita e app da
+      Web publicado (09/11/2026):
+      <https://script.google.com/a/macros/natura.net/s/AKfycbyHsn22MGj041T0fbGpOfGh2oxUGVd5uvtm3jnz4A6T6MU3PQCehw3j0oU6h2x11Nw/exec>.
+      As 4 páginas conferem com o Databricks (Brasil nov/2026: 88,1% / 94,7% / 58,5% / 226; Hispana nov/2026:
+      84,9% / 91,8% / 42,2%; CES set/2026: 4,26).
+- [x] Na primeira versão, a Hispana levava uns 35 s para abrir e o Brasil uns 15 s, porque a página lia a aba inteira a
+      cada acesso. Também o NCC abria em nov/2026, com 2 enquetes enviadas e nenhuma respondida. A versão 2 (09/11/2026)
+      grava os pacotes prontos e abre no último mês com respostas. No painel publicado, a Hispana abre em menos de 5 s
+      e o NCC abre em out/2026 (96,2% / 30,2% / 26).
+- [ ] Conferir no painel o "Carregar meses anteriores…", que usa o pacote do histórico inteiro (coluna B). No teste local,
+      esse pacote volta igual ao dados() antigo.
