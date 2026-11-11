@@ -40,7 +40,7 @@ de bater com o gabarito.
 
 | `Exp_Br_Proativos_Mensal`, `_Contatos_Pedidos`, `_HC_Mensal` | todas iguais (1 a investigar) | "Alcance %" do Health Check ainda sem regra. |
 | `Exp_Br_Email_Natura_Expcb/AppNatura/AppAvon_Mensal` e `_SLA` | todas iguais | Volumetria e SLA contam só e-mails encerrados; sem e-mails no mês, "0" e "Sem dados" (como o Book). |
-| `Exp_Br_CSAT_3Meses`, `_Classificacao`, `_Nota` | todas iguais | Contagem por protocolo distinto (a fonte tem uma linha por pergunta da enquete). O C-SAT daqui (promotores ÷ respondidas) é diferente do CSAT dos indicadores contratuais (média das notas). |
+| `Exp_Br_CSAT_3Meses`, `_Classificacao`, `_Nota` | todas iguais | Contagem por protocolo distinto (a fonte tem uma linha por pergunta da enquete). O C-SAT daqui (promotores ÷ respondidas) é diferente do CSAT dos indicadores contratuais (média das notas). **Só os setores do C-SAT** (`SETORES_CSAT`, sem o ATIVOS): é a base do C-SAT oficial (out/2026: 87,90%) e da análise de qualidade dos detratores (`Exp_Br_CSAT_Analise_Quald`; out: 30 detratores = 23 corretos + 7 de melhoria). Junho/2026 bate exatamente com essa regra; setembro/2026 foi gravado com todos os setores (88,22% em vez de 88,97%) e não foi alterado. Outubro foi regravado com a regra em 09/11/2026 (antes: 87,09%, 1.627 enviadas, 906 respondidas e 41 detratores, contando os 11 do ATIVOS). |
 | `Exp_Br_CSAT_Mercado` | 3 de 5 | Araucária e Atlântica diferem alguns décimos; a regra de mercado pode juntar outros códigos. |
 | `Exp_Br_CSAT_Ofensores_Detr` | 2 de 3 | Empate no 3º lugar (vários com 2 casos): o programa escolhe pela ordem alfabética. |
 
@@ -49,6 +49,19 @@ de bater com o gabarito.
 
 Manuais (texto): `Exp_Br_Highlights`, `Exp_Br_Lowlights`, `Exp_Br_Proativos_HC_Comentarios`, `Exp_Br_CSAT_Comentarios`,
 `Exp_Br_CSAT_Analise_Quald`, abas `Exp_Br_QA_*`.
+
+Regras conferidas com setembro/2026 e usadas para gravar outubro em 06/11/2026 (calculadas por consulta, ainda fora do `executar.py`):
+
+| Aba | Regra |
+|---|---|
+| `Exp_Br_Desempenho_Ferramenta` | SLA do primeiro contato de cada WhatsApp (GN, GV, Franquia, CBCom, GV Antecipada) e SLA Tarefas do Cards2; texto = diferença em p.p. contra o mês anterior gravado. Setembro bate. |
+| `Exp_Br_Top3_Plataformas` | WhatsApp reativos (5 setores), níveis N1, N2 e NEUTRO: 3 maiores tribos × 3 maiores motivos (macro). Setembro bate (AIBV 524, FV 435, Cognito 343). |
+| `Exp_Br_Solicitacoes_Dia` | Soma de Qtd Atendimentos por dia e nível (N1, N2) da Experiencia Brasil Nivel. Setembro bate dia a dia. |
+| `Exp_Br_Tarefas_Top3_N1` | Apesar do nome, todos os níveis: tarefas "Encerrado em", retrabalho Normal, 3 tribos × 3 motivos. Setembro: Exp. Compras 374 = 240 N1 + 134 N2. |
+| `Exp_Br_Tarefas_Top3_N2` | Mesma regra, só N2. Setembro: Exp. Compras 134 bate; AIBV 169 × 168 e FV 51 × 57. |
+| `Exp_Br_Email_*_Assunto` | E-mails de loja encerrados do setor, campo Função do Sistema 2, 3 maiores sem "Não especificado". Sem e-mails no mês: linha "Sem dados". |
+| `Exp_Br_ReqEvent_Motivos_N1/N2` | Mês sem requisições: uma linha "Sem requisições eventuais no mês" com volume 0 (pedido da Juliana, para não parecer erro). |
+| `Exp_Br_Email_TMO` | Valores são durações (dias); desde 06/11/2026 a coluna usa o formato `0.0 "dias"`. O Book lê o valor, não o texto. |
 
 Ainda sem regra: `Exp_Br_Top3_Plataformas`, `Exp_Br_Tarefas_Top3_N1/N2`, `Exp_Br_ReqEvent_Motivos_*`, volume N1/N2 de
 Requisições Eventuais e "Resenhas 4 e 5".
@@ -70,10 +83,10 @@ Regras (painéis "Daily Mexico OIS" e "Experiência Hispana Sur - Daily", tabela
 - **Volumes e níveis:** nível consolidado do painel. E-mail a partir de março/2026 conta pelas linhas do MKT Completo;
   WhatsApp e Requisições (grupos) pelo MKT Analítico. Só N1, N2 e Neutro; mês da data de contato. Retenção = N1 / (N1 + N2).
 - **SLA WhatsApp:** linhas de WhatsApp do MKT Analítico, dentro / (dentro + fora) do SLA com expurgo.
-- **Pedidos convertidos:** soma de atendimentos com pedido finalizado "SI" × ticket médio do país no mês.
+- **Pedidos convertidos:** quantidade de LINHAS do MKT Analítico com Pedidos Finalizados = "SI", sem diferenciar maiúsculas (a base tem "SI" e "Si"), × ticket médio do país no mês. Corrigido em 05/11/2026: antes o programa somava "Cant. de Atendimientos" e só de "SI". Com a regra nova, setembro bate país a país com o Book e outubro dá 4.892 / R$ 3.185.569,25, o número da Juliana.
 - **Motivos e causa raiz:** 3 maiores plataformas (status de classificação, sem as filas de acompanhamento) e, em cada
   uma, as 3 maiores funções do sistema.
-- **CSAT:** enquetes `fonte = 'Hispana'` do país, por protocolo distinto.
+- **CSAT:** enquetes `fonte = 'Hispana'` do país, por protocolo distinto. **A partir de out/2026** (decisão de 09/11/2026), sem as enquetes do canal PRO ACTIVO (WhatsApp proativo), como o ATIVOS no Brasil: a análise de qualidade dos detratores não as considera. Em out/2026 isso tirou 19 enviadas e 7 respondidas, entre elas o único detrator do canal (México, protocolo 1531-2628401036571). Com isso, os detratores da Hispana fecham com a análise: 24 + 59 = 83 = 62 corretos + 21 inconformes. Até set/2026 o canal estava incluído; os meses fechados não foram alterados. Regra em `filtro_canal_csat` (`book/hispana.py`).
 
 | Setembro/2026 | México | Sur | Observação |
 |---|---|---|---|
@@ -81,7 +94,7 @@ Regras (painéis "Daily Mexico OIS" e "Experiência Hispana Sur - Daily", tabela
 | Volumes de WhatsApp, grupos, retenção total, SLA, solicitações por dia, motivos, causa raiz, CSAT | iguais | iguais | Empates no 3º ofensor detrator: o programa escolhe pela ordem alfabética. |
 | E-mails | 262 × 33 | 932 × 644 | Os tickets de e-mail de setembro concluídos depois do preenchimento entraram na base (agosto bate: 330). Por isso o total e a retenção de e-mail também diferem. |
 | TMA E-mail | não confere | 03:36 × 03:41 | Regra provável: média do tempo de operação dos e-mails N1 e N2 do MKT Analítico. |
-| Pedidos convertidos | 1.285 × 1.290 | 1.706 × 1.691 | Mesma regra, dados mudaram. |
+| Pedidos convertidos | iguais (1.290) | iguais (1.691) | Depois da correção de 05/11/2026 (contar linhas "SI"/"Si"). |
 
 Sem regra (ficam em branco): **Health Check** (vem da planilha "Healthcheck Paises Consolidado", fora do Databricks).
 Manuais: Comentarios dos Cards1, `*_CSAT_Analise_Quald`, `*_CSAT_Comentarios` e o texto de `*_CSAT_Paises_Ofensor`.
@@ -102,15 +115,30 @@ Setembro/2026: 184 de 265 colunas iguais. Além dos e-mails que entraram depois 
 
 | Assunto | Situação |
 |---|---|
-| Pedidos convertidos do Andino | Colômbia bate (515 × 512), mas Equador (406 × 492) e Peru (606 × 759) ficam abaixo do Book. Regra a confirmar. |
+| Pedidos convertidos do Andino | Iguais país a país depois da correção de 05/11/2026 (Colômbia 512, Equador 492, Peru 759). |
 | Resenhas 01 a 03 (média, volume, estrelas) | Regra certa; o Book tem 3 a 4% menos avaliações (as lojas acrescentam avaliações depois). |
 | Resenhas 07 | Só a linha 2 (respostas a 1 a 3 estrelas). |
-| Resenhas 04, 05, 06, 08, 09, 10 | Sem regra que bata (SLA, categorias, TMO e assunto). Ficam fora do programa. |
-| Monitoração | TMO N2/N3 de origem WhatsApp e N2 de origem e-mail batem; N3 de origem e-mail e TPA de resenhas, a investigar. |
-| Cards | Health Check, Resenhas 1 a 3/4 e 5, E-mails Loja, Soporte Experiencia, Líderes Equador e SLA Geral do Andino, a investigar. |
-| Indicadores contratuais | TMR e-mail N1 a investigar; Notificação de Incidente e QA manuais. |
+| Resenhas 04, 05, 06, 08, 09, 10 (regras de 06/11/2026, conferidas de junho a agosto; setembro foi lançado com uma foto anterior da base) | **04 e 09**: respostas do AppSheets do app com 1 a 3 estrelas, pelo mês de `fecha_de_la_respuesta_exp`, % com `status_sla_hispana` = "Dentro do SLA"; na 09, >D+2 = 100% − D+1. **05**: contagem por `categoria_de_la_respuesta` (mesmo recorte). Desde 18/09/2026 o time preenche "-" nesse campo (como no Brasil); outubro inteiro veio "-" e foi lançado como "Sem categoria no AppSheets". **06**: 5 maiores `categoria_de_la_respuesta_2` (o Book traduz alguns nomes: Acceso → Acesso, Funcionalidad → Funcionalidade no Mi Negocio). **08**: e-mails da `dexp_gold_hispana_base_mkt_lojas` por `setor_fim` (MI NEGOCIO, APP NATURA, APP AVON) e data de contato; TMO = média de `tempo_de_operacao_segundos`, truncada em hh:mm:ss. **10**: 3 maiores `funcao_do_sistema` desses e-mails. Out/2026: Mi Negocio 93,65% / 33 e-mails / 02:07:37; Natura Latam 82,35% / 9 / 03:28:45; App Avon 80% / 1 / 06:21:31. |
+| Monitoração | TMO N2/N3 de origem WhatsApp e N2 de origem e-mail batem. **N3 de origem e-mail**: status "Resuelto E-mail N3" (a Matriz de Indicadores; o programa usava "N3 – E-mail – Pendientes – JIRA"), média truncada em 1 casa; jun a set batem; out = 26,8 dias. **TPA de resenhas**: mesma regra da Resenhas 04 com os três apps juntos; jun a set batem (set 66/145 = 45,51%, truncado); out = 119/136 = 87,50%, igual à planilha da Juliana. |
+| Cards (`Exp_Hisp_OIs_Pag_1_Cards`), regras de 05/11/2026 | **Resenhas 1 a 3**: respostas do AppSheets dos três apps no mês (= soma da linha 2 das `_07`); jun 116 e set 114 batem, jul 85 × 84 e ago 131 × 113 (respostas registradas depois). **E-mails Loja**: todas as linhas da `dexp_gold_hispana_base_mkt_lojas` pela data de contato, sem filtro de nível; jun a ago batem, set 60 × 38. **Líderes Equador**: Setor Fim "LNN EC" e "LNN EC - Email", só MKT Analítico, todos os níveis; ago e set batem, jul 78 × 79 (com os e-mails do MKT Completo, outubro iria de 42 para 45). O mesmo número vai no card do Andino (`Exp_Hisp_Pag_4_Mercado_Andino_Cards`), onde julho tem 110 no Book. |
+| Cards, fora do Databricks | **Soporte Experiencia**: exportação do ServiceNow `sc_req_item.xlsx` (item "Soporte Experiencia CB OIs"), contando todos os RITMs pela data de criação, em qualquer fase, sem a coluna País = BRA (testes, segundo a Juliana em 05/11/2026); jul 55, ago 79 e set 159 batem; nenhum BRA em outubro. Card da Hispana: total sem Brasil, out = 272. Card do Andino, a partir de outubro/2026 (decisão de 05/11/2026): só Colômbia, Equador e Peru, pela segunda coluna de país (a do afetado), out = 215 (90 + 44 + 81). Até setembro o Andino usava o total, porque quase todos os casos eram da Colômbia e do Peru. **Health Check** e **Resenhas 4 e 5**: vêm da planilha da Juliana "<mês> - Dados para o Book" (aba OIs; texto em vermelho = ainda não confirmado). Health Check OIs = soma dos mercados (out: Andino 402 + Sur 912 + México 282 = 1.596). **SLA Geral do Andino** = SLA WhatsApp do Andino (`Exp_Hisp_Pag_5_Mercado_Andino_Cards`): jun a ago iguais, set 96,39% × 97,25%; out = 96,71%. |
+| Indicadores contratuais | **TMR e-mail N1** = % de e-mails respondidos em até 1 hora: planilha "EMAIL % 1 Hora" do painel "Llamados MKT" (Experiência Hispana - Daily). Base MKT OIS, `tipo` = Email, `origem_da_linha` = MKT Analítico, `email_1_hora` em ("Dentro de 1 Hora", "Acima de 1 Hora"), sem os status de classificação "EN ACOMPAÑAMIENTO TD" e "Pendientes – JIRA", todos os níveis (apesar do "N1" no nome), pela data de contato. % = "Dentro de 1 Hora" ÷ total. Set/2026 bate exatamente (27/719 = 3,76%); jun a ago batem com a mesma regra sem a exclusão de status (5,08%, 3,61%, 1,49%), que deve ter entrado no painel depois. Out/2026 = 84/791 = 10,62% (gravado em 06/11/2026). Notificação de Incidente e QA manuais. |
+| Pedidos convertidos nos meses fechados (conferência de 06/11/2026, regra corrigida) | Out/2026 certo nas quatro planilhas (México 1.442, Sur 2.129, Andino 1.321, OIs 4.892). Jul e set batem país a país, salvo um erro de digitação no Chile de julho no Book do Sur (R$ 528.826,53; a base dá R$ 527.826,53). Ago: o Book usou um ticket único de R$ 572,38 para todos os países, em vez do ticket de cada país; a quantidade bate, o valor por país não (o total da OIs fica perto: R$ 2.659.262,65 × R$ 2.661.326,41). Jun: o Book do Sur tem 1.465 pedidos, a base dá 1.430 (a OIs, 4.467, bate). Nada foi alterado nos meses fechados. |
 
 Fora do programa: `Interacoes_Mes` (soma de NCC + Brasil + Hispana), `Hisp_HC_3Meses`, QA, Highlights e Lowlights.
+
+Regras da `Interacoes_Mes` (conferidas em agosto e setembro/2026; outubro preenchido em 05/11/2026):
+
+| Coluna | Regra |
+|---|---|
+| Torre Técnica | Volumetria total do 80x20 (N1 + N2) + Changes + Requisições (`NCC_8020` + `NCC_Changes` + `NCC_TT_REQ`). Até junho/2026 só entrava o N1 (Juliana, 05/11/2026). Julho tem só o 80x20 total; Changes e Requisições entram a partir de agosto. Out = 9.456 + 131 + 75 = 9.662. |
+| Gestão de Alerta | Gestão + Impacto Evitado (`NCC_GA`). |
+| SEV 3 / Incidentes Críticos | `NCC_SEV3` e `NCC_IC` (volumetria total). |
+| Interações NCC | Torre Técnica + SEV 3 + Gestão de Alerta + Incidentes Críticos. |
+| Experiência Hispana | Soma das colunas de volume de `Exp_Hisp_OIs_Pag_1_Cards` (WhatsApp, e-mails, Health Check, grupos, resenhas 1 a 3 e 4 e 5, E-mails Loja, Soporte, Líderes Equador). |
+| Experiência BR | Soma das colunas de volume de `Exp_Br_Cards01` (WhatsApp, e-mails, Health Check, Dynatrace, resenhas, protocolos CB/CF, E-mails Loja, Requisições Eventuais). |
+| Atendimentos Experiência / Total Geral | Fórmulas `=I+J` e `=C+H`. |
+| Pedidos e valor | Cards da Hispana e Indicadores Contratuais do Brasil. Out/2026 = 4.892 / R$ 3.185.569,25 depois da correção da regra (igual à planilha da Juliana). |
 
 ## Estrutura
 

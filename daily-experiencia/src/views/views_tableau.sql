@@ -1306,11 +1306,14 @@ AS SELECT
   `observacoes` AS `Observações`,
   `protocolo` AS `Protocolo`,
   `responsavel` AS `Responsável`,
-  `setor_fim` AS `Setor Fim`,
   `status_de_finalizacao` AS `Status de finalização`,
   `data_contato` AS `Data Contato`,
   `protocolo_do_atendimento` AS `Protocolo do Atendimento`,
-  `protocolo_analitico` AS `Protocolo analitico`
+  `protocolo_analitico` AS `Protocolo analitico`,
+  CAST(`qtde_msg_automatico` AS BIGINT) AS `Qtde Msg Automático`,
+  CAST(`qtde_msg_operador` AS BIGINT) AS `Qtde Msg Operador`,
+  CAST(`qtde_msg_recebidas` AS BIGINT) AS `Qtde Msg Recebidas`,
+  `setor_fim` AS `Setor Fim`
 FROM sandbox.sustentacao_bau_experiencias.dexp_gold_hispana_base_mkt;
 
 -- Base MKT HC OIS
@@ -1379,11 +1382,14 @@ AS SELECT
   `observacoes` AS `Observações`,
   `protocolo` AS `Protocolo`,
   `responsavel` AS `Responsável`,
-  `setor_fim` AS `Setor Fim`,
   `status_de_finalizacao` AS `Status de finalização`,
   `data_contato` AS `Data Contato`,
   `protocolo_do_atendimento` AS `Protocolo do Atendimento`,
-  `protocolo_analitico` AS `Protocolo analitico`
+  `protocolo_analitico` AS `Protocolo analitico`,
+  CAST(`qtde_msg_automatico` AS BIGINT) AS `Qtde Msg Automático`,
+  CAST(`qtde_msg_operador` AS BIGINT) AS `Qtde Msg Operador`,
+  CAST(`qtde_msg_recebidas` AS BIGINT) AS `Qtde Msg Recebidas`,
+  `setor_fim` AS `Setor Fim`
 FROM sandbox.sustentacao_bau_experiencias.dexp_gold_hispana_base_mkt_hc;
 
 -- Base MKT Lojas OIS
@@ -1452,11 +1458,14 @@ AS SELECT
   `observacoes` AS `Observações`,
   `protocolo` AS `Protocolo`,
   `responsavel` AS `Responsável`,
-  `setor_fim` AS `Setor Fim`,
   `status_de_finalizacao` AS `Status de finalização`,
   `data_contato` AS `Data Contato`,
   `protocolo_do_atendimento` AS `Protocolo do Atendimento`,
-  `protocolo_analitico` AS `Protocolo analitico`
+  `protocolo_analitico` AS `Protocolo analitico`,
+  CAST(`qtde_msg_automatico` AS BIGINT) AS `Qtde Msg Automático`,
+  CAST(`qtde_msg_operador` AS BIGINT) AS `Qtde Msg Operador`,
+  CAST(`qtde_msg_recebidas` AS BIGINT) AS `Qtde Msg Recebidas`,
+  `setor_fim` AS `Setor Fim`
 FROM sandbox.sustentacao_bau_experiencias.dexp_gold_hispana_base_mkt_lojas;
 
 -- MKT Hispana Completo
@@ -1493,7 +1502,10 @@ AS SELECT
   `data_criacao` AS `Data criação`,
   `data_conclusao` AS `Data conclusão`,
   `setor` AS `Setor`,
-  `situacao` AS `Situação`
+  `situacao` AS `Situação`,
+  CAST(`qtde_msg_automatico` AS BIGINT) AS `Qtde Msg Automático`,
+  CAST(`qtde_msg_operador` AS BIGINT) AS `Qtde Msg Operador`,
+  CAST(`qtde_msg_recebidas` AS BIGINT) AS `Qtde Msg Recebidas`
 FROM sandbox.sustentacao_bau_experiencias.dexp_gold_hispana_completo;
 
 -- Experiencia Hispana Produtividade

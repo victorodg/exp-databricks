@@ -538,9 +538,14 @@ def loja_sla(mes, chave):
 
 # --- CSAT (fonte Enquetes C-SAT, Experiencia Brasil) -----------------------------------------------------------------------
 # A tabela tem uma linha por pergunta (slice) da enquete: contamos protocolos distintos.
+# Só os setores do C-SAT (SETORES_CSAT; fica de fora o ATIVOS), como o C-SAT dos Indicadores Contratuais e a análise de
+# qualidade dos detratores. Setembro/2026 foi gravado com todos os setores (88,22% × 88,97% nos Contratuais); corrigido a
+# partir de outubro/2026 (decisão de 09/11/2026), sem alterar os meses fechados.
 
 def _csat_base(mes):
-    return f"fonte = 'Experiencia Brasil' AND {_mes('data', mes)}"
+    setores = ", ".join(f"'{s}'" for s in SETORES_CSAT)
+    return (f"fonte = 'Experiencia Brasil' AND (exp_br_setor_fim IS NULL OR exp_br_setor_fim IN ({setores})) "
+            f"AND {_mes('data', mes)}")
 
 
 def csat_3meses(mes):

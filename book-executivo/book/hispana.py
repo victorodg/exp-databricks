@@ -122,10 +122,17 @@ def _tma(mes, paises):
 
 
 def _pedidos(mes, paises):
-    """Pedidos convertidos: atendimentos com pedido finalizado ("SI") no MKT Analítico; valor = quantidade x ticket
-    médio do país no mês (fonte Ticket Medio Hispana)."""
+    """Pedidos convertidos: LINHAS com pedido finalizado no MKT Analítico; valor = quantidade x ticket médio do país no
+    mês (fonte Ticket Medio Hispana).
+
+    Regra do painel (planilha "Tabela Pedidos Convertidos", fonte Base MKT OIS):
+    [Pedidos Convertidos (Qtd)] = IF [Pedidos Finalizados] = "SI" THEN 1 END, somado por país e mês. Conta linhas (não
+    soma "Cant. de Atendimientos") e a comparação do Tableau não diferencia maiúsculas: a base tem "SI" e "Si".
+    Corrigido em 05/11/2026: set/2026 passou a bater país a país com o Book (4.744 / R$ 2.797.575,83) e out/2026 dá
+    4.892 / R$ 3.185.569,25, o número da planilha da Juliana. Antes o programa somava valor_atendimento só de "SI".
+    """
     linhas = consultar(f"""
-        SELECT b.pais, sum(CASE WHEN b.pedidos_finalizados = 'SI' THEN b.valor_atendimento ELSE 0 END) AS qtd,
+        SELECT b.pais, sum(CASE WHEN upper(trim(b.pedidos_finalizados)) = 'SI' THEN 1 ELSE 0 END) AS qtd,
                max(t.valor_por_pedido) AS ticket
         FROM {tabela('dexp_gold_hispana_base_mkt')} b
         LEFT JOIN {tabela('dexp_gold_hispana_ticket_medio')} t ON t.pais = b.pais AND {_mes('t.data_contato', mes)}
@@ -258,9 +265,18 @@ def _causa_raiz(mercado, mes, nivel):
 
 # --- CSAT (fonte Enquetes C-SAT, Hispana): uma linha por pergunta da enquete, contamos protocolos distintos ----------
 
+# A partir de outubro/2026 (decisão de 09/11/2026), as enquetes do canal PRO ACTIVO (WhatsApp proativo) ficam fora do
+# C-SAT, como o ATIVOS no Brasil: a análise de qualidade dos detratores não as considera. Meses fechados não mudam.
+SEM_PROATIVO_DESDE = "2026-10"
+
+
+def filtro_canal_csat(mes):
+    return "AND coalesce(canal, '') NOT LIKE 'PRO ACTIVO%'" if mes >= SEM_PROATIVO_DESDE else ""
+
+
 def _csat_base(mes, paises):
     return f"""{tabela('dexp_gold_csat_enquetes')}
-        WHERE fonte = 'Hispana' AND pais IN ({_lista(paises)}) AND {_mes('data', mes)}"""
+        WHERE fonte = 'Hispana' AND pais IN ({_lista(paises)}) AND {_mes('data', mes)} {filtro_canal_csat(mes)}"""
 
 
 def _csat_contagem(mes, paises):

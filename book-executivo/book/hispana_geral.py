@@ -77,7 +77,7 @@ def andino_cards(mes):
          "Acionamentos Recebidos nos Grupos": inteiro(h._soma(d, AND, ("Requisições",), "vol"))}
     r.update({f"Pedidos Convertidos - {BANDEIRA[p]}": reais(ped.get(p, (0, 0))[1]) for p in AND})
     r.update({"SLA Geral do Mercado Andino (Texto)": A_INVESTIGAR, "Soporte Experiencia": A_INVESTIGAR,
-              "Atendimentos Líderes Equador": A_INVESTIGAR, "Comentarios": MANUAL})
+              "Atendimentos Líderes Equador": _cards1_extras(mes)["lideres"], "Comentarios": MANUAL})
     return r
 
 
@@ -119,16 +119,38 @@ ABAS_ANDINO = {
 HIS = MERCADOS["hispana"]
 
 
+def _cards1_extras(mes):
+    """Resenhas 1 a 3, E-mails Loja e Líderes Equador dos Cards (regras conferidas com o Book em 05/11/2026).
+
+    - Resenhas 1 a 3: respostas do time no AppSheets dos três apps no mês, ou seja, a soma da linha 2 das abas
+      Exp_Hisp_Resenhas_*_07. Bate de junho a setembro/2026.
+    - E-mails Loja: todas as linhas da fonte "Base MKT Lojas OIS" (Setor Fim APP NATURA, APP NATURA LATAM, MI NEGOCIO
+      e APP AVON), sem filtro de nível, pela data de contato. Bate em junho, julho e agosto; setembro dá 60 × 38 no Book.
+    - Líderes Equador: linhas do MKT Analítico com Setor Fim "LNN EC" ou "LNN EC - Email", todos os níveis. Bate em
+      agosto e setembro; julho dá 78 × 79. Os e-mails do MKT Completo ficam de fora (em outubro seriam +3).
+    """
+    apps = ", ".join(f"'{a[1]}'" for a in APPS.values())
+    r = consultar(f"""SELECT
+        (SELECT count(*) FROM {tabela('dexp_gold_hispana_appsheets_resenhas')}
+          WHERE aplicacion IN ({apps}) AND {h._mes('fecha_de_la_respuesta_original', mes)}) AS resenhas13,
+        (SELECT count(*) FROM {tabela('dexp_gold_hispana_base_mkt_lojas')} WHERE {h._mes('data_contato', mes)}) AS lojas,
+        (SELECT count(*) FROM {tabela('dexp_gold_hispana_base_mkt')}
+          WHERE setor_fim IN ('LNN EC', 'LNN EC - Email') AND origem_da_linha = 'MKT Analítico'
+            AND {h._mes('data_contato', mes)}) AS lideres""")[0]
+    return {k: inteiro(h._f(v)) for k, v in r.items()}
+
+
 def ois_cards1(mes):
-    d, ped = h._por_pais(mes, HIS), h._pedidos(mes, HIS)
+    d, ped, x = h._por_pais(mes, HIS), h._pedidos(mes, HIS), _cards1_extras(mes)
     return {"Valor de pedido convertido": reais(sum(v for _, v in ped.values())),
             "Pedidos convertidos": inteiro(sum(q for q, _ in ped.values())),
             "Volume de Casos Recebidos WhatsApp": inteiro(h._soma(d, HIS, ("WhatsApp",), "vol")),
             "Volume de E-mails Recebidos": inteiro(h._soma(d, HIS, ("Email",), "vol")),
-            "Health Check": A_INVESTIGAR,
+            "Health Check": A_INVESTIGAR,  # Hispana não está no Databricks (planilha "Healthcheck Paises Consolidado")
             "Acionamentos Recebidos nos Grupos": inteiro(h._soma(d, HIS, ("Requisições",), "vol")),
-            "Resenhas 1 a 3": A_INVESTIGAR, "Resenhas 4 e 5": A_INVESTIGAR, "E-mails Loja": A_INVESTIGAR,
-            "Soporte Experiencia": A_INVESTIGAR, "Atendimentos Líderes Equador": A_INVESTIGAR, "Comentários": MANUAL}
+            "Resenhas 1 a 3": x["resenhas13"], "Resenhas 4 e 5": A_INVESTIGAR, "E-mails Loja": x["lojas"],
+            "Soporte Experiencia": A_INVESTIGAR,  # setor CO-SOPORTE é removido no Prep; sem fonte no Databricks
+            "Atendimentos Líderes Equador": x["lideres"], "Comentários": MANUAL}
 
 
 def ois_vol(mes):
@@ -141,8 +163,9 @@ def ois_vol(mes):
 
 
 def _csat_hispana_base(mes):
-    """CSAT consolidado: todas as enquetes da fonte Hispana (inclui o país "Latam")."""
-    return f"{tabela('dexp_gold_csat_enquetes')} WHERE fonte = 'Hispana' AND {h._mes('data', mes)}"
+    """CSAT consolidado: todas as enquetes da fonte Hispana (inclui o país "Latam"); sem o canal PRO ACTIVO desde out/2026."""
+    return (f"{tabela('dexp_gold_csat_enquetes')} WHERE fonte = 'Hispana' AND {h._mes('data', mes)} "
+            f"{h.filtro_canal_csat(mes)}")
 
 
 def csat_hispana(mes):
@@ -184,7 +207,8 @@ def csat_ofensores(mes):
 TMO_STATUS = {"TMR - SLA de Resolução N2 -E-mail (origem whatsapp)": ("Resuelto N2 MKT",),
               "TMR - SLA de Resolução N3 -E-mail (origem whatsapp)": ("Resuelto MKT N3",),
               "TMR - SLA de Resolução N2 -E-mail (origem e-mail)": ("Resuelto N2 E-mail",),
-              "TMR - SLA de Resolução N3 -E-mail (origem e-mail)": ("N3 – E-mail – Pendientes – JIRA",)}
+              # status da Matriz de Indicadores (corrigido em 06/11/2026; antes "N3 – E-mail – Pendientes – JIRA")
+              "TMR - SLA de Resolução N3 -E-mail (origem e-mail)": ("Resuelto E-mail N3",)}
 
 
 def indicadores_monitoracao(mes):

@@ -201,6 +201,19 @@ agendamento. Os tokens ficam no cofre de credenciais do Windows.
 
 `ferramentas/ligar_fontes_publicadas_tableau.py <original.twbx> <saída.twbx>` liga um workbook a essas fontes.
 
+O token do Databricks embutido nas fontes vence em 14 dias (limite do workspace para qualquer token). A rotina diária
+(`enviar_arquivos.py` e a 2ª célula do `rotina_manual.ipynb`) chama `coleta/token_tableau.py`, que confere o token de
+comentário "tableau-cloud" e, quando faltam 4 dias ou menos, cria um novo, guarda no cofre e troca a credencial em todas
+as fontes `dexp - `. Uma falha nessa etapa só gera aviso; o envio e o job seguem. À mão:
+
+```powershell
+.venv\Scripts\python.exe coleta\token_tableau.py --simular   # quantos dias faltam
+.venv\Scripts\python.exe coleta\token_tableau.py --forcar    # renova agora
+```
+
+Definitivo (pendente com o time da plataforma): service principal com login OAuth M2M no Tableau Cloud, sem o limite
+de 14 dias e sem depender de token pessoal.
+
 O Daily Hispana (fluxo "Daily Experiencia OIS") usa o mesmo processo: gold em `src/gold/hispana.py`, tabelas
 `dexp_gold_hispana_*`, 8 fontes a mais e painel gerado por `ferramentas/ligar_hispana_tableau.py`. Validação em
 `docs/validacao_hispana.md`; para comparar de novo, `sh ferramentas/comparar_hispana.sh`.

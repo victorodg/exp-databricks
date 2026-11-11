@@ -115,7 +115,7 @@ ncc_atendimento = silver("csat_base_malasia").select(
     "protocolo", F.col("function").alias("ncc_function"), F.col("solution_applied").alias("ncc_solution_applied"),
     F.col("canal_de_entrada").alias("ncc_canal_de_entrada"), F.col("setor_entrada").alias("ncc_setor_entrada"),
     F.col("setor_fim").alias("ncc_setor_fim"), F.col("status_de_classificacao").alias("ncc_status_de_classificacao"),
-    F.col("status_de_finalizacao").alias("ncc_status_de_finalizacao"))
+    F.col("status_de_finalizacao").alias("ncc_status_de_finalizacao"), F.lit(True).alias("_na_base_malasia"))
 base = remover(juntar(base, ncc_atendimento, [("protocolo", "protocolo")], "left"), "protocolo_1")
 
 # COMMAND ----------
@@ -125,13 +125,30 @@ base = remover(juntar(base, ncc_atendimento, [("protocolo", "protocolo")], "left
 # COMMAND ----------
 
 # [27] [13] [28] Só entram as enquetes dos analistas da lista
+#
+# Exceção (decisão de 09/11/2026, fora do Prep): no NCC, a partir de out/2026 vale a regra do painel Daily NCC
+# (Apps Script, obterDadosCsat). Entra toda enquete cujo protocolo está na BASE MALASIA e cujo Status de finalização
+# não contém "Teste", esteja o analista na lista ou não. A lista Analistas Enquetes deixava de fora analistas
+# do NCC que ainda não tinham sido incluídos (em out/2026: 45 das 131 enquetes). Até set/2026, os meses fechados
+# continuam com a regra da lista.
+NCC_REGRA_DAILY_DESDE = "2026-10-01"
+
 base = (
     base
     .withColumn("responsavel", remapear("responsavel", R.RESPONSAVEL_CONSOLIDADO))
     .where(excluir("ncc_status_de_finalizacao", "Teste NCC"))
     .withColumn("responsavel", remapear("responsavel", R.RESPONSAVEL_FINAL))
 )
-base = juntar(base, silver("csat_analistas").drop("coluna_1"), [("responsavel", "analista_para_considerar_nas_enquetes")], "inner")
+analistas = silver("csat_analistas").drop("coluna_1").withColumn("_na_lista", F.lit(True))
+base = juntar(base, analistas, [("responsavel", "analista_para_considerar_nas_enquetes")], "left")
+regra_daily_ncc = (F.col("fonte") == "NCC") & (F.col("enviado_em").cast("timestamp") >= F.lit(NCC_REGRA_DAILY_DESDE).cast("timestamp"))
+teste_ncc = F.upper(F.coalesce(F.col("ncc_status_de_finalizacao"), F.lit(""))).contains("TESTE")
+base = (
+    base
+    .where(F.when(regra_daily_ncc, F.coalesce(F.col("_na_base_malasia"), F.lit(False)) & ~teste_ncc)
+            .otherwise(F.coalesce(F.col("_na_lista"), F.lit(False))))
+    .drop("_na_lista", "_na_base_malasia")
+)
 
 # [29] [30]
 c_sat = F.col("c_sat")

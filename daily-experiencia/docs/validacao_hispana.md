@@ -81,3 +81,13 @@ Decisão: os três painéis regionais recebem o mesmo filtro do consolidado. O f
 essas classificações, não só as sem função (outubro/2026: 916 linhas, 172 sem função e 744 com função). A gold não muda,
 porque o TMO precisa dessas linhas. As cópias ligadas às fontes `dexp - …` são geradas a partir do workbook publicado
 (`ferramentas/ligar_hispana_tableau.py`), então herdam o filtro quando forem geradas de novo.
+
+## Colunas novas do MKT Hispana Completo (05/11/2026)
+
+O MKT Hispana Completo ganhou `Qtde Msg Automático`, `Qtde Msg Operador` e `Qtde Msg Recebidas`, e o Prep as repassa para
+Base MKT OIS, Base MKT HC OIS, Base MKT Lojas OIS e MKT Hispana Completo. As golds já as tinham (a silver do Completo
+leva todas as colunas da planilha); faltavam nas views, geradas dos extracts de 30/10. Os extracts dessas quatro saídas
+em `validacao\extracts_hispana\` foram trocados pelos de produção de 05/11 (os anteriores estão em
+`anteriores_20261030\`) e as views foram regeneradas com `gerar_views_tableau.py --aplicar`. Os painéis México, Andino e
+Sur usam esses campos.
+

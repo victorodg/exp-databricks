@@ -41,3 +41,13 @@ operação e mês, entre o extract de 30/10 e a view `dexp_vw_csat_enquetes`. Os
 O relatório também mostra o efeito das regras do painel novo em Apps Script (`dexp_gold_csat_mensal`), que conta tudo
 por protocolo distinto. Só o Brasil muda, em dez/2024, abr/2025 e set/2025, por protocolos com mais de uma enquete. Em
 abr/2025, o C-SAT vai de 90,37% para 86,31%. Detalhes e decisões em `../csat/README.md`.
+
+## NCC com a regra do Daily NCC (09/11/2026)
+
+A partir de out/2026, a gold deixa de seguir o Prep no NCC. A regra passa a ser a do painel Daily NCC: entra toda
+enquete cujo protocolo está na BASE MALASIA e cujo Status de finalização não contém "Teste", esteja o analista na
+lista Analistas Enquetes ou não. Até set/2026 nada muda, e por isso a comparação com o extract continua valendo para os
+meses fechados.
+
+Em out/2026, o NCC passou de 86 enviadas, 26 respondidas e 96,15% para 131, 39 e 94,87%. A diferença são 45 enquetes de
+4 analistas do NCC fora da lista. Decisão e detalhes em `../csat/README.md`.

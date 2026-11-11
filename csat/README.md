@@ -111,7 +111,7 @@ O fluxo tem 34 etapas, especificadas em `../daily-experiencia/docs/fluxos/csat.m
 | MKT_Reativos | `EXP BR\MKT\MKT_Reativos.xlsx` | Atributos do Brasil e do CES: mercado, função do sistema, setor fim e status |
 | BASE MTK, BASE MTK Histórico, MKT Analítico Hispana | `EXP OIS\MKT\...` | Atributos da Hispana. O país sai do setor fim |
 | BASE MALASIA | `BASE MALASIA.xlsx` | Atributos do NCC: function, status, setores e solution applied |
-| Analistas Enquetes | `Analistas Enquetes.xlsx` | Join **interno**: só entram enquetes de analistas da lista, que também traz o Time |
+| Analistas Enquetes | `Analistas Enquetes.xlsx` | Só entram enquetes de analistas da lista, que também traz o Time. **Exceção: NCC a partir de out/2026** (abaixo) |
 | Modelo Gauge | Excel | 5 fatias. Cada enquete aparece 5 vezes na `dexp_gold_csat_enquetes`, porque o Tableau desenha os medidores assim |
 
 Regras principais:
@@ -122,6 +122,13 @@ Regras principais:
 - **Mercado:** é normalizado (AT → ATLÂNTICA, AM → AMAZÔNIA etc.). No filtro, só os 5 mercados válidos aparecem; os
   outros ficam vazios.
 - **Data da enquete:** é a data de `Enviado em`. O mês de cada indicador é o mês dessa data.
+- **Quais enquetes do NCC entram (a partir de out/2026):** vale a mesma regra do painel Daily NCC. Entra toda enquete
+  cujo protocolo está na BASE MALASIA e cujo Status de finalização não contém "Teste", esteja o analista na lista
+  Analistas Enquetes ou não. Analistas fora da lista ficam sem Time e sem Turno.
+  - Até set/2026, o NCC continua com a regra da lista, para não mudar meses fechados. Antes de jul/2026 a regra do
+    Daily nem daria certo, porque a BASE MALASIA só tem atendimentos a partir de jul/2026.
+  - A regra está em `daily-experiencia/src/gold/csat.py` (`NCC_REGRA_DAILY_DESDE`). Por isso, a gold se afasta do
+    fluxo do Prep a partir de out/2026.
 
 ## Indicadores
 
@@ -216,6 +223,7 @@ a partir da pasta `daily-experiencia`, rode:
 | 2 | "CES – Total Respostas e Média" não filtrava a fatia, e o total saía 5× maior | Corrigido: respostas = protocolos com nota | Fechado |
 | 3 | O painel NCC foi salvo com o intervalo de 01/01 a 31/03/2026 junto com o mês 11/2026, e abria vazio | Corrigido: só um seletor de mês, igual em todas as páginas | Fechado |
 | 4 | Os ofensores do NCC agrupavam pelo status de finalização, e o título dizia "classificação" | Agrupa pelo status de classificação | **A avaliar no futuro** |
+| 5 | O NCC só contava analistas da lista Analistas Enquetes. Em out/2026, isso deixava de fora 45 das 131 enquetes, de 4 analistas do NCC que não estavam na lista. Por isso, o Daily NCC e o Tableau davam números diferentes | A partir de out/2026, vale a regra do Daily NCC (protocolo na BASE MALASIA, sem "Teste"). Os meses até set/2026 não mudam | Decidido pelo Victor em 09/11/2026 |
 
 Outros pontos encontrados:
 
@@ -248,3 +256,8 @@ Outros pontos encontrados:
       e o NCC abre em out/2026 (96,2% / 30,2% / 26).
 - [ ] Conferir no painel o "Carregar meses anteriores…", que usa o pacote do histórico inteiro (coluna B). No teste local,
       esse pacote volta igual ao dados() antigo.
+- [x] NCC com a regra do Daily NCC a partir de out/2026: gold e CSV atualizados em 09/11/2026. Out/2026 ficou em 131
+      enviadas, 39 respondidas e 94,87%; antes eram 86, 26 e 96,15%.
+- [ ] Tableau: o workbook GovEXP lê a fonte "Enquetes C-SAT", que sai do fluxo do Prep e não tem a regra nova. Para o
+      Tableau mostrar a regra do Daily NCC, troque a fonte do workbook por "dexp - Enquetes C-SAT" (3. SANDBOX), que
+      sai do Databricks e se atualiza às 09:30.

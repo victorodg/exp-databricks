@@ -29,7 +29,9 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import sys
+import threading
 import time
 import tomllib
 from dataclasses import dataclass
@@ -117,8 +119,49 @@ def carregar_config(caminho=PASTA / "fontes.toml"):
         return tomllib.load(f)
 
 
+def _sessao_interativa():
+    """True no Jupyter ou num terminal aberto; False numa execução agendada, onde ninguém faria o login."""
+    return "ipykernel" in sys.modules or bool(sys.stdin and sys.stdin.isatty())
+
+
+def _login_expirado(erro):
+    texto = str(erro)
+    return "databricks auth login" in texto or "refresh token is invalid" in texto
+
+
+def _refazer_login(perfil, cli, limite_segundos=300):
+    """Roda `databricks auth login --profile <perfil>`: abre o navegador para entrar de novo e espera até 5 minutos.
+    Repete a saída da CLI na tela, porque ela traz o link caso o navegador não abra sozinho."""
+    print(f"O login do Databricks (perfil {perfil}) expirou. Abrindo o navegador para entrar de novo...", flush=True)
+    processo = subprocess.Popen([cli, "auth", "login", "--profile", perfil], stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
+    threading.Thread(target=lambda: [print("   ", l.rstrip(), flush=True) for l in processo.stdout], daemon=True).start()
+    try:
+        processo.wait(timeout=limite_segundos)
+    except subprocess.TimeoutExpired:
+        processo.kill()
+        raise RuntimeError(f"O login não foi concluído em {limite_segundos // 60} minutos. "
+                           f"Rode de novo, ou faça à mão: databricks auth login --profile {perfil}")
+    if processo.returncode != 0:
+        raise RuntimeError(f"A CLI não conseguiu refazer o login (código {processo.returncode}). "
+                           f"Faça à mão: databricks auth login --profile {perfil}")
+    print("Login refeito.", flush=True)
+
+
 def cliente(cfg):
-    return WorkspaceClient(config=Config(profile=cfg["destino"]["perfil"], databricks_cli_path=caminho_cli()))
+    """Conecta ao workspace pelo perfil da CLI. Se o login OAuth tiver expirado (acontece depois de alguns dias sem
+    uso), refaz o login pelo navegador e tenta de novo, mas só quando há alguém na frente da tela."""
+    perfil, cli = cfg["destino"]["perfil"], caminho_cli()
+    try:
+        return WorkspaceClient(config=Config(profile=perfil, databricks_cli_path=cli))
+    except ValueError as erro:
+        if not _login_expirado(erro):
+            raise
+        if not _sessao_interativa():
+            raise RuntimeError(f"O login do Databricks (perfil {perfil}) expirou e esta execução não é interativa. "
+                               f"Rode no terminal: databricks auth login --profile {perfil}") from erro
+    _refazer_login(perfil, cli)
+    return WorkspaceClient(config=Config(profile=perfil, databricks_cli_path=cli))
 
 
 def verificar_google_sheets(cfg):
@@ -241,6 +284,19 @@ def conferir_gold(w, cfg):
     return saida
 
 
+def verificar_token_tableau(cfg, w):
+    """Renova o token das fontes do Tableau Cloud quando está perto de vencer (token_tableau.py).
+    Uma falha aqui só gera aviso: o envio e o job seguem."""
+    try:
+        if str(PASTA) not in sys.path:  # com python -I (rotina_diaria.ps1) a pasta do script não entra no sys.path
+            sys.path.insert(0, str(PASTA))
+        import token_tableau
+        print(token_tableau.verificar_e_renovar(cfg, w) + "\n")
+    except Exception as e:  # noqa: BLE001
+        print(f"⚠️ Não foi possível conferir/renovar o token do Tableau ({type(e).__name__}: {e}). "
+              f"Rode à mão: .venv\\Scripts\\python.exe coleta\\token_tableau.py\n")
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Envia os arquivos de entrada para o volume dexp_landing.")
@@ -255,6 +311,8 @@ def main():
     cfg = carregar_config(args.config)
     print(verificar_google_sheets(cfg)[1])
     w = None if args.simular else cliente(cfg)
+    if w:
+        verificar_token_tableau(cfg, w)
     contagem = imprimir_resultados(cfg, enviar(cfg, w, args.somente, args.simular, args.forcar))
     if contagem["erro"]:
         print("❌ Houve erro no envio: o job do Databricks não foi disparado.")
