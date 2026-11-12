@@ -246,6 +246,12 @@ def agendar(servidor, cfg, fonte_id):
     return f"agendada às {cfg['tableau']['horario_atualizacao']}"
 
 
+def sessao_caiu(erro):
+    """O Tableau Cloud derruba a sessão quando o mesmo token pessoal entra de novo em outro lugar (outro script, a
+    renovação do token, uma consulta feita à parte): a partir daí toda chamada volta 401002."""
+    return type(erro).__name__ in ("FailedSignInError", "NotSignedInError") or "401002" in str(erro)
+
+
 def publicar(cfg, w=None, somente=None, sem_publicar=False):
     """Uma falha numa fonte não para as demais. Devolve uma lista de (fonte, linhas, segundos, situação, erro)."""
     w = w or cliente(cfg)
@@ -270,10 +276,19 @@ def publicar(cfg, w=None, somente=None, sem_publicar=False):
                 try:
                     caminho, linhas = gerar_tdsx(w, cfg, hyper, nome, view, pasta)
                     if not sem_publicar:
-                        item = TSC.DatasourceItem(projeto, name=cfg["tableau"]["prefixo"] + nome)
-                        item = servidor.datasources.publish(item, str(caminho), TSC.Server.PublishMode.Overwrite,
-                                                            connection_credentials=credencial)
-                        situacao = f"publicada, {agendar(servidor, cfg, item.id)}"
+                        for tentativa in (1, 2):
+                            try:
+                                item = TSC.DatasourceItem(projeto, name=cfg["tableau"]["prefixo"] + nome)
+                                item = servidor.datasources.publish(item, str(caminho), TSC.Server.PublishMode.Overwrite,
+                                                                    connection_credentials=credencial)
+                                situacao = f"publicada, {agendar(servidor, cfg, item.id)}"
+                                break
+                            except Exception as e:
+                                if tentativa == 2 or not sessao_caiu(e):
+                                    raise
+                                print(f"{nome}: a sessão do Tableau caiu (o token foi usado em outro lugar); "
+                                      "entrando de novo...", flush=True)
+                                servidor = conectar_tableau(cfg)
                     caminho.unlink()
                 except Exception as e:
                     erro = f"{type(e).__name__}: {e}"
@@ -282,7 +297,10 @@ def publicar(cfg, w=None, somente=None, sem_publicar=False):
                 print(f"{nome}: {linhas if linhas is None else f'{linhas:,}'} linhas, {resultados[-1][2]}s {texto}", flush=True)
     finally:
         if servidor:
-            servidor.auth.sign_out()
+            try:
+                servidor.auth.sign_out()
+            except Exception:  # noqa: BLE001 - a sessão pode já ter caído
+                pass
     return resultados
 
 
