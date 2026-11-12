@@ -135,7 +135,8 @@ def ligar(raiz, urls, tb):
             continue
         mapeadas = ligar_fonte(ds, url, tb)
         antigo = ds.get("name")
-        trocas[antigo] = "sqlproxy." + antigo.removeprefix("federated.")
+        if not antigo.startswith("sqlproxy."):  # fonte que já era publicada (de produção) mantém o nome interno
+            trocas[antigo] = "sqlproxy." + antigo.removeprefix("federated.")
         print(f"+ {ds.get('caption')} -> {url}" + (f" | campos com outro nome na fonte: {mapeadas}" if mapeadas else ""))
 
     texto = etree.tostring(raiz, encoding="utf-8", xml_declaration=True).decode("utf-8")

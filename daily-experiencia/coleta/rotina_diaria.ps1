@@ -1,5 +1,6 @@
 ﻿# Rotina diária do Daily Experiência BR no Databricks: envia os arquivos de entrada ao volume, dispara o job e, quando
 # ele termina, exporta o CSAT para a pasta do Drive do painel em Apps Script (..\csat\coleta\exportar_sheets.py).
+# Por fim, publica as fontes dexp - no Tableau Cloud (coleta\publicar_tableau.py).
 # Grava o que aconteceu em coleta\.estado\logs\AAAA-MM-DD_HHmm.log (fora do Git).
 # Rodar à mão:   powershell -ExecutionPolicy Bypass -File coleta\rotina_diaria.ps1
 # O agendamento no Windows é feito por coleta\agendar_rotina.ps1.
@@ -31,6 +32,19 @@ $csat = Join-Path (Split-Path -Parent $pasta) "csat\coleta\exportar_sheets.py"
 if ($codigo -eq 0 -and ($args -notcontains "--simular") -and (Test-Path $csat)) {
     "--- Exportação do CSAT ($(Get-Date -Format 'HH:mm:ss'))" | Out-File -Encoding utf8 -Append $log
     & "$pasta\.venv\Scripts\python.exe" -I $csat --aguardar-job 2>&1 | ForEach-Object {
+        $linha = "$_"
+        $linha
+        $linha | Out-File -Encoding utf8 -Append $log
+    }
+    if ($LASTEXITCODE -ne 0) { $codigo = $LASTEXITCODE }
+}
+
+# Tableau Cloud: publica as fontes dexp - (elas não têm atualização agendada no site). Roda depois da exportação do
+# CSAT, que espera o job terminar.
+if ($codigo -eq 0 -and ($args -notcontains "--simular") -and (Test-Path $csat)) {
+    "--- Publicação no Tableau Cloud ($(Get-Date -Format 'HH:mm:ss'))" | Out-File -Encoding utf8 -Append $log
+    # sem -I: o script importa enviar_arquivos da própria pasta coleta
+    & "$pasta\.venv\Scripts\python.exe" coleta\publicar_tableau.py 2>&1 | ForEach-Object {
         $linha = "$_"
         $linha
         $linha | Out-File -Encoding utf8 -Append $log

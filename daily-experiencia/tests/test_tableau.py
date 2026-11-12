@@ -54,6 +54,12 @@ def test_remapear_ignora_maiusculas_e_mantem_o_resto(spark):
     assert r == ["Finalizado", "aberta"]
 
 
+def test_remapear_poe_a_grafia_do_grupo_no_proprio_nome(spark):
+    df = spark.createDataFrame([("Gabrielle Tenorio",), ("gabrielletenorio.sonda@natura.net",), ("Gabrielle tenorio",), (None,)], "s string")
+    mapa = {"Gabrielle tenorio": ["gabrielletenorio.sonda@natura.net"], None: [""]}
+    r = [x.r for x in df.select(tb.remapear("s", mapa).alias("r")).collect()]
+    assert r == ["Gabrielle tenorio"] * 3 + [None]
+
 def test_filtro_data_ate_usa_o_limite_gravado(spark):
     df = spark.createDataFrame([("2025-10-31 00:00:00",), ("2025-10-31 09:00:00",), (None,)], "d string")
     assert df.withColumn("d", tb.data_hora(F.col("d"))).where(tb.filtro_data("d", ate="2025-10-31")).count() == 1

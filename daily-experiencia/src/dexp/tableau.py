@@ -61,11 +61,14 @@ def excluir(c, *valores) -> Column:
 
 
 def remapear(c, mapa) -> Column:
-    """Remapear do Prep: {novo: [antigos]}; valores fora do mapa ficam como estão."""
+    """Remapear do Prep: {novo: [antigos]}; valores fora do mapa ficam como estão.
+
+    O próprio nome do grupo também é membro dele, comparado sem maiúsculas: no Prep, "Gabrielle Tenorio" cai no grupo
+    "Gabrielle tenorio" e sai com essa grafia. Sem isso, um mesmo analista aparece em duas linhas nos painéis."""
     c = F.col(c) if isinstance(c, str) else c
     expr = None
     for novo, antigos in mapa.items():
-        cond = igual(c, *antigos)
+        cond = igual(c, novo, *antigos)
         expr = F.when(cond, F.lit(novo)) if expr is None else expr.when(cond, F.lit(novo))
     return expr.otherwise(c)
 

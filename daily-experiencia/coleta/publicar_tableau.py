@@ -1,8 +1,9 @@
-"""Cria no Tableau Cloud as fontes de dados do workbook, como extrações que se atualizam sozinhas a partir do Databricks.
+"""Publica no Tableau Cloud as fontes de dados do workbook, como extrações das views do Databricks.
 
-Roda uma vez (e de novo só quando uma fonte mudar de colunas): depois disso as atualizações são agendadas no próprio
-Tableau Cloud. Para cada fonte em [tableau.fontes] de fontes.toml, lê a view no SQL Warehouse, grava a extração inicial e
-a definição da fonte num .tdsx, publica com o token do Databricks embutido na conexão e cria o agendamento.
+Roda todo dia depois do job (última célula do rotina_manual.ipynb ou fim do rotina_diaria.ps1). Para cada fonte em
+[tableau.fontes] de fontes.toml, lê a view no SQL Warehouse, grava a extração e a definição da fonte num .tdsx (textos
+com a collation do Prep) e publica com o token do Databricks embutido na conexão. As fontes não têm atualização
+agendada no Tableau Cloud: ela gravaria os textos com collation "binary" (ver remover_agenda).
 
 Nada de segredo em arquivo: os dois tokens ficam no cofre de credenciais do Windows.
   .venv\\Scripts\\python.exe coleta\\publicar_tableau.py --guardar-tokens
@@ -22,7 +23,7 @@ import time
 import urllib.request
 import uuid
 import zipfile
-from datetime import datetime, time as hora_do_dia
+from datetime import datetime
 from pathlib import Path
 
 import keyring
@@ -48,6 +49,12 @@ REAL = (SqlType.double(), "5", "5", "real", "Sum")
 DATA = (SqlType.date(), "7", "133", "date", "Year")
 DATA_HORA = (SqlType.timestamp(), "135", "135", "datetime", "Year")
 BOOLEANO = (SqlType.bool(), "11", "11", "boolean", "Count")
+
+# Collation dos textos, a mesma das extrações que o Prep grava: português do Brasil sem diferenciar maiúsculas.
+# Com "binary", filtros e grupos do workbook que guardam o nome com outra grafia ("Gabrielle Tenorio" × "Gabrielle
+# tenorio") deixam de achar o valor, e a ordem alfabética põe os acentos no fim.
+COLLATION_HYPER = "pt_BR_CI"
+COLLATION_TABLEAU = "LPT_RBR_S2"
 
 
 def tipos(tipo):
@@ -109,7 +116,8 @@ def gerar_hyper(w, cfg, hyper, view, caminho):
             if tabela is None:
                 esquema = bloco.schema
                 tabela = TableDefinition(TableName("Extract", "Extract"), [
-                    TableDefinition.Column(c.name, tipos(c.type)[0], Nullability.NULLABLE) for c in esquema])
+                    TableDefinition.Column(c.name, tipos(c.type)[0], Nullability.NULLABLE,
+                                           COLLATION_HYPER if tipos(c.type) is TEXTO else None) for c in esquema])
                 con.catalog.create_table(tabela)
             with Inserter(con, tabela) as ins:
                 ins.add_rows(linhas_do_bloco(bloco))
@@ -134,7 +142,7 @@ def registro(pai, coluna, ordinal, objeto, extracao, view=None):
     for tag, valor in campos:
         etree.SubElement(r, tag).text = valor
     if local == "string":
-        etree.SubElement(r, "collation", flag="0", name="binary")
+        etree.SubElement(r, "collation", flag="1", name=COLLATION_TABLEAU)
     etree.SubElement(r, "object-id").text = f"[{objeto}]"
     return r
 
@@ -227,23 +235,19 @@ def id_do_projeto(servidor, cfg):
     return achadas[0].project_id
 
 
-def agendar(servidor, cfg, fonte_id):
-    """Atualização completa diária, se a fonte ainda não tiver uma."""
-    horario = hora_do_dia.fromisoformat(cfg["tableau"]["horario_atualizacao"])
+def remover_agenda(servidor, fonte_id):
+    """Apaga a atualização agendada da fonte, se houver. A fonte passa a ser atualizada só pela publicação diária
+    (última célula do rotina_manual.ipynb ou fim do rotina_diaria.ps1).
+
+    Motivo: a atualização do Tableau Cloud relê o Databricks e grava os textos com collation "binary", desfazendo a
+    collation do Prep gravada aqui (testado em 12/11/2026). Além disso, o job só roda quando a rotina roda, então a
+    atualização agendada não trazia dado novo."""
+    removidas = 0
     for tarefa in TSC.Pager(servidor.tasks):
         if tarefa.target is not None and tarefa.target.id == fonte_id:
-            return "já agendada"
-    dias = [TSC.IntervalItem.Day.Sunday, TSC.IntervalItem.Day.Monday, TSC.IntervalItem.Day.Tuesday,
-            TSC.IntervalItem.Day.Wednesday, TSC.IntervalItem.Day.Thursday, TSC.IntervalItem.Day.Friday,
-            TSC.IntervalItem.Day.Saturday]
-    # O 24 com fim igual ao início é "uma vez por dia", como a tela do site grava; sem isso o Tableau Cloud repete de
-    # hora em hora a partir do horário. O DailyInterval não recebe o fim no construtor, mas o envia se existir.
-    intervalo = TSC.DailyInterval(horario, 24, *dias)
-    intervalo.end_time = horario
-    agenda = TSC.ScheduleItem(None, None, None, None, intervalo)
-    tarefa = TSC.TaskItem(None, "FullRefresh", None, schedule_item=agenda, target=TSC.Target(fonte_id, "datasource"))
-    servidor.tasks.create(tarefa)
-    return f"agendada às {cfg['tableau']['horario_atualizacao']}"
+            servidor.tasks.delete(tarefa.id)
+            removidas += 1
+    return "atualização agendada removida" if removidas else "sem atualização agendada"
 
 
 def sessao_caiu(erro):
@@ -281,7 +285,7 @@ def publicar(cfg, w=None, somente=None, sem_publicar=False):
                                 item = TSC.DatasourceItem(projeto, name=cfg["tableau"]["prefixo"] + nome)
                                 item = servidor.datasources.publish(item, str(caminho), TSC.Server.PublishMode.Overwrite,
                                                                     connection_credentials=credencial)
-                                situacao = f"publicada, {agendar(servidor, cfg, item.id)}"
+                                situacao = f"publicada, {remover_agenda(servidor, item.id)}"
                                 break
                             except Exception as e:
                                 if tentativa == 2 or not sessao_caiu(e):

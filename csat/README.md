@@ -8,7 +8,8 @@ Excelencia - CSAT"** (cópias em `tableau/`):
 - **Painel:** o painel passa para Google Sheets + Apps Script, com um desenho novo e uma página por operação: Brasil, NCC,
   Hispana e CES.
 
-Os outros painéis do workbook (QA, Produtividade, Retenção) não leem a fonte do C-SAT e ficam fora deste trabalho.
+Os outros painéis do workbook (QA, Produtividade, Retenção) não leem a fonte do C-SAT. Eles entram na próxima etapa,
+no fim deste arquivo.
 
 ## Arquitetura
 
@@ -260,4 +261,90 @@ Outros pontos encontrados:
       enviadas, 39 respondidas e 94,87%; antes eram 86, 26 e 96,15%.
 - [ ] Tableau: o workbook GovEXP lê a fonte "Enquetes C-SAT", que sai do fluxo do Prep e não tem a regra nova. Para o
       Tableau mostrar a regra do Daily NCC, troque a fonte do workbook por "dexp - Enquetes C-SAT" (3. SANDBOX), que
-      sai do Databricks e se atualiza às 09:30.
+      sai do Databricks e se atualiza às 09:30. **Versão local pronta em 12/11/2026** (etapa 1 abaixo).
+
+## Próxima etapa: o Métricas da Excelência inteiro (reunião de 12/11/2026)
+
+A reunião "Alinhamento: Evolução do Painel de Métricas de Excelência" (Juliana, Valéria, Suelen, Sabrina, Vico, Victor e
+outros) definiu:
+
+- **Tableau é o lugar do histórico e dos resultados fechados**, por ser a ferramenta oficial da Natura. **Apps Script é
+  para o acompanhamento do dia a dia.** Para o C-SAT, isso dá dois usos da mesma gold: o Métricas no Tableau para a
+  linha histórica e o Painel C-SAT em Apps Script para o mês corrente.
+- **O Métricas vai ser reorganizado por bloco** (eficiência, produtividade, qualidade, monitoramento e contratuais). A
+  Juliana vai recuperar a planilha de categorização feita pela Valéria em 2025. Qualidade (CES e C-SAT) fica num painel;
+  produtividade e retenção, em outro.
+- **NCC:** o Daily NCC (Apps Script do Diego) recebe a qualidade: nota geral de C-SAT, que já existe, e abas de
+  incidente crítico, monitoring, torre, ECAB e monitoria WR, sem detalhe por analista. O detalhe por analista vai para
+  um painel à parte, da operação e supervisão. Por isso as abas de QA saíram do Métricas em 12/11/2026.
+- **Fórum semanal** com a Experiência a partir da semana de 16/11, para revisar o documento de páginas e necessidades
+  da Valéria e priorizar. Tudo que for feito para o Brasil vale também para a Espanha.
+
+### Fontes do Métricas (levantadas no .twbx de 12/11/2026)
+
+| Painel | Fonte de produção | No Databricks |
+|---|---|---|
+| C-SAT Brasil, C-SAT NCC, C-SAT OIS, CES | Enquetes C-SAT | `dexp - Enquetes C-SAT` (`dexp_vw_csat_enquetes`) |
+| PRODUTIVIDADE EXP. BRASIL, RETENCAO EXP. BRASIL | Experiencia Brasil Nivel | `dexp - Experiencia Brasil Nivel` (`dexp_vw_mkt_experiencia_brasil_nivel`) |
+| PRODUTIVIDADE EXP. HISPANA | Experiencia Hispana Produtividade | `dexp - Experiencia Hispana Produtividade` (`dexp_vw_hispana_produtividade`) |
+| QA Brasil (removido) | GovEXP_QA_BR_V2, GovEXP_QA_BR_V2_MediaFinal | Não |
+| QA Hispana (removido) | GovEXP_QA_OIS_V2, GovEXP_QA_OIS_V2_MediaFinal | Não |
+| QA NCC IC, QA NCC IC por Analista (removidos) | QA_IC_SEV3_Base_Consolidada, _Apontamentos, _Analistas | Não |
+| QA Monitoring (removido) | QA Gestao de Alertas | Não |
+| QA Incidentes N1 (removido) | QA Incidentes N1 | Não |
+| QA Mudancas (removido) | QA Mudancas TT | Não |
+| QA Monitoria WR (removido) | QA Monitoria WR | Não |
+
+Os 8 painéis que ficaram no Métricas já têm todas as fontes no Databricks. Só as fontes de QA estão fora.
+
+### Etapas
+
+1. **Métricas no Databricks.** `metricas-excelencia/GovEXP - Métricas da Excelência - Databricks.twbx` é o Métricas sem
+   QA com as três fontes trocadas pelas `dexp -`, gerado por `ferramentas/ligar_fontes_publicadas_tableau.py`. Todas as
+   colunas que o workbook declara existem nas views, menos `Pedido Finalizado` (Experiencia Brasil Nivel), que nenhuma
+   planilha usa. Diferença esperada: NCC a partir de out/2026 com a regra do Daily NCC.
+   - [x] Publicado em 3. SANDBOX como **"GovEXP - Métricas da Excelência - Databricks"** (12/11/2026) e comparado
+         com o de produção. Imagens dos 8 painéis e contagem por analista nas fontes de novembro:
+         - Ficha de Relatório, CES e C-SAT Brasil: imagens idênticas.
+         - C-SAT NCC: muda só o mês de out/2026, pela regra do Daily NCC (esperado).
+         - Produtividade Brasil, Retenção Brasil, Produtividade Hispana e C-SAT OIS: os totais batem (Brasil 1.723,
+           Hispana 1.790 em nov/2026). Muda só a grafia de 4 analistas: "Gabrielle Tenorio" × "Gabrielle tenorio",
+           "Haryssa Nayanne da Silva Santana" × "Da Silva", "Maria Belen La Giglia Luque" × "MARIA BELEN…" e
+           "…Rodríguez berro" × "Berro". O painel filtra ou agrupa pelo nome, então a pessoa perde linhas ou aparece
+           duas vezes.
+         - Causa: no Remapear do Prep, o valor igual ao nome do grupo (sem diferenciar maiúsculas) também entra no
+           grupo e sai com a grafia do grupo. O `remapear` de `src/dexp/tableau.py` não fazia isso. Corrigido em
+           12/11/2026, com teste. Deploy, job e as 3 fontes `dexp -` republicados no mesmo dia.
+         - Segunda comparação (12/11/2026): Ficha, CES, C-SAT Brasil, C-SAT OIS e Retenção Brasil idênticos; NCC
+           com a diferença esperada. Produtividade Hispana: mesmos números, só a ordem de "MARÍA INÉS" e "MARIA
+           ISABEL" troca. Produtividade Brasil: some a linha de "Gabrielle tenorio" (34 atendimentos em nov/2026).
+         - Causa do que sobrou: os filtros do workbook guardam o nome com uma grafia fixa ("Gabrielle Tenorio" em
+           umas planilhas, "Gabrielle tenorio" em outras). A fonte de produção usa a collation `LPT_RBR_S2`
+           (português, sem diferenciar maiúsculas), então as duas grafias batem. As fontes `dexp -` são gravadas por
+           `coleta/publicar_tableau.py` com collation `binary`, que diferencia maiúsculas e ordena os acentos no fim.
+         - Decisão (Victor, 12/11/2026): gravar as fontes `dexp -` com a collation do Prep. `publicar_tableau.py`
+           passou a gravar os textos com `pt_BR_CI` no Hyper e `LPT_RBR_S2` na definição da fonte, como as
+           extrações do Prep. Vale para todas as fontes `dexp -` a partir da próxima publicação.
+         - Terceira comparação (12/11/2026), com as 3 fontes republicadas: os 7 painéis ficam idênticos à produção.
+           A única diferença é a esperada, no C-SAT NCC de out/2026.
+         - **Limite:** a atualização agendada do Tableau Cloud (todo dia às 09:30) relê o Databricks e volta a
+           collation para `binary`, tanto no Hyper quanto na definição. Foi testado em 12/11/2026 na "dexp - Ticket
+           Medio Hispana", com a agenda adiantada para as 14:45 e depois devolvida para 09:30. A collation do Prep só
+           fica valendo até a próxima atualização agendada. O site também não permite disparar uma atualização à mão
+           (erro 409082).
+         - Decisão (Victor, 12/11/2026): sem atualização agendada; as fontes `dexp -` são publicadas todo dia pelo
+           script. As 28 atualizações agendadas foram apagadas em 12/11/2026. `publicar_tableau.py` passou a apagar a
+           agenda que encontrar, no lugar de criar uma. A publicação é a última célula do `rotina_manual.ipynb` e
+           também o fim do `rotina_diaria.ps1`. O job só roda quando a rotina roda, então a agenda não trazia dado
+           novo. As outras 25 fontes `dexp -` ganham a collation do Prep na próxima publicação diária.
+   - [ ] Depois do OK, publicar por cima do Métricas de produção. Com isso, o fluxo Prep "GovEXP - Metricas de
+         Excelencia - CSAT" pode ser desligado.
+2. **Divisão por bloco.** Separar qualidade (CES, C-SAT) de produtividade e retenção, com os nomes da planilha de
+   categorização. Esperar a planilha da Juliana para não refazer os nomes.
+3. **QA no Databricks.** Levar as fontes de QA para o pipeline, como foi feito com o C-SAT: levantar de onde vem cada
+   uma (fluxo do Prep ou planilha), especificar, gerar a gold e validar. É o que alimenta as abas de qualidade do Daily
+   NCC e, para Brasil e Hispana, a linha histórica de qualidade que a Valéria quer no Tableau.
+4. **Fórum.** Levar ao primeiro fórum um mapa de cada painel atual: para onde vai (Tableau histórico, Apps Script dia
+   a dia ou painel por analista) e se já está no Databricks. Cruzar com o documento da Valéria quando a Juliana
+   compartilhar. O documento dela ("Revisão dos Dash no Tableau", CDES-2708) já foi cruzado com a versão Databricks
+   do Daily em `../daily-experiencia/docs/revisao_dash_valeria.md`.

@@ -82,7 +82,8 @@ arquivos = [
     "base_exento",
 ]
 
-# Fontes no Tableau Cloud (publicar_tableau.py): extrações que se atualizam sozinhas a partir das views.
+# Fontes no Tableau Cloud (publicar_tableau.py): extrações das views, publicadas todo dia pela rotina, sem atualização
+# agendada no Tableau Cloud.
 # A fonte de referência identifica o projeto, porque há vários projetos com o mesmo nome em pastas diferentes.
 # O prefixo evita substituir qualquer fonte que já exista no projeto.
 [tableau]
@@ -92,7 +93,6 @@ token_nome = "dexp-publicacao"
 projeto = "3. SANDBOX"
 fonte_referencia = "test-hc_exp_brasil"
 prefixo = "dexp - "
-horario_atualizacao = "09:30"
 
 [tableau.databricks]
 servidor = "dbc-02543f96-daa5.cloud.databricks.com"
