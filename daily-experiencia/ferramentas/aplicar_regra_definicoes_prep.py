@@ -31,30 +31,34 @@ NEUTRO = ["Documento invalido", "Documento inválido", "Documento não anexado",
           "Solicitação não procedente –desvio operacional:", "Solicitação não procedente – Desvio operacional"]
 
 
-def lista(valores):
-    return ", ".join(f'"{v}"' for v in valores)
+INICIO_ANTIGA = '\nIF [Etapa] = "Análise Aplicativo Consultoria"'
+
+
+def alguma(valores):
+    """TRIM([Solução]) = "a" OR TRIM([Solução]) = "b" ... (sem IN, que o Prep não aceitou)."""
+    return "(" + "\n  OR ".join(f'TRIM([Solução]) = "{v}"' for v in valores) + ")"
 
 
 def expressao_nivel(antiga):
-    return f"""{MARCA} (aba Brasil), para tarefas encerradas a partir de 01/11/2026.
-// Dynamics: o nível sai da Solução. Salesforce: "Erro operacional" é NEUTRO (retrabalho: fora da Retenção,
-// mas conta na produtividade). O que a planilha não lista continua na regra antiga, abaixo.
-IF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND TRIM([Solução]) IN ({lista(N1)}) THEN "N1"
-ELSEIF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND TRIM([Solução]) IN ({lista(N2)}) THEN "N2"
-ELSEIF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND TRIM([Solução]) IN ({lista(NEUTRO)}) THEN "NEUTRO"
+    """Uma cadeia IF/ELSEIF só: as condições novas na frente e a regra antiga, sem o IF inicial, em seguida."""
+    assert antiga.count(INICIO_ANTIGA) == 1, "o começo da regra antiga mudou; conferir o cálculo no fluxo"
+    resto = antiga.replace(INICIO_ANTIGA, '\nELSEIF [Etapa] = "Análise Aplicativo Consultoria"', 1)
+    nova = f"""{MARCA} (aba Brasil), para tarefas encerradas a partir de 01/11/2026.
+// Dynamics: o nível sai da Solução. Salesforce: Erro operacional é NEUTRO (retrabalho: fora da Retenção,
+// mas conta na produtividade). O que a planilha não lista segue a regra antiga, logo abaixo.
+IF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND {alguma(N1)} THEN "N1"
+ELSEIF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND {alguma(N2)} THEN "N2"
+ELSEIF [Término Real] >= {DESDE} AND [Fonte] = "Dynamics" AND {alguma(NEUTRO)} THEN "NEUTRO"
 ELSEIF [Término Real] >= {DESDE} AND IFNULL([Fonte], "") <> "Dynamics" AND TRIM([Solução]) = "Erro operacional" THEN "NEUTRO"
-ELSE
-{antiga}
-END"""
+"""
+    return nova + resto.lstrip("\n")
 
 
 FILTRO_RETRABALHO = f"""// Retrabalho (Erro operacional e Desvio operacional): até 31/10/2026 sai da base; a partir de 01/11/2026 fica,
 // como NEUTRO, e conta na produtividade (regra da planilha Definições N1 N2).
-IF IFNULL([Status de finalização], "") = "Erro operacional"
-OR IFNULL([Status de finalização], "") = "{DESVIO}"
-THEN IFNULL([Data] >= {DESDE}, FALSE)
-ELSE TRUE
-END"""
+NOT (IFNULL([Status de finalização], "") = "Erro operacional"
+  OR IFNULL([Status de finalização], "") = "{DESVIO}")
+OR IFNULL([Data], #1900-01-01#) >= {DESDE}"""
 
 
 def ler(caminho):
