@@ -89,6 +89,40 @@ DEDUP_SALESFORCE = ["aplicativo_com_problemas", "caso_pai_chamado", "chamado", "
                     "solucao", "status_da_atividade", "termino_real"]
 
 
+# Regra da planilha "Definições N1 N2" (1pBL9a3rSSjDc26HEBPHg7GcDvkvdNJff-_xklq4YIpk, aba Brasil), adotada em 13/11/2026.
+# Vale para as tarefas encerradas a partir de REGRA_DEFINICOES_DESDE; os meses anteriores ficam com a regra antiga.
+# - Dynamics: o nível sai da Solução. Solução fora da lista continua na regra antiga (Etapa, Solução e Chamado).
+# - Salesforce: "Erro operacional" vira NEUTRO; o resto continua na regra antiga.
+# - Retrabalho (Desvio operacional e Erro operacional) passa a contar na produtividade como NEUTRO: fica fora da
+#   Retenção, que é N1 / (N1 + N2), mas entra no total de atendimentos do analista.
+# - A planilha de expurgo continua prevalecendo sobre tudo isso.
+REGRA_DEFINICOES_DESDE = "2026-11-01"
+SOLUCAO_DYNAMICS = {
+    "N1": ["Cancelamento realizado", "Correção realizada", "Reativação realizada", "Reset de senha realizado",
+           "Solicitação não procedente", "Solicitação procedente"],
+    "N2": ["Correção solicitada", "Correção solicitada - TD", "Correção solicitada TD"],
+    "NEUTRO": ["Documento invalido", "Documento inválido", "Documento não anexado", "Documento não anexado:", DESVIO,
+               "Solicitação não procedente –desvio operacional:", "Solicitação não procedente – Desvio operacional"],
+}
+SOLUCAO_SALESFORCE_NEUTRO = ["Erro operacional"]
+
+
+def regra_definicoes():
+    """Verdadeiro para as tarefas encerradas a partir de REGRA_DEFINICOES_DESDE."""
+    return F.coalesce(F.col("termino_real") >= F.lit(REGRA_DEFINICOES_DESDE).cast("timestamp"), F.lit(False))
+
+
+def nivel_definicoes(regra_antiga):
+    """Nível pela planilha Definições N1 N2; o que ela não lista fica com a regra antiga."""
+    solucao = F.trim(F.col("solucao"))
+    dynamics, salesforce = igual("fonte", "Dynamics"), igual("fonte", "Salesforce")
+    nova = (F.when(dynamics & igual(solucao, *SOLUCAO_DYNAMICS["N1"]), "N1")
+             .when(dynamics & igual(solucao, *SOLUCAO_DYNAMICS["N2"]), "N2")
+             .when(dynamics & igual(solucao, *SOLUCAO_DYNAMICS["NEUTRO"]), "NEUTRO")
+             .when(salesforce & igual(solucao, *SOLUCAO_SALESFORCE_NEUTRO), "NEUTRO"))
+    return F.when(regra_definicoes(), F.coalesce(nova, regra_antiga)).otherwise(regra_antiga)
+
+
 def classificar_nivel(rotulo_1, rotulo_2, olhar_chamado):
     """Nivel de Atendimento (N1/N2) e Fase (Fase 1/Fase 2) usam a mesma regra; a versão 'Encerrado em' também olha o Chamado."""
     regra = (F.when(igual("etapa", *ETAPAS_N1), rotulo_1)
@@ -279,7 +313,7 @@ visao_encerrado = (
                                 .when(F.col("termino_real") > F.col("data_do_sla"), "FORA DO PRAZO")
                                 .otherwise("DENTRO DO PRAZO"))
     .withColumn("sla_experiencia", prazo("segundos_corridos_experiencia", SEGUNDOS_24H))
-    .withColumn("nivel_de_atendimento", classificar_nivel("N1", "N2", olhar_chamado=True))
+    .withColumn("nivel_de_atendimento", nivel_definicoes(classificar_nivel("N1", "N2", olhar_chamado=True)))
     .withColumn("faixa_tempo_solucao_sla_experiencia", faixa_tempo_solucao())
     .withColumn("sla_5_horas", prazo("segundos_corridos_experiencia", SEGUNDOS_5H))
 )
@@ -382,8 +416,9 @@ nivel = (
             F.col("experience").alias("funcao_do_sistema"), F.col("termino_real").alias("data"),
             F.col("solucao").alias("status_de_finalizacao"), F.col("modificado_por").alias("responsavel_dynamics"))
     .withColumn("qtd_atendimentos", F.lit(1))
-    .where(excluir("status_de_finalizacao", "Erro operacional"))
-    .where(excluir("status_de_finalizacao", DESVIO))
+    # Antes de REGRA_DEFINICOES_DESDE o retrabalho sai da base; depois fica, como NEUTRO (conta na produtividade)
+    .where(F.coalesce(F.col("data") >= F.lit(REGRA_DEFINICOES_DESDE).cast("timestamp"), F.lit(False))
+           | (excluir("status_de_finalizacao", "Erro operacional") & excluir("status_de_finalizacao", DESVIO)))
 )
 gravar(nivel, "dexp_gold_dynamics_nivel", "Gold Daily Experiência BR: tarefas encerradas com nível, para o fluxo MKT (extract Dynamics Nivel)")
 

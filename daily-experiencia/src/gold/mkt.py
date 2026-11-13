@@ -562,7 +562,10 @@ nivel_geral = (
 )
 
 # [155] [157] [12] [33] [159] [163] Ticket médio do mês ao lado de cada atendimento (sem Dynamics e sem MKT Completo)
-pedidos_mes = (remover(nivel_geral, "status_de_classificacao", "status_de_finalizacao")
+# O retrabalho do CRM (NEUTRO desde nov/2026, regra Definições N1 N2) fica fora do ticket médio, como antes
+retrabalho_crm = igual("status_de_finalizacao", "Erro operacional", "Solicitação não procedente - Desvio operacional")
+pedidos_mes = (remover(nivel_geral.where(~F.coalesce(retrabalho_crm, F.lit(False))),
+                       "status_de_classificacao", "status_de_finalizacao")
                .where(excluir("origem", "MKT Completo")).where(excluir("tipo", "Protocolos CB", "Protocolos CF"))
                .select("int_pedido_finalizado", "mes"))
 ticket_medio = silver("mkt_ticket_medio").withColumnRenamed("mes", "data").withColumn("mes", mes_ano("data"))

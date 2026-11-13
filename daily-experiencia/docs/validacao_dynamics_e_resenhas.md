@@ -66,3 +66,25 @@ fatia e reduz o percentual dentro do prazo (`ferramentas/melhorias_tableau.py`, 
 Primeiro caso: 94 tarefas do SEV 1 [INC1203571] Captação de Pedidos, pedido da Suelen com aprovação da Valéria em
 27/10/2026. Com o cálculo do painel (horas úteis), 76 delas estavam fora do prazo de 24h e 18 dentro; a lista aprovada
 foi aplicada inteira.
+
+## Nível do CRM pela planilha Definições N1 N2 (13/11/2026)
+
+A produtividade por analista (painel PRODUTIVIDADE EXP. BRASIL) estava baixa e a regra de nível do CRM não seguia a
+planilha "Definições N1 N2" (`1pBL9a3rSSjDc26HEBPHg7GcDvkvdNJff-_xklq4YIpk`, aba Brasil). No WhatsApp e no e-mail as duas
+regras já eram iguais. A partir das tarefas **encerradas em 01/11/2026**, vale a planilha; outubro e antes não mudam:
+
+- **Dynamics:** o nível sai da Solução, e não mais da Etapa. N1: Cancelamento realizado, Correção realizada, Reativação
+  realizada, Reset de senha realizado, Solicitação não procedente, Solicitação procedente. N2: Correção solicitada,
+  Correção solicitada - TD, Correção solicitada TD. NEUTRO: Documento inválido, Documento não anexado, Solicitação não
+  procedente - Desvio operacional. Solução fora da lista continua na regra antiga. O expurgo de nível continua valendo.
+- **Salesforce:** "Erro operacional" passa a NEUTRO; o resto continua como antes.
+- **Retrabalho** (Desvio operacional e Erro operacional): deixa de sair da saída "Dynamics Nivel" e entra como NEUTRO.
+  Conta como atendimento na produtividade e fica fora da Retenção, que é N1 / (N1 + N2). Continua fora do Ticket Médio.
+
+Onde está: `REGRA_DEFINICOES_DESDE` e `nivel_definicoes()` em `src/gold/dynamics_e_resenhas.py`, o filtro do Ticket
+Médio em `src/gold/mkt.py`, e nos dois fluxos do Prep por `ferramentas/aplicar_regra_definicoes_prep.py` (cálculo
+"Nivel de Atendimento" da visão Encerrado em, filtro de "Deixar colunas para MKT" e filtro de "Remoção do Dynamics").
+Os fluxos de produção de antes da mudança estão em `validacao/tableau/prep_backup/20261113_1424 - producao - ...`.
+
+Simulação com os dados de 13/11 (nov/2026 até 12/11): atendimentos do CRM de 816 para 1.020; Retenção N1 dos
+Protocolos CB de 74,9% para 76,3%. Quem mais ganha na produtividade é quem trata retrabalho (Matheus Vergilio +64).
