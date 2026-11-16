@@ -88,3 +88,19 @@ Os fluxos de produção de antes da mudança estão em `validacao/tableau/prep_b
 
 Simulação com os dados de 13/11 (nov/2026 até 12/11): atendimentos do CRM de 816 para 1.020; Retenção N1 dos
 Protocolos CB de 74,9% para 76,3%. Quem mais ganha na produtividade é quem trata retrabalho (Matheus Vergilio +64).
+
+## Feriados nacionais no SLA das Resenhas Brasil (16/11/2026)
+
+Pedido de 16/11/2026: o feriado nacional passa a ser tratado como o fim de semana no SLA das Resenhas Brasil. A lista
+(`FERIADOS_NACIONAIS` em `src/gold/dynamics_e_resenhas.py`) começa em 20/11/2026, então nenhum mês fechado muda; ela vai
+até dez/2027 e precisa ganhar os feriados de cada ano novo (no código e, com a mesma lista, no Prep).
+
+- **Resenhas AppSheets** (`dexp_gold_resenhas_appsheets`, etapa "Regras do SLA"): avaliação em feriado começa a contar no
+  próximo dia útil às 08:00, como no fim de semana; o prazo é o próximo dia útil depois do início (pula sábado, domingo e
+  feriado). Sem feriado no caminho, o resultado é o de antes (segunda às 08:00; +1 dia, ou +3 na sexta).
+- **Resenhas Brasil (Google Play)** (`dexp_gold_resenhas_brasil`, etapa "SLA Resenhas"): os feriados não contam como dias
+  corridos (sem resposta, usuário replicou e última interação do EXP), em Status SLA e Status SLA 2.
+
+Testado no cluster com datas de exemplo: 20/11 (sexta, feriado) começa em 23/11 08:00 com prazo 24/11; avaliação de
+24/12/2026 tem prazo 28/12; de 31/12/2026, 04/01/2027; sexta e domingo comuns ficam como antes. No Prep, a mudança é feita por
+`ferramentas/aplicar_feriados_resenhas_prep.py` (colunas auxiliares removidas no fim de cada etapa).

@@ -497,6 +497,39 @@ gravar(chamados, "dexp_gold_servicenow_chamados", "Gold Daily Experiência BR: i
 APLICATIVO_SEMPRE_PRESENTE = {"Sempre Presente": ["Natura CF"]}
 LOJAS = ["Google Play", "Applestore"]
 
+# Feriados nacionais no SLA das Resenhas Brasil (pedido de 16/11/2026): o feriado é tratado como o fim de semana.
+# A lista começa em 20/11/2026, então nenhum mês fechado muda. Acrescentar os feriados de cada ano novo aqui e
+# no Prep (ferramentas/aplicar_feriados_resenhas_prep.py), com a mesma lista.
+FERIADOS_NACIONAIS = [
+    "2026-11-20", "2026-12-25",
+    "2027-01-01", "2027-03-26", "2027-04-21", "2027-05-01", "2027-09-07", "2027-10-12", "2027-11-02", "2027-11-15",
+    "2027-11-20", "2027-12-25",
+]
+
+
+def eh_feriado(dia):
+    return F.to_date(dia).isin(*[F.to_date(F.lit(d)) for d in FERIADOS_NACIONAIS])
+
+
+def eh_dia_util(dia):
+    return ~tb.dia_semana(dia).isin(1, 7) & ~eh_feriado(dia)
+
+
+def proximo_dia_util(dia):
+    """Primeiro dia depois de `dia` que não é sábado, domingo nem feriado (data, sem horário)."""
+    d = F.to_date(dia)
+    proximo = F.date_add(d, 5)
+    for n in range(4, 0, -1):
+        proximo = F.when(eh_dia_util(F.date_add(d, n)), F.date_add(d, n)).otherwise(proximo)
+    return proximo
+
+
+def feriados_entre(depois_de, ate):
+    """Quantos feriados caem no intervalo (depois_de, ate], contando por data."""
+    inicio, fim = F.to_date(depois_de), F.to_date(ate)
+    return sum(F.when((F.to_date(F.lit(d)) > inicio) & (F.to_date(F.lit(d)) <= fim), 1).otherwise(0)
+               for d in FERIADOS_NACIONAIS)
+
 resenhas = (
     silver("resenhas_appsheets")
     .withColumn("aplicativo", remapear("aplicativo", APLICATIVO_SEMPRE_PRESENTE))
@@ -504,8 +537,9 @@ resenhas = (
 )
 resposta = F.col("data_da_resposta")
 dia_resposta = tb.dia_semana(resposta)
+# Fim de semana ou feriado: a contagem começa no próximo dia útil às 08:00 (sem feriado, é a segunda-feira, como antes).
 inicio_sla = (
-    F.when(dia_resposta.isin(1, 7), tb.fazer_data_hora(tb.somar_dias(resposta, F.when(dia_resposta == 1, 1).otherwise(2)), 8))
+    F.when(dia_resposta.isin(1, 7) | eh_feriado(resposta), tb.fazer_data_hora(proximo_dia_util(resposta), 8))
      .when(F.hour(resposta) < 8, tb.fazer_data_hora(resposta, 8))
      .otherwise(resposta))
 resenhas = (
@@ -515,8 +549,9 @@ resenhas = (
     .withColumn("inicio_da_contagem_sla_brasil", inicio_sla)
 )
 inicio = F.col("inicio_da_contagem_sla_brasil")
+# Prazo: o próximo dia útil, no mesmo horário do início (sem feriado: +1 dia, ou +3 na sexta, como antes).
 resenhas = resenhas.withColumn(
-    "prazo_sla_brasil", F.when(tb.dia_semana(inicio) == 6, tb.somar_dias(inicio, 3)).otherwise(tb.somar_dias(inicio, 1)))
+    "prazo_sla_brasil", tb.somar_dias(inicio, F.datediff(proximo_dia_util(inicio), F.to_date(inicio))))
 resposta_exp, prazo_br = F.col("data_da_resposta_exp"), F.col("prazo_sla_brasil")
 aplicativo, loja = F.col("aplicativo"), F.col("loja")
 resenhas = (
@@ -562,8 +597,10 @@ avaliacoes = (
 estrelas = F.col("star_rating")
 baixa, alta = estrelas.between(1, 3), estrelas.between(4, 5)
 avaliacao, resposta_exp, atualizacao = F.col("data_avaliacao"), F.col("data_da_resposta_exp"), F.col("data_atualizacao_da_avaliacao")
-dias_desde_avaliacao = tb.diff_dias(avaliacao, tb.hoje())
-dias_desde_atualizacao = tb.diff_dias(atualizacao, tb.hoje())
+# Feriados não contam como dias corridos (FERIADOS_NACIONAIS, desde 20/11/2026).
+dias_desde_avaliacao = tb.diff_dias(avaliacao, tb.hoje()) - feriados_entre(avaliacao, tb.hoje())
+dias_desde_atualizacao = tb.diff_dias(atualizacao, tb.hoje()) - feriados_entre(atualizacao, tb.hoje())
+feriados_ate_resposta = feriados_entre(avaliacao, resposta_exp)
 tolerancia_baixa = F.when(tb.dia_semana(avaliacao) == 6, 2).when(tb.dia_semana(avaliacao) == 7, 1).otherwise(1)
 
 
@@ -579,9 +616,10 @@ usuario_replicou = (F.when(baixa, dentro_ou_fora(dias_desde_atualizacao > 1))
                      .otherwise("Dentro do SLA"))
 # Prazo até 23:59:59 do dia limite. A fórmula do Prep usa "+ 86399", e no Tableau data + número soma DIAS
 # (86.399 dias), então lá esse ramo nunca dá "Fora do SLA". Corrigido para segundos, a pedido (27/10/2026).
-limite_resposta_baixa = (F.date_trunc("day", tb.somar_dias(avaliacao, tolerancia_baixa)).cast("long") + 86399).cast("timestamp")
+limite_resposta_baixa = (F.date_trunc("day", tb.somar_dias(avaliacao, tolerancia_baixa + feriados_ate_resposta)).cast("long")
+                         + 86399).cast("timestamp")
 ultima_foi_exp = (F.when(baixa, dentro_ou_fora(resposta_exp > limite_resposta_baixa))
-                   .when(alta, dentro_ou_fora(F.to_date(resposta_exp) > F.date_add(F.to_date(avaliacao), 5)))
+                   .when(alta, dentro_ou_fora(F.to_date(resposta_exp) > F.date_add(F.to_date(avaliacao), 5 + feriados_ate_resposta)))
                    .otherwise("Dentro do SLA"))
 status_sla = (F.when(resposta_exp.isNull(), sem_resposta)
                .otherwise(F.when(atualizacao.isNotNull() & (atualizacao > resposta_exp), usuario_replicou)
