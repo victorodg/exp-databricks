@@ -91,16 +91,23 @@ Protocolos CB de 74,9% para 76,3%. Quem mais ganha na produtividade é quem trat
 
 ## Feriados nacionais no SLA das Resenhas Brasil (16/11/2026)
 
-Pedido de 16/11/2026: o feriado nacional passa a ser tratado como o fim de semana no SLA das Resenhas Brasil. A lista
-(`FERIADOS_NACIONAIS` em `src/gold/dynamics_e_resenhas.py`) começa em 20/11/2026, então nenhum mês fechado muda; ela vai
-até dez/2027 e precisa ganhar os feriados de cada ano novo (no código e, com a mesma lista, no Prep).
+Pedido de 16/11/2026: o feriado nacional passa a ser tratado como o fim de semana no SLA das Resenhas Brasil, a partir de
+01/11/2026 (novembro ainda estava aberto). A lista é a base da ANBIMA (`feriados_nacionais.xlsx`, pasta DYNAMICS), copiada
+de 2026 a 2040 para a aba **"Feriados"** da planilha Expurgo (`15TkEO9b...`). Ela inclui Carnaval e Corpus Christi.
 
-- **Resenhas AppSheets** (`dexp_gold_resenhas_appsheets`, etapa "Regras do SLA"): avaliação em feriado começa a contar no
-  próximo dia útil às 08:00, como no fim de semana; o prazo é o próximo dia útil depois do início (pula sábado, domingo e
-  feriado). Sem feriado no caminho, o resultado é o de antes (segunda às 08:00; +1 dia, ou +3 na sexta).
-- **Resenhas Brasil (Google Play)** (`dexp_gold_resenhas_brasil`, etapa "SLA Resenhas"): os feriados não contam como dias
-  corridos (sem resposta, usuário replicou e última interação do EXP), em Status SLA e Status SLA 2.
+- **Databricks:** a aba vira `dexp_silver_feriados_nacionais` (fonte opcional `feriados_nacionais`, mesma exportação da
+  planilha Expurgo). A gold usa os feriados a partir de `FERIADOS_DESDE = "2026-11-01"`.
+- **Prep:** a aba **"Calendário Feriados"** da mesma planilha (uma linha por dia de 2010 a 2040, por fórmula: Feriado,
+  Próximo Dia Útil, Feriados Acumulados em dia útil, Segundo Dia Útil, só com os feriados desde 01/11/2026) entra pela
+  conexão "Expurgo" dentro dos grupos das Resenhas, por joins à esquerda pela data
+  (`ferramentas/aplicar_feriados_resenhas_prep.py`).
 
-Testado no cluster com datas de exemplo: 20/11 (sexta, feriado) começa em 23/11 08:00 com prazo 24/11; avaliação de
-24/12/2026 tem prazo 28/12; de 31/12/2026, 04/01/2027; sexta e domingo comuns ficam como antes. No Prep, a mudança é feita por
-`ferramentas/aplicar_feriados_resenhas_prep.py` (colunas auxiliares removidas no fim de cada etapa).
+Regras:
+- **Resenhas AppSheets** (`dexp_gold_resenhas_appsheets`): avaliação em feriado começa a contar no próximo dia útil às
+  08:00, como no fim de semana; o prazo é o dia útil seguinte ao início.
+- **Resenhas Brasil (Google Play)** (`dexp_gold_resenhas_brasil`): os feriados em dia útil não contam como dias corridos
+  (sem resposta, usuário replicou e última interação do EXP), em Status SLA e Status SLA 2. Feriado em sábado ou domingo
+  não desconta nada, porque o fim de semana já conta como dia corrido nessa regra.
+
+Sem feriado no caminho, o resultado é o de antes (segunda às 08:00; +1 dia, ou +3 na sexta). Testes das funções no
+cluster: 20/11 (sexta, feriado) começa em 23/11 08:00 com prazo 24/11; 24/12/2026 tem prazo 28/12; 31/12/2026, 04/01/2027.

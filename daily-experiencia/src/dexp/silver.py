@@ -130,7 +130,7 @@ _TIPOS_ANALITICO_HISPANA = {"data_contato": "data_hora", "encerrado_em": "data_h
 _TIPOS_ENQUETE = {"data_do_contato": "data_hora", "enviado_em": "data_hora"}
 
 # tabelas que só existem quando a aba de origem existe (FonteExcel opcional)
-OPCIONAIS = {"expurgo_dynamics_sla"}
+OPCIONAIS = {"expurgo_dynamics_sla", "feriados_nacionais"}
 
 # tabela silver -> (tabelas bronze unidas, colunas ou MesmasColunas)
 TABELAS = {
@@ -209,6 +209,13 @@ TABELAS = {
         ("incidente", "incidente", "texto"),
         ("motivo", "motivo", "texto"),
         ("aprovado_por", "aprovado_por", "texto"),
+    ]),
+    # aba "Feriados" da planilha de expurgo: feriados nacionais da ANBIMA (uma linha por feriado)
+    "feriados_nacionais": (["feriados_nacionais"], [
+        ("data", "data", "data"),
+        ("dia_da_semana", "dia_da_semana", "texto"),
+        ("feriado", "feriado", "texto"),
+        ("dia_util", "dia_util", "texto"),
     ]),
     "resenhas_appsheets": (["resenhas_appsheets"], [
         ("id", "coluna_1", "texto"),

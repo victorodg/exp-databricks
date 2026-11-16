@@ -44,6 +44,8 @@ FONTES_EXCEL = [
     FonteExcel("expurgo_dynamics", "google_sheets", "expurgo_dynamics", "Página1"),
     # Expurgo de SLA por tarefa (aba criada em 29/10/2026, primeiro caso: INC1203571)
     FonteExcel("expurgo_dynamics_sla", "google_sheets", "expurgo_dynamics", "Expurgo SLA", opcional=True),
+    # aba "Feriados" da planilha de expurgo: feriados nacionais da ANBIMA (SLA das Resenhas Brasil, desde 01/11/2026)
+    FonteExcel("feriados_nacionais", "google_sheets", "expurgo_dynamics", "Feriados", opcional=True),
     FonteExcel("auxiliar_brasil", "google_sheets", "auxiliar_brasil", "Página1"),
     FonteExcel("base_mkt", "google_sheets", "base_mkt", "MKT Brasil"),
     FonteExcel("tribos_base_mkt", "google_sheets", "mapeamento_tribos", "Base_MKT_1309"),

@@ -498,16 +498,23 @@ APLICATIVO_SEMPRE_PRESENTE = {"Sempre Presente": ["Natura CF"]}
 LOJAS = ["Google Play", "Applestore"]
 
 # Feriados nacionais no SLA das Resenhas Brasil (pedido de 16/11/2026): o feriado é tratado como o fim de semana.
-# A lista começa em 20/11/2026, então nenhum mês fechado muda. Acrescentar os feriados de cada ano novo aqui e
-# no Prep (ferramentas/aplicar_feriados_resenhas_prep.py), com a mesma lista.
-FERIADOS_NACIONAIS = [
-    "2026-11-20", "2026-12-25",
-    "2027-01-01", "2027-03-26", "2027-04-21", "2027-05-01", "2027-09-07", "2027-10-12", "2027-11-02", "2027-11-15",
-    "2027-11-20", "2027-12-25",
-]
+# A lista vem da base da ANBIMA, na aba "Feriados" da planilha de expurgo (silver feriados_nacionais), e vale para
+# as datas a partir de 01/11/2026. O Prep lê a aba "Calendário Feriados" da mesma planilha, calculada dessa lista.
+FERIADOS_DESDE = "2026-11-01"
+if spark.catalog.tableExists(f"{CATALOGO}.{SCHEMA}.dexp_silver_feriados_nacionais"):
+    _feriados = (silver("feriados_nacionais").where(F.col("data") >= F.lit(FERIADOS_DESDE).cast("date"))
+                 .select(F.date_format("data", "yyyy-MM-dd").alias("d"), F.dayofweek("data").alias("dia")).distinct().collect())
+else:
+    _feriados = []
+FERIADOS_NACIONAIS = sorted(r.d for r in _feriados)
+# Feriado em sábado ou domingo já é fim de semana: não desconta mais um dia nas Resenhas Google Play.
+FERIADOS_EM_DIA_UTIL = sorted(r.d for r in _feriados if r.dia not in (1, 7))
+print(f"Feriados nacionais desde {FERIADOS_DESDE}: {len(FERIADOS_NACIONAIS)} ({len(FERIADOS_EM_DIA_UTIL)} em dia útil)")
 
 
 def eh_feriado(dia):
+    if not FERIADOS_NACIONAIS:
+        return F.lit(False)
     return F.to_date(dia).isin(*[F.to_date(F.lit(d)) for d in FERIADOS_NACIONAIS])
 
 
@@ -525,10 +532,10 @@ def proximo_dia_util(dia):
 
 
 def feriados_entre(depois_de, ate):
-    """Quantos feriados caem no intervalo (depois_de, ate], contando por data."""
+    """Quantos feriados em dia útil caem no intervalo (depois_de, ate], contando por data."""
     inicio, fim = F.to_date(depois_de), F.to_date(ate)
-    return sum(F.when((F.to_date(F.lit(d)) > inicio) & (F.to_date(F.lit(d)) <= fim), 1).otherwise(0)
-               for d in FERIADOS_NACIONAIS)
+    return sum((F.when((F.to_date(F.lit(d)) > inicio) & (F.to_date(F.lit(d)) <= fim), 1).otherwise(0)
+                for d in FERIADOS_EM_DIA_UTIL), F.lit(0))
 
 resenhas = (
     silver("resenhas_appsheets")
@@ -538,8 +545,12 @@ resenhas = (
 resposta = F.col("data_da_resposta")
 dia_resposta = tb.dia_semana(resposta)
 # Fim de semana ou feriado: a contagem começa no próximo dia útil às 08:00 (sem feriado, é a segunda-feira, como antes).
+# Só as avaliações feitas a partir de FERIADOS_DESDE usam o calendário; as anteriores seguem a regra antiga, mesmo
+# que o prazo caia depois (ex.: avaliação de 31/10 com prazo no feriado de 02/11), para não mudar mês fechado.
+com_feriados = F.to_date(resposta) >= F.lit(FERIADOS_DESDE).cast("date")
 inicio_sla = (
-    F.when(dia_resposta.isin(1, 7) | eh_feriado(resposta), tb.fazer_data_hora(proximo_dia_util(resposta), 8))
+    F.when(com_feriados & (dia_resposta.isin(1, 7) | eh_feriado(resposta)), tb.fazer_data_hora(proximo_dia_util(resposta), 8))
+     .when(dia_resposta.isin(1, 7), tb.fazer_data_hora(tb.somar_dias(resposta, F.when(dia_resposta == 1, 1).otherwise(2)), 8))
      .when(F.hour(resposta) < 8, tb.fazer_data_hora(resposta, 8))
      .otherwise(resposta))
 resenhas = (
@@ -551,7 +562,10 @@ resenhas = (
 inicio = F.col("inicio_da_contagem_sla_brasil")
 # Prazo: o próximo dia útil, no mesmo horário do início (sem feriado: +1 dia, ou +3 na sexta, como antes).
 resenhas = resenhas.withColumn(
-    "prazo_sla_brasil", tb.somar_dias(inicio, F.datediff(proximo_dia_util(inicio), F.to_date(inicio))))
+    "prazo_sla_brasil",
+    F.when(com_feriados, tb.somar_dias(inicio, F.datediff(proximo_dia_util(inicio), F.to_date(inicio))))
+     .when(tb.dia_semana(inicio) == 6, tb.somar_dias(inicio, 3))
+     .otherwise(tb.somar_dias(inicio, 1)))
 resposta_exp, prazo_br = F.col("data_da_resposta_exp"), F.col("prazo_sla_brasil")
 aplicativo, loja = F.col("aplicativo"), F.col("loja")
 resenhas = (
@@ -598,9 +612,17 @@ estrelas = F.col("star_rating")
 baixa, alta = estrelas.between(1, 3), estrelas.between(4, 5)
 avaliacao, resposta_exp, atualizacao = F.col("data_avaliacao"), F.col("data_da_resposta_exp"), F.col("data_atualizacao_da_avaliacao")
 # Feriados não contam como dias corridos (FERIADOS_NACIONAIS, desde 20/11/2026).
-dias_desde_avaliacao = tb.diff_dias(avaliacao, tb.hoje()) - feriados_entre(avaliacao, tb.hoje())
-dias_desde_atualizacao = tb.diff_dias(atualizacao, tb.hoje()) - feriados_entre(atualizacao, tb.hoje())
-feriados_ate_resposta = feriados_entre(avaliacao, resposta_exp)
+# Só para avaliações feitas a partir de FERIADOS_DESDE (as anteriores seguem a regra antiga).
+avaliacao_com_feriados = F.coalesce(F.to_date(avaliacao) >= F.lit(FERIADOS_DESDE).cast("date"), F.lit(False))
+
+
+def so_desde(feriados):
+    return F.when(avaliacao_com_feriados, feriados).otherwise(0)
+
+
+dias_desde_avaliacao = tb.diff_dias(avaliacao, tb.hoje()) - so_desde(feriados_entre(avaliacao, tb.hoje()))
+dias_desde_atualizacao = tb.diff_dias(atualizacao, tb.hoje()) - so_desde(feriados_entre(atualizacao, tb.hoje()))
+feriados_ate_resposta = so_desde(feriados_entre(avaliacao, resposta_exp))
 tolerancia_baixa = F.when(tb.dia_semana(avaliacao) == 6, 2).when(tb.dia_semana(avaliacao) == 7, 1).otherwise(1)
 
 
